@@ -1,0 +1,19 @@
+@font-face { font-family: Raleway; src: url('./Raleway-Regular.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: Raleway; src: url('./Raleway-SemiBold.ttf') format('truetype'); font-style: normal; font-weight: 600; font-display: swap; }
+@font-face { font-family: Raleway; src: url('./Raleway-Bold.ttf') format('truetype'); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: Gyst; src: url('./Gyst-Bold.otf') format('opentype'); font-style: normal; font-weight: 700; font-display: swap; }
+:root { font-family: Raleway, 'Noto Sans Bengali', Arial, sans-serif; }
+h1,h2,h3 { font-family: Gyst, 'Noto Sans Bengali', Georgia, serif; font-weight: 700; }
+
+/* Bangla face used by the reference portal; self-hosted under the SIL OFL. */
+@font-face { font-family: 'Hind Siliguri'; src: url('./HindSiliguri-Regular.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hind Siliguri'; src: url('./HindSiliguri-Medium.ttf') format('truetype'); font-style: normal; font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Hind Siliguri'; src: url('./HindSiliguri-SemiBold.ttf') format('truetype'); font-style: normal; font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Hind Siliguri'; src: url('./HindSiliguri-Bold.ttf') format('truetype'); font-style: normal; font-weight: 700; font-display: swap; }
+
+/* :lang also covers Bangla labels on English pages. Override component font shorthands. */
+:lang(bn) {
+  font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
+  letter-spacing: normal !important;
+}
+:is(h1, h2, h3, h4, h5, h6):lang(bn) { line-height: 1.4 !important; }

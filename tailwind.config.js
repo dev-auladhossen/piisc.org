@@ -1,0 +1,1 @@
+export default { content: ['./index.html','./src/**/*.{vue,js}'], theme: { extend: { colors: { navy:'#092645', blue:'#123f70', emerald:'#0e5b4a', gold:'#b89345', cream:'#f7f6f2' }, fontFamily:{ sans:['Inter','Noto Sans Bengali','sans-serif'], display:['Georgia','Noto Serif Bengali','serif'] } } }, plugins: [] }
