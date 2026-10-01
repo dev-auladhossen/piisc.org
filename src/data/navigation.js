@@ -1,6 +1,6 @@
 ﻿// Populate with PIISC's confirmed contact details and social profile URLs.
 export const headerContacts = {
-  phone: "+880 1979-702827 ",
+  phone: "+880 1747740774 ",
   email: "admissions@piisc.org",
   eiin: "110608",
   socials: { whatsapp: "", facebook: "", instagram: "", youtube: "" },
@@ -9,43 +9,57 @@ export const navigation = [
   { id: "home", label: "Home", to: "/" },
   {
     id: "about",
-    label: "About Us",
+    label: "About",
     children: [
-      { label: "Chief Advisor’s Message", to: "/chief-advisor-message" },
-      {
-        label: "About Us-Peace International Islamic School & College",
-        to: "/about",
-      },
-      { label: "Meet Our Team", to: "/our-team" },
-      { label: "Contact us", to: "/contact" },
-      { label: "Student-Parents Handbook", to: "/student-parents-handbook" },
+      { label: "About Us", to: "/about" },
+      { label: "Vision & Mission", to: "/vision-mission" },
+      { label: "Message from the HOS", to: "/chief-advisor-message" },
     ],
   },
-  { id: "academics", label: "Academics", children: [
-    { label: "Academic Affairs", to: "/academics" },
-    { label: "Academic Calendar", to: "/academic-calendar" },
-  ] },
-  { id: "admissions", label: "Admission", to: "/admissions" },
-  { id: "notices", label: "Notices", to: "/notices" },
-  { id: "gallery", label: "Gallery", to: "/gallery" },
-  { id: "contact", label: "Contact", to: "/contact" },
-  { id: "more", label: "More", children: [
-  { label: "PIISC News & Events", to: "/news" },
   {
-    id: "newsletter",
-    label: "Newsletter",
+    id: "admissions",
+    label: "Admission",
     children: [
-      { label: "1st Edition", to: "/newsletter/1" },
-      { label: "2nd Edition", to: "/newsletter/2" },
-      { label: "3rd Edition", to: "/newsletter/3" },
-      { label: "4th Edition", to: "/newsletter/4" },
+      { label: "Admission Requirements", to: "/admission-requirement" },
+      { label: "Admission Procedures", to: "/application-process" },
     ],
   },
-  { label: "Student Support-PIISC", to: "/student-support" },
-  { label: "Careers", to: "/careers" },
-  ] },
+  {
+    id: "academics",
+    label: "Academic",
+    children: [
+      { label: "Primary School (Grades 1–5)", to: "/primary-school" },
+      { label: "Middle School (Grades 6–8)", to: "/middle-school" },
+      { label: "Secondary School (Grades 9–10)", to: "/secondary-school" },
+      { label: "College (Grades 11–12)", to: "/college" },
+      { label: "Activities", to: "/extra-curricular-activities" },
+    ],
+  },
+  {
+    id: "explore",
+    label: "Explore",
+    children: [
+      { label: "Facilities", to: "/campus" },
+    { label: "Curriculum", to: "/curriculum" },
+      { label: "Our Learning Areas", to: "/learning-areas" },
+    ],
+  },
+  { id: "gallery", label: "Gallery", to: "/gallery" },
+  { id: "notices", label: "Notice", to: "/notices" },
+  { id: "contact", label: "Contact", to: "/contact" },
 ];
 export const informationPages = [
+  ...[
+    ["vision-mission", "Vision & Mission"],
+    ["early-years", "Early Years (Play, Nursery, KG)"],
+    ["junior-school", "Junior School (Grade I–III)"],
+    ["learning-areas", "Our Learning Areas"],
+  ].map(([slug, title]) => ({
+    path: `/${slug}`,
+    name: slug,
+    title,
+    description: `${title} information for PIISC will be published here.`,
+  })),
   ...[
     ["academic-calendar", "Academic Calendar"],
     ["admission-notice", "Admission Notice"],
@@ -56,7 +70,9 @@ export const informationPages = [
     ["admission-form", "Admission Form"],
     ["admission-process", "Admission Process"],
   ].map(([slug, title]) => ({
-    path: `/${slug}`, name: slug, title,
+    path: `/${slug}`,
+    name: slug,
+    title,
     description: `${title} information will be published here once confirmed by PIISC. Please contact the school for assistance.`,
   })),
   {
@@ -102,4 +118,3 @@ export const informationPages = [
       "This edition of the PIISC newsletter has not been published yet. Please check back for school news and updates.",
   })),
 ];
-

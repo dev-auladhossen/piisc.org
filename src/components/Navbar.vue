@@ -118,45 +118,33 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="reference-contact-bar">
-    <div class="reference-contact-inner">
-      <span
-        ><strong>{{ $tr(t.contact.phone) }}:</strong>
-        <a
-          v-if="headerContacts.phone"
-          :href="`tel:${headerContacts.phone.replace(/\s/g, '')}`"
-          >{{ $tr(headerContacts.phone) }}</a
-        ><span v-else>{{ $tr("Coming soon") }}</span></span
-      >
-      <span
-        ><strong>{{ $tr(t.contact.email) }}:</strong>
-        <a
-          v-if="headerContacts.email"
-          :href="`mailto:${headerContacts.email}`"
-          >{{ $tr(headerContacts.email) }}</a
-        ><span v-else>{{ $tr("Coming soon") }}</span></span
-      >
-      <span
-        ><strong>{{ $tr("EIIN:") }}</strong>
-        {{ $tr(headerContacts.eiin || "Coming soon") }}</span
-      >
-      <div class="reference-socials" :aria-label="$tr('Social media')">
-        <template v-for="(icon, name) in socialIcons" :key="name">
+    <div class="reference-top-layout">
+      <div class="reference-verse">
+        <p lang="ar" dir="rtl">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</p>
+        <p lang="bn">অর্থ: “পড়ো তোমার প্রভুর নামে, যিনি সৃষ্টি করেছেন।”</p>
+      </div>
+      <div class="reference-contact-inner">
+        <span
+          ><strong>{{ $tr(t.contact.phone) }}:</strong>
           <a
-            v-if="headerContacts.socials[name]"
-            :href="headerContacts.socials[name]"
-            target="_blank"
-            rel="noopener noreferrer"
-            :aria-label="$tr(`PIISC on ${name}`)"
-            ><component :is="icon" :size="16" aria-hidden="true"
-          /></a>
-          <span
-            v-else
-            class="social-unavailable cursor-pointer"
-            :aria-label="$tr(`${name}: coming soon`)"
-            :title="$tr(`${name}: coming soon`)"
-            ><component :is="icon" :size="16" aria-hidden="true"
-          /></span>
-        </template>
+            v-if="headerContacts.phone"
+            :href="`tel:${headerContacts.phone.replace(/\s/g, '')}`"
+            >{{ $tr(headerContacts.phone) }}</a
+          ><span v-else>{{ $tr("Coming soon") }}</span></span
+        >
+        <span
+          ><strong>{{ $tr(t.contact.email) }}:</strong>
+          <a
+            v-if="headerContacts.email"
+            :href="`mailto:${headerContacts.email}`"
+            >{{ $tr(headerContacts.email) }}</a
+          ><span v-else>{{ $tr("Coming soon") }}</span></span
+        >
+        <span
+          ><strong>{{ $tr("EIIN:") }}</strong>
+          {{ $tr(headerContacts.eiin || "Coming soon") }}</span
+        >
+        <span> <LanguageSwitcher /></span>
       </div>
     </div>
   </div>
@@ -181,137 +169,155 @@ onBeforeUnmount(() => {
           />
           <span class="reference-brand-name"
             ><strong>{{ $tr("PEACE INTERNATIONAL") }} </strong
-            ><span
-              >{{ $tr(" ISLAMIC SCHOOL & COLLEGE (PIISC) ")
-              }}</span
-            >
-            <small>{{
-              $tr("EST.2026 | Ashulia, Savar, Dhaka-1349 ")
-            }}</small></span
-          >
+            ><span>{{ $tr(" ISLAMIC SCHOOL & COLLEGE (PIISC) ") }}</span>
+          </span>
         </div>
       </RouterLink>
+      <div class="reference-nav-shell">
+        <nav
+          id="primary-navigation"
+          class="reference-navigation"
+          :class="{ 'is-mobile-open': mobileOpen }"
+          :aria-label="$tr('Main navigation')"
+        >
+          <ul class="reference-nav-list">
+            <li
+              v-for="item in localizedNavigation"
+              :key="item.id"
+              class="reference-nav-item"
+              @pointerenter="hover(item, $event)"
+              @pointerleave="leave(item, $event)"
+              @focusout="focusOut"
+            >
+              <button
+                v-if="item.children"
+                type="button"
+                class="reference-nav-link"
+                :class="{
+                  'is-active': active(item),
+                  'is-expanded': expanded === item.id,
+                }"
+                :aria-expanded="expanded === item.id"
+                :aria-controls="`dropdown-${item.id}`"
+                @click="expanded = expanded === item.id ? null : item.id"
+                @keydown.down.prevent="focusDropdown(item)"
+              >
+                {{ $tr(item.label)
+                }}<ChevronDown :size="16" aria-hidden="true" />
+              </button>
+              <RouterLink
+                v-else
+                :to="item.to"
+                class="reference-nav-link"
+                :class="{ 'is-active': active(item) }"
+                @click="closeMenus"
+                >{{ $tr(item.label) }}</RouterLink
+              >
+              <Transition name="reference-dropdown">
+                <ul
+                  v-if="item.children"
+                  v-show="expanded === item.id"
+                  :id="`dropdown-${item.id}`"
+                  class="reference-dropdown-panel"
+                >
+                  <li
+                    v-for="child in item.children"
+                    :key="child.id || child.to"
+                  >
+                    <details v-if="child.children" class="reference-submenu">
+                      <summary :class="{ 'is-active': active(child) }">
+                        {{ $tr(child.label)
+                        }}<ChevronDown :size="16" aria-hidden="true" />
+                      </summary>
+                      <ul>
+                        <li v-for="edition in child.children" :key="edition.to">
+                          <RouterLink :to="edition.to" @click="closeMenus">{{
+                            $tr(edition.label)
+                          }}</RouterLink>
+                        </li>
+                      </ul>
+                    </details>
+                    <RouterLink v-else :to="child.to" @click="closeMenus">{{
+                      $tr(child.label)
+                    }}</RouterLink>
+                  </li>
+                </ul>
+              </Transition>
+            </li>
+          </ul>
+        </nav>
+        <button
+          class="reference-menu-toggle"
+          type="button"
+          :aria-expanded="mobileOpen"
+          aria-controls="primary-navigation"
+          :aria-label="$tr(mobileOpen ? 'Close navigation' : 'Open navigation')"
+          @click="
+            mobileOpen = !mobileOpen;
+            expanded = null;
+          "
+        >
+          <span>{{ language === "bn" ? "মেনু" : "Menu" }}</span>
+          <X v-if="mobileOpen" :size="28" /><Menu v-else :size="28" />
+        </button>
+      </div>
+
       <div class="header-actions">
         <RouterLink
-          to="/online-admission"
-          class="header-capsule admission-capsule"
-          @click="closeMenus"
-          >{{
-            $tr(language === "bn" ? "অনলাইন ভর্তি" : "Online Admission")
-          }}</RouterLink
-        >
-        <RouterLink
           to="/recruitment"
-          class="header-capsule recruitment-capsule"
+          class="header-capsule apply-capsule"
           @click="closeMenus"
-          >{{ $tr(language === "bn" ? "নিয়োগ" : "Recruitment") }}</RouterLink
+          >{{ $tr(language === "bn" ? "আবেদন" : "Apply Now") }}</RouterLink
         >
-        <LanguageSwitcher />
       </div>
-    </div>
-    <div class="reference-nav-shell">
-      <button
-        class="reference-menu-toggle"
-        type="button"
-        :aria-expanded="mobileOpen"
-        aria-controls="primary-navigation"
-        :aria-label="$tr(mobileOpen ? 'Close navigation' : 'Open navigation')"
-        @click="
-          mobileOpen = !mobileOpen;
-          expanded = null;
-        "
-      >
-        <span>{{ language === 'bn' ? 'মেনু' : 'Menu' }}</span>
-        <X v-if="mobileOpen" :size="28" /><Menu v-else :size="28" />
-      </button>
-      <nav
-        id="primary-navigation"
-        class="reference-navigation"
-        :class="{ 'is-mobile-open': mobileOpen }"
-        :aria-label="$tr('Main navigation')"
-      >
-        <ul class="reference-nav-list">
-          <li
-            v-for="item in localizedNavigation"
-            :key="item.id"
-            class="reference-nav-item"
-            @pointerenter="hover(item, $event)"
-            @pointerleave="leave(item, $event)"
-            @focusout="focusOut"
-          >
-            <button
-              v-if="item.children"
-              type="button"
-              class="reference-nav-link"
-              :class="{
-                'is-active': active(item),
-                'is-expanded': expanded === item.id,
-              }"
-              :aria-expanded="expanded === item.id"
-              :aria-controls="`dropdown-${item.id}`"
-              @click="expanded = expanded === item.id ? null : item.id"
-              @keydown.down.prevent="focusDropdown(item)"
-            >
-              {{ $tr(item.label) }}<ChevronDown :size="16" aria-hidden="true" />
-            </button>
-            <RouterLink
-              v-else
-              :to="item.to"
-              class="reference-nav-link"
-              :class="{ 'is-active': active(item) }"
-              @click="closeMenus"
-              >{{ $tr(item.label) }}</RouterLink
-            >
-            <Transition name="reference-dropdown">
-              <ul
-                v-if="item.children"
-                v-show="expanded === item.id"
-                :id="`dropdown-${item.id}`"
-                class="reference-dropdown-panel"
-              >
-                <li v-for="child in item.children" :key="child.id || child.to">
-                  <details v-if="child.children" class="reference-submenu">
-                    <summary :class="{ 'is-active': active(child) }">
-                      {{ $tr(child.label)
-                      }}<ChevronDown :size="16" aria-hidden="true" />
-                    </summary>
-                    <ul>
-                      <li v-for="edition in child.children" :key="edition.to">
-                        <RouterLink :to="edition.to" @click="closeMenus">{{
-                          $tr(edition.label)
-                        }}</RouterLink>
-                      </li>
-                    </ul>
-                  </details>
-                  <RouterLink v-else :to="child.to" @click="closeMenus">{{
-                    $tr(child.label)
-                  }}</RouterLink>
-                </li>
-              </ul>
-            </Transition>
-          </li>
-        </ul>
-      </nav>
     </div>
   </header>
 </template>
 
 <style scoped>
 .reference-contact-bar {
-  background: #303657;
+  background: linear-gradient(100deg, #102442, #294e9e);
+  border-bottom: 2px solid #d9b33d;
   color: white;
   font-family: Raleway, Arial, sans-serif;
 }
-.reference-contact-inner {
-  min-height: 46px;
-  padding: 8px 32px;
+.reference-top-layout {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 2px 32px;
+}
+.reference-verse {
+  flex-shrink: 0;
+}
+.reference-verse p {
+  margin: 0;
+}
+.reference-verse p[lang="ar"] {
+  width: fit-content;
+  font-family:
+    "Traditional Arabic", "Noto Naskh Arabic", "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.reference-verse p[lang="bn"] {
+  color: #f0c54d;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.reference-contact-inner {
+  min-height: 46px;
+  padding: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
-  column-gap: 38px;
+  column-gap: 24px;
   row-gap: 6px;
-  font-size: clamp(13px, 1.15vw, 21px);
+  font-size: clamp(13px, 1.05vw, 21px);
   line-height: 1.4;
 }
 .reference-contact-inner strong {
@@ -342,13 +348,13 @@ onBeforeUnmount(() => {
 }
 .reference-header-inner {
   width: 100%;
-  min-height: 112px;
-  padding: 20px clamp(24px, 2.6vw, 50px);
-  display: grid;
+  min-height: 82px;
+  /* padding: 20px clamp(24px, 2.6vw, 50px); */
+  display: flex;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   justify-content: space-between;
-  gap: 10px clamp(24px, 4.5vw, 86px);
+  gap: 10px clamp(12px, 1.5vw, 24px);
 }
 .reference-brand {
   grid-column: 1;
@@ -361,11 +367,14 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: flex-end;
   gap: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  margin-right: clamp(12px, 2vw, 28px);
 }
 .reference-nav-shell {
-  border-top: 1px solid #e6eaf0;
-  padding: 10px clamp(24px, 2.6vw, 50px);
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 10px clamp(12px, 1.5vw, 24px);
 }
 .header-capsule {
   display: inline-flex;
@@ -374,10 +383,11 @@ onBeforeUnmount(() => {
   min-height: 40px;
   padding: 9px 21px;
   border-radius: 10px;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
+  color: #3b3b3b;
+  font-size: 14px;
+  font-weight: 800;
   line-height: 1.5;
+  white-space: nowrap;
   transition:
     transform 0.25s ease,
     background 0.25s ease,
@@ -386,15 +396,15 @@ onBeforeUnmount(() => {
 .admission-capsule {
   background: #bd253e;
 }
-.recruitment-capsule {
-  background: #0e5b4a;
+.apply-capsule {
+  background: #e7b234;
 }
 .admission-capsule:hover {
   background: #a51c33;
   box-shadow: 0 5px 15px #bd253e30;
 }
-.recruitment-capsule:hover {
-  background: #094637;
+.apply-capsule:hover {
+  background: #eccd4e;
   box-shadow: 0 5px 15px #0e5b4a30;
 }
 .header-capsule:is(:hover, :focus-visible) {
@@ -429,21 +439,21 @@ onBeforeUnmount(() => {
 .reference-brand-name strong {
   display: block;
   font-family: Georgia, serif;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.1;
-  color: #303657;
+  color: #294e9e;
   letter-spacing: 0.025em;
 }
 .reference-brand-name > span {
   display: block;
   white-space: nowrap;
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   line-height: 1.5;
   color: #a77d31;
-  font-weight: 600;
+  font-weight: 700;
 }
 .reference-brand-name small {
   display: block;
@@ -616,17 +626,24 @@ onBeforeUnmount(() => {
     flex-basis: 270px;
   }
   .reference-brand img {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
   }
   .reference-nav-list {
-    gap: 2rem;
+    gap: clamp(12px, 1.5vw, 20px);
   }
   .reference-nav-link {
     gap: 6px;
   }
 }
 @media (max-width: 1199px) {
+  .reference-top-layout {
+    padding: 6px 16px;
+    gap: 16px;
+  }
+  .reference-top-layout .reference-contact-inner {
+    padding: 0;
+  }
   .reference-nav-shell {
     display: flex;
     flex-wrap: wrap;
@@ -676,7 +693,7 @@ onBeforeUnmount(() => {
     white-space: normal;
   }
   .reference-brand-name small {
-    letter-spacing: .06em;
+    letter-spacing: 0.06em;
     line-height: 1.6;
   }
   .reference-brand img {
@@ -740,7 +757,7 @@ onBeforeUnmount(() => {
 @media (max-width: 540px) {
   .header-actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     width: 100%;
     gap: 10px;
   }
@@ -763,6 +780,27 @@ onBeforeUnmount(() => {
     gap: 6px 14px;
     font-size: 11px;
     padding: 9px 12px;
+  }
+  .reference-top-layout {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 6px 12px;
+    gap: 12px;
+  }
+  .reference-verse {
+    text-align: center;
+  }
+  .reference-verse p[lang="ar"] {
+    margin-inline: auto;
+  }
+  .reference-verse p[lang="bn"] {
+    font-size: 13px;
+  }
+  .reference-top-layout .reference-contact-inner {
+    width: 100%;
+    margin: 0;
+    padding-top: 6px;
+    border-top: 1px solid #ffffff25;
   }
   .reference-contact-inner > span:nth-child(-n + 2) {
     grid-column: 1 / -1;
@@ -826,6 +864,16 @@ onBeforeUnmount(() => {
   .reference-nav-link svg,
   .reference-nav-link::after {
     transition: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  .reference-brand {
+    flex: 0 0 auto;
+    margin-right: clamp(28px, 3vw, 52px);
+  }
+  .reference-brand-name {
+    min-width: max-content;
   }
 }
 </style>

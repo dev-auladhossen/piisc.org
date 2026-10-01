@@ -31,7 +31,7 @@ address svg { color: #e3c88d; flex-shrink: 0; margin-top: 3px; }
 address span { overflow-wrap: anywhere; min-width: 0; }
 a { transition: color .25s ease, background .25s ease; }
 address a:hover { color: #e3c88d; }
-.panel-button { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 17px; background: #e3c88d; color: #092645; font-size: 14px; font-weight: 700; }
+.panel-button { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 17px; background: #e3c88d; border-radius: 6px; color: #092645; font-size: 14px; font-weight: 700; cursor: pointer; }
 .panel-button:hover { background: #f2dcae; }
 .panel-contact { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 19px; font-size: 13px; color: #e3c88d; }
 a svg { transition: transform .25s ease; }

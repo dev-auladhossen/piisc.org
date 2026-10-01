@@ -3,7 +3,12 @@
 @font-face { font-family: Raleway; src: url('./Raleway-Bold.ttf') format('truetype'); font-style: normal; font-weight: 700; font-display: swap; }
 @font-face { font-family: Gyst; src: url('./Gyst-Bold.otf') format('opentype'); font-style: normal; font-weight: 700; font-display: swap; }
 :root { font-family: Raleway, 'Noto Sans Bengali', Arial, sans-serif; }
-h1,h2,h3 { font-family: Gyst, 'Noto Sans Bengali', Georgia, serif; font-weight: 700; }
+/* Keep headings readable and consistent, including component-specific font shorthands. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Arial, Helvetica, 'Hind Siliguri', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: normal !important;
+}
 
 /* Bangla face used by the reference portal; self-hosted under the SIL OFL. */
 @font-face { font-family: 'Hind Siliguri'; src: url('./HindSiliguri-Regular.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; }

@@ -1,180 +1,48 @@
-<script setup>
-import { computed } from 'vue'
-import { ChevronRight, Clock3, Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Youtube } from 'lucide-vue-next'
-import { images, address } from '../data/content.js'
+﻿<script setup>
+import { Facebook, Youtube } from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
+import { images } from '../data/content.js'
 import { headerContacts } from '../data/navigation.js'
 import { useI18n } from '../composables/useI18n.js'
-const { t, language } = useI18n()
-const quickLinks = computed(() => [
-  { to: '/', label: t.value.nav.home },
-  { to: '/about', label: t.value.nav.about },
-  { to: '/admissions', label: t.value.nav.admissions },
-  { to: '/notices', label: language.value === 'bn' ? 'নোটিশ' : 'Notices' },
-  { to: '/academics', label: t.value.nav.academics },
-  { to: '/academic-calendar', label: language.value === 'bn' ? 'শিক্ষাবর্ষের ক্যালেন্ডার' : 'Academic Calendar' },
-  { to: '/campus', label: t.value.nav.campus },
-  { to: '/gallery', label: language.value === 'bn' ? 'গ্যালারি' : 'Gallery' },
-  { to: '/news', label: t.value.nav.news },
-  { to: '/contact', label: t.value.nav.contact },
-])
-const socialIcons = { facebook: Facebook, instagram: Instagram, whatsapp: MessageCircle, youtube: Youtube }
-const socialLinks = Object.entries(headerContacts.socials)
-  .filter(([, url]) => url)
-  .map(([name, url]) => ({ name, url, icon: socialIcons[name] }))
-const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+const { language } = useI18n()
+const route = useRoute()
+const copy = (en, bn) => language.value === 'bn' ? bn : en
+const socials = [{name:'Facebook',icon:Facebook,url:headerContacts.socials.facebook},{name:'YouTube',icon:Youtube,url:headerContacts.socials.youtube}]
 </script>
 <template>
-  <footer class="site-footer">
-    <div class="container site-footer-grid">
-      <div class="site-footer-brand">
-        <RouterLink to="/" class="site-footer-mark" :aria-label="$tr(t.brand)">
-          <img :src="images.logo" :alt="$tr(&quot;PIISC emblem&quot;)" width="80" height="80" />
-          <span class="site-footer-name">{{ $tr("Peace") }}<br />{{ $tr("International") }}<small>{{ $tr("Islamic School & College") }}</small></span>
-        </RouterLink>
-        <p class="site-footer-description">{{ $tr(t.footer.note) }}</p>
-        <div v-if="socialLinks.length" class="site-footer-socials">
-          <a v-for="social in socialLinks" :key="social.name" :href="social.url" :aria-label="$tr(`PIISC on ${social.name}`)" target="_blank" rel="noopener noreferrer">
-            <component :is="social.icon" :size="19" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
-
-      <div class="site-footer-navigation">
-        <h2 id="footer-links-heading">{{ $tr(language === 'bn' ? 'প্রয়োজনীয় লিংক' : 'Quick Links') }}</h2>
-        <nav class="site-footer-links" aria-labelledby="footer-links-heading">
-          <RouterLink v-for="item in quickLinks" :key="item.to" :to="item.to">
-            <ChevronRight :size="16" aria-hidden="true" />
-            <span>{{ $tr(item.label) }}</span>
-          </RouterLink>
-        </nav>
-      </div>
-
-      <div class="site-footer-contact">
-        <h2>{{ $tr(language === 'bn' ? 'যোগাযোগ করুন' : 'Get In Touch') }}</h2>
-        <address class="site-footer-contact-list">
-          <a :href="mapUrl" target="_blank" rel="noopener noreferrer" class="site-footer-contact-row">
-            <span class="site-footer-icon"><MapPin :size="20" aria-hidden="true" /></span>
-            <span>{{ $tr(address) }}</span>
-          </a>
-          <a :href="`tel:${headerContacts.phone.replace(/\s/g, '')}`" class="site-footer-contact-row">
-            <span class="site-footer-icon"><Phone :size="20" aria-hidden="true" /></span>
-            <span>{{ $tr(headerContacts.phone.trim()) }}</span>
-          </a>
-          <a :href="`mailto:${headerContacts.email}`" class="site-footer-contact-row">
-            <span class="site-footer-icon"><Mail :size="20" aria-hidden="true" /></span>
-            <span>{{ $tr(headerContacts.email) }}</span>
-          </a>
-          <div class="site-footer-contact-row">
-            <span class="site-footer-icon"><Clock3 :size="20" aria-hidden="true" /></span>
-            <span><small>{{ $tr(t.contact.office) }}</small>{{ $tr(t.contact.officeValue) }}</span>
-          </div>
-        </address>
-      </div>
+ <footer class="site-footer" :class="{ 'vision-footer': ['vision-mission', 'chief-advisor-message'].includes(route.name) }">
+  <div class="container">
+   <section class="footer-admission" aria-labelledby="footer-admission-title">
+    <div>
+     <p class="footer-eyebrow">{{ copy('ADMISSION OFFICE','ভর্তি অফিস') }}</p>
+     <h2 id="footer-admission-title">{{ copy('Let’s plan your child’s next step.','আপনার সন্তানের আগামী দিনের পরিকল্পনা করি।') }}</h2>
+     <p>{{ copy('Speak with the PIISC team about admission or arrange a school visit.','ভর্তি সম্পর্কে জানতে বা স্কুল পরিদর্শনের ব্যবস্থা করতে পিআইআইএসসি দলের সঙ্গে কথা বলুন।') }}</p>
     </div>
-    <div class="container site-footer-bottom">
-      <span>&copy; {{ $tr(new Date().getFullYear()) }}{{ $tr(" PIISC. ") }}{{ $tr(t.footer.copyright) }}</span>
-      <span>{{ $tr(t.footer.visualNote) }}</span>
+    <div class="footer-actions"><RouterLink to="/contact" class="footer-inquiry">{{ copy('Send Inquiry','জিজ্ঞাসা করুন') }}</RouterLink><a :href="`tel:${headerContacts.phone.replace(/\s/g, '')}`">{{ copy('Call Office','অফিসে কল করুন') }}</a></div>
+   </section>
+   <div class="footer-bottom">
+    <div class="footer-brand-group">
+     <RouterLink to="/" class="footer-brand" :aria-label="copy('PIISC home','পিআইআইএসসি হোম')">
+      <img :src="images.logo" :alt="copy('PIISC school logo','পিআইআইএসসি স্কুলের লোগো')" width="64" height="70" loading="lazy" />
+      <span><strong>{{ copy('PEACE INTERNATIONAL','পিস ইন্টারন্যাশনাল') }}</strong><small>{{ copy('ISLAMIC SCHOOL & COLLEGE','ইসলামিক স্কুল অ্যান্ড কলেজ') }}</small><em>{{ copy('Modern Education With Islamic Values','ইসলামী মূল্যবোধের সঙ্গে আধুনিক শিক্ষা') }}</em></span>
+     </RouterLink>
+     <div class="footer-socials" :aria-label="copy('Social media','সামাজিক যোগাযোগমাধ্যম')">
+      <template v-for="social in socials" :key="social.name">
+       <a v-if="social.url" :href="social.url" :aria-label="`PIISC on ${social.name}`" target="_blank" rel="noopener noreferrer"><component :is="social.icon" :size="18" aria-hidden="true" /></a>
+       <span v-else role="img" :aria-label="`${social.name} — ${copy('link coming soon','লিংক শীঘ্রই আসছে')}`" :title="`${social.name} — ${copy('link coming soon','লিংক শীঘ্রই আসছে')}`"><component :is="social.icon" :size="18" aria-hidden="true" /></span>
+      </template>
+     </div>
     </div>
-  </footer>
+    <div class="footer-details">
+     <p>© {{ new Date().getFullYear() }} {{ copy('Peace International Islamic School & College (PIISC).','পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজ (পিআইআইএসসি)।') }}</p>
+     <p>{{ copy('All rights reserved.','সর্বস্বত্ব সংরক্ষিত।') }}</p>
+     <nav :aria-label="copy('School links','স্কুলের লিংক')"><RouterLink to="/about">{{ copy('About Us','আমাদের সম্পর্কে') }}</RouterLink><RouterLink to="/admission-requirement">{{ copy('Admissions','ভর্তি') }}</RouterLink><RouterLink to="/contact">{{ copy('Contact','যোগাযোগ') }}</RouterLink></nav>
+    </div>
+   </div>
+  </div>
+ </footer>
 </template>
-
 <style scoped>
-.site-footer { background: #061e36; color: #b9cacc; border-top: 3px solid #bb9952; }
-.site-footer-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 1.1fr 1fr;
-  gap: clamp(28px, 4vw, 64px);
-  padding-block: 76px 66px;
-}
-.site-footer-grid > div { min-width: 0; }
-.site-footer-mark { display: inline-flex; align-items: center; gap: 15px; color: #fff; }
-.site-footer-mark img { width: 80px; height: 80px; flex-shrink: 0; object-fit: contain; background: #fff; padding: 5px; }
-.site-footer-name { font-size: clamp(21px, 2vw, 28px); font-weight: 800; line-height: 1.12; letter-spacing: -.025em; }
-.site-footer-name small {
-  display: block;
-  margin-top: 9px;
-  color: #e3c88d;
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1.6;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-.site-footer-description { max-width: 350px; margin-top: 25px; font-size: 15px; line-height: 1.85; }
-.site-footer h2 { margin: 0 0 25px; color: #fff; font-family: inherit; font-size: 20px; font-weight: 700; line-height: 1.4; }
-.site-footer h2::after { content: ''; display: block; width: 38px; height: 3px; margin-top: 12px; border-radius: 2px; background: #bb9952; }
-.site-footer-links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(5, auto);
-  grid-auto-flow: column;
-  gap: 5px 20px;
-}
-.site-footer-links a {
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-  width: fit-content;
-  max-width: calc(100% - 8px);
-  padding-block: 7px;
-  font-size: 14px;
-  line-height: 1.6;
-  transition: transform 260ms ease, color 260ms ease;
-}
-.site-footer-links svg { flex-shrink: 0; align-self: flex-start; margin-top: 3px; color: #e3c88d; }
-.site-footer-links a:hover,
-.site-footer-links a:focus-visible { color: #e3c88d; transform: translateX(8px); }
-.site-footer-contact-list { display: grid; gap: 17px; font-style: normal; }
-.site-footer-contact-row { display: flex; align-items: center; gap: 15px; font-size: 14px; line-height: 1.75; }
-.site-footer-contact-row > span:last-child { min-width: 0; overflow-wrap: anywhere; }
-.site-footer-contact-row small { display: block; color: #e1e8e9; font-size: 12px; }
-.site-footer-icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #ffffff0d;
-  color: #e3c88d;
-  transition: background 260ms ease, color 260ms ease;
-}
-.site-footer-contact-list a { transition: color 260ms ease; }
-.site-footer-contact-list a:hover,
-.site-footer-contact-list a:focus-visible { color: #e3c88d; }
-.site-footer-contact-list a:hover .site-footer-icon,
-.site-footer-contact-list a:focus-visible .site-footer-icon { background: #0e5b4a; color: #fff; }
-.site-footer-socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-.site-footer-socials a {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid #ffffff30;
-  border-radius: 50%;
-  transition: transform 260ms ease, background 260ms ease, color 260ms ease;
-}
-.site-footer-socials a:hover,
-.site-footer-socials a:focus-visible { transform: translateY(-3px); background: #0e5b4a; color: #fff; }
-.site-footer a:focus-visible { outline: 2px solid #e3c88d; outline-offset: 5px; border-radius: 3px; }
-.site-footer-bottom { display: flex; justify-content: space-between; gap: 20px 40px; padding-block: 22px; border-top: 1px solid #ffffff1c; color: #a8bec3; font-size: 12px; line-height: 1.7; }
-.site-footer-bottom > span:last-child { max-width: 510px; text-align: right; }
-@media (max-width: 1000px) {
-  .site-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 42px; }
-  .site-footer-brand { grid-column: 1 / -1; }
-  .site-footer-description { max-width: 460px; }
-}
-@media (max-width: 600px) {
-  .site-footer-grid { grid-template-columns: minmax(0, 1fr); padding-block: 50px 40px; gap: 36px; }
-  .site-footer-name { font-size: 25px; }
-  .site-footer-mark img { width: 72px; height: 72px; }
-  .site-footer-links { gap: 6px 18px; }
-  .site-footer-bottom { flex-direction: column; gap: 8px; }
-  .site-footer-bottom > span:last-child { text-align: left; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .site-footer a, .site-footer-icon { transition: none; }
-  .site-footer-links a:hover, .site-footer-links a:focus-visible,
-  .site-footer-socials a:hover, .site-footer-socials a:focus-visible { transform: none; }
-}
+.vision-footer>.container{width:calc(100% - clamp(32px,6.5vw,128px));max-width:1800px}
+.site-footer{background:linear-gradient(180deg,#f7f8fc,#fff);padding-top:28px;color:#294e9e}.footer-admission{display:flex;align-items:center;justify-content:space-between;gap:40px;background:linear-gradient(110deg,#0a2948,#294e9e);padding:clamp(28px,4vw,48px);border-radius:6px;color:white}.footer-admission>div:first-child{max-width:760px}.footer-eyebrow{color:#f0cf66;font-size:11px;font-weight:800;letter-spacing:.2em;margin-bottom:15px}.footer-admission h2{color:white;font-size:clamp(28px,3.2vw,42px);line-height:1.2;margin:0 0 18px;max-width:650px}.footer-admission p:last-child{color:#e7edf7;font-size:15px;line-height:1.7}.footer-actions{display:flex;gap:12px;flex-shrink:0}.footer-actions a{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:12px 19px;border:1px solid #ffffff66;border-radius:6px;color:white;font-size:14px;font-weight:700;cursor:pointer;transition:background .25s,color .25s,transform .25s,box-shadow .25s}.footer-actions .footer-inquiry{background:#d9b33d;border-color:#d9b33d;color:#102947}.footer-actions a:hover{transform:translateY(-3px);background:white;color:#0a2948;box-shadow:0 8px 20px #0002}.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:30px;border-top:1px solid #dbe2ed;margin-top:44px;padding-block:30px 36px}.footer-brand-group{display:flex;align-items:center;gap:24px}.footer-brand{display:flex;align-items:center;gap:12px}.footer-brand img{width:64px;height:70px;object-fit:contain;flex-shrink:0}.footer-brand strong{display:block;font-size:16px;line-height:1.35;color:#0a2948}.footer-brand small{display:block;font-size:11px;font-weight:700;line-height:1.5;margin-top:3px}.footer-brand em{display:block;margin-top:6px;font-size:9px;line-height:1.5;font-style:normal;color:#977323}.footer-socials{display:flex;gap:8px}.footer-socials>a,.footer-socials>span{display:grid;place-items:center;width:36px;height:36px;border:1px solid #dbe2ed;border-radius:6px;background:#fff;color:#294e9e}.footer-socials>a{transition:background .25s,color .25s,transform .25s;cursor:pointer}.footer-socials>a:hover{background:#294e9e;color:white;transform:translateY(-3px)}.footer-details{text-align:right;font-size:11px;line-height:1.8;max-width:490px}.footer-details nav{display:flex;justify-content:flex-end;gap:20px;margin-top:5px}.footer-details a{transition:color .25s}.footer-details a:hover{color:#977323;text-decoration:underline;text-underline-offset:4px}@media(max-width:1000px){.footer-admission{align-items:flex-start;flex-direction:column;gap:24px}.footer-bottom{align-items:flex-start;flex-direction:column}.footer-details{text-align:left}.footer-details nav{justify-content:flex-start}}@media(max-width:480px){.footer-brand-group{align-items:flex-start;flex-direction:column;gap:18px}.footer-actions{width:100%;flex-wrap:wrap}.footer-actions a{flex:1}.footer-brand strong{font-size:14px}.footer-brand img{width:56px;height:62px}.footer-bottom{margin-top:30px}}@media(prefers-reduced-motion:reduce){.site-footer a{transition:none}.site-footer a:hover{transform:none}}
 </style>
