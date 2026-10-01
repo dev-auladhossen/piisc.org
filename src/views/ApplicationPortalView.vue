@@ -146,8 +146,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid #d9b33d; outline-offs
 .pdf-card-actions a { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 47px; padding: 11px 15px; border: 1px solid #294e9e; border-radius: 7px; color: #294e9e; font-size: 13px; font-weight: 700; white-space: nowrap; text-decoration: none; transition: background .25s ease, color .25s ease, transform .25s ease, box-shadow .25s ease; }
 .pdf-card-actions .pdf-download { color: #fff; background: #294e9e; }
 .pdf-card-actions a:hover { transform: translateY(-2px); color: #fff; background: #173a80; box-shadow: 0 9px 20px #173a6a1f; }
-@media (max-width: 1100px) { .pdf-card { flex-wrap: wrap; } .pdf-card-actions { width: 100%; margin-left: 92px; } }
-@media (max-width: 600px) { .pdf-card { gap: 15px; } .pdf-card-icon { width: 52px; height: 52px; } .pdf-card-icon svg { width: 26px; height: 26px; } .pdf-card-actions { margin: 5px 0 0; flex-wrap: wrap; } .pdf-card-actions a { flex: 1; } }
+@media (max-width: 1100px) { .pdf-card { flex-wrap: wrap; } .pdf-card-actions { width: 100%; margin-left: 0; flex-wrap: wrap; } }
+@media (max-width: 600px) { .pdf-card { gap: 15px; } .pdf-card-icon { width: 52px; height: 52px; } .pdf-card-icon svg { width: 26px; height: 26px; } .pdf-card-actions { margin: 5px 0 0; } .pdf-card-actions a { flex: 1 1 180px; } }
 @media(max-width: 850px) { .portal-layout { grid-template-columns: 1fr; gap: 35px; } }
 @media(max-width: 540px) { .portal-form { padding: 25px 20px; } .portal-fields { grid-template-columns: 1fr; } .portal-submit { width: 100%; } }
 @media(prefers-reduced-motion: reduce) { input, textarea, .portal-submit, .pdf-card-actions a { transition: none; } .portal-submit:hover, .pdf-card-actions a:hover { transform: none; } }

@@ -154,10 +154,12 @@ import { headerContacts } from "../data/navigation.js";
   background: #fff9e4;
 }
 .gateway-links {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 .gateway-links a {
+  min-width: 0;
   position: relative;
   display: flex;
   align-items: center;
@@ -202,6 +204,7 @@ import { headerContacts } from "../data/navigation.js";
   letter-spacing: 0.12em;
 }
 .gateway-links h3 {
+  min-width: 0;
   margin: 0;
   font-size: clamp(18px, 1.4vw, 22px);
   line-height: 1.4;
@@ -241,7 +244,7 @@ import { headerContacts } from "../data/navigation.js";
     padding: 22px 18px;
   }
 }
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .admission-gateway {
     width: calc(100% - 24px);
     margin-top: -25px;
@@ -268,8 +271,9 @@ import { headerContacts } from "../data/navigation.js";
     gap: 14px;
   }
   .gateway-links a {
+    display: grid;
     min-height: 112px;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
     gap: 16px;
     padding: 22px;
   }
