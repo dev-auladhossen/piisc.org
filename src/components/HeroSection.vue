@@ -160,8 +160,13 @@ onBeforeUnmount(() => {
         {{ $tr("ESTABLISHED 2026 IN ASHULIA-SAVAR") }}
       </p>
       <h1 class="school-name">
-        <span>{{ $tr("PEACE INTERNATIONAL") }}</span>
-        <small>{{ $tr("ISLAMIC SCHOOL AND COLLEGE (PIISC)") }}</small>
+        <span>{{
+          $tr("PEACE ")
+        }}</span>
+        <span>{{
+          $tr("INTERNATIONAL")
+        }}</span>
+        <small>{{ $tr(" ISLAMIC SCHOOL AND COLLEGE (PIISC)") }}</small>
       </h1>
     </div>
     <div class="hero-actions">
@@ -263,7 +268,7 @@ onBeforeUnmount(() => {
     linear-gradient(
       90deg,
       rgba(8, 23, 35, 0.88) 0%,
-      rgba(8, 23, 35, 0.67) 48%,
+      rgba(26, 65, 97, 0.67) 48%,
       rgba(8, 23, 35, 0.18) 100%
     ),
     linear-gradient(180deg, transparent 42%, rgba(8, 23, 24, 0.58) 100%);
@@ -294,7 +299,7 @@ onBeforeUnmount(() => {
   margin: 0;
   max-width: 850px;
   color: #fff;
-  font-family: Raleway, "Noto Sans Bengali", Arial, sans-serif;
+  font-family: Newsreader, 'Hind Siliguri', Georgia, serif;
   line-height: 0.94;
   letter-spacing: 0;
   text-shadow: 0 3px 22px #0005;
@@ -316,7 +321,7 @@ onBeforeUnmount(() => {
 }
 .school-slide-label {
   margin: 0 0 10px;
-  font-size: 12px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -334,7 +339,7 @@ onBeforeUnmount(() => {
 .school-slide-caption h2 {
   margin: 0;
   max-width: 900px;
-  font-size: clamp(20px, 2vw, 28px);
+  font-size: clamp(20px, 1vw, 28px);
   line-height: 1.15;
   color: #fff;
   text-wrap: balance;
@@ -413,7 +418,7 @@ onBeforeUnmount(() => {
 }
 .hero-controls {
   position: absolute;
-  bottom: 68px;
+  bottom: 80px;
   left: 7%;
   right: 7%;
   display: flex;
@@ -595,19 +600,20 @@ onBeforeUnmount(() => {
     height: 560px;
   }
   .school-slide-caption {
-    top: 280px;
+    top: 270px;
   }
   .hero-identity {
-    top: 140px;
+    top: 70px;
   }
   .school-name > span {
-    font-size: 33px;
+    font-size: 40px;
+    margin-bottom: 6px;
   }
   .school-name > small {
-    font-size: 28px;
+    font-size: 19px;
   }
   .hero-actions {
-    top: 360px;
+    top: 340px;
   }
   .hero-actions a {
     min-height: 50px;

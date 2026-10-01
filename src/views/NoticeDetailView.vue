@@ -26,3 +26,7 @@ const date = value => new Intl.DateTimeFormat(language.value === 'bn' ? 'bn-BD' 
 @media(max-width:800px){.document-layout{grid-template-columns:1fr;gap:24px}.document-sidebar{grid-template-columns:repeat(3,minmax(0,1fr));padding:7px}.document-sidebar a{padding:12px 8px;border-bottom:0}.document-sidebar strong{font-size:16px}.document-sidebar span{font-size:11px;margin-top:8px}.pdf-reader{height:70dvh;min-height:360px}}
 @media(max-width:430px){.document-sidebar{grid-template-columns:1fr}.document-sidebar a{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.document-sidebar span,.document-sidebar small{margin:0}.document-toolbar>div{flex-wrap:wrap}}
 </style>
+
+<style scoped>
+.document-page{padding-block:54px 80px}.back-link{color:#294e9e;font-weight:750}.document-layout{gap:28px}.document-sidebar{border:1px solid #dce5f3;border-radius:9px;padding:10px;box-shadow:0 12px 30px #173a6a0b}.document-sidebar a{border-color:#dce5f3;border-radius:6px;color:#405775}.document-sidebar a:hover{background:#edf3ff}.document-sidebar a.selected{background:#294e9e;color:white}.document-content h1{color:#173f8e}.document-toolbar{background:#f5f8fd;border-color:#dce5f3;border-radius:8px 8px 0 0;color:#405775}.document-toolbar a{color:#294e9e}.document-toolbar a:hover{color:#a07817}.pdf-reader{border:1px solid #dce5f3;border-top:0;border-radius:0 0 8px 8px}.missing-notice h1{color:#173f8e}
+</style>

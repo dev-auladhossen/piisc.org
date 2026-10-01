@@ -1,36 +1,66 @@
-﻿<script setup>
-import { ref } from 'vue'
+<script setup>
+import { reactive, ref } from 'vue'
 import { Send } from 'lucide-vue-next'
 import { headerContacts } from '../data/navigation.js'
-const name = ref(''), email = ref(''), subject = ref(''), message = ref(''), status = ref('')
-function submit() {
-  if (![name.value, email.value, subject.value, message.value].every(value => value.trim())) {
-    status.value = 'Please complete all required fields.'
-    return
+import { useI18n } from '../composables/useI18n.js'
+
+const { language } = useI18n()
+const copy = (en, bn) => language.value === 'bn' ? bn : en
+const fields = reactive({ name: '', phone: '', email: '', grade: '', callback: false, callbackTime: 'Any convenient time', message: '', website: '' })
+const sending = ref(false)
+const status = ref('')
+const statusKind = ref('')
+const grades = Array.from({ length: 12 }, (_, index) => index + 1)
+
+async function submit() {
+  if (sending.value || fields.website) return
+  sending.value = true
+  status.value = ''
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(headerContacts.email.trim())}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        name: fields.name.trim(), email: fields.email.trim(), phone: fields.phone.trim(),
+        interested_class: fields.grade, callback_requested: fields.callback ? 'Yes' : 'No',
+        preferred_callback_time: fields.callback ? fields.callbackTime : 'Not requested',
+        message: fields.message.trim(), _subject: 'New PIISC admission inquiry',
+        _template: 'table', _honey: fields.website,
+      }),
+    })
+    const result = await response.json()
+    if (!response.ok || ![true, 'true'].includes(result.success)) throw new Error('Submission failed')
+    statusKind.value = 'success'
+    status.value = copy('Your inquiry has been submitted. Our team will contact you after reviewing it.', 'আপনার অনুসন্ধান জমা হয়েছে। পর্যালোচনার পর আমাদের দল আপনার সঙ্গে যোগাযোগ করবে।')
+    Object.assign(fields, { name: '', phone: '', email: '', grade: '', callback: false, callbackTime: 'Any convenient time', message: '', website: '' })
+  } catch {
+    statusKind.value = 'error'
+    status.value = copy('We could not send your inquiry. Please try again, call us, or email the office directly.', 'আপনার অনুসন্ধান পাঠানো যায়নি। আবার চেষ্টা করুন অথবা ফোন বা ইমেইলে যোগাযোগ করুন।')
+  } finally {
+    sending.value = false
   }
-  const body = encodeURIComponent(`Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\n\n${message.value.trim()}`)
-  window.location.href = `mailto:${headerContacts.email}?subject=${encodeURIComponent(subject.value.trim())}&body=${body}`
-  status.value = 'Your email app has been requested. Please send the prepared message there to complete your inquiry. If it does not open, email us directly at ' + headerContacts.email + '.'
 }
 </script>
+
 <template>
-  <form class="inquiry-form" @submit.prevent="submit">
-    <span class="eyebrow">{{ $tr("We are here to help") }}</span><h2>{{ $tr("Need help? Contact us.") }}</h2>
-    <p class="form-intro">{{ $tr("Ask about admissions, learning or a visit to PIISC. We look forward to hearing from you.") }}</p>
-    <div class="inquiry-fields">
-      <label for="inquiry-name">{{ $tr("Your name ") }}<span>*</span><input id="inquiry-name" v-model="name" name="name" autocomplete="name" :placeholder="$tr(&quot;Your full name&quot;)" maxlength="150" required /></label>
-      <label for="inquiry-email">{{ $tr("Your email ") }}<span>*</span><input id="inquiry-email" v-model="email" name="email" type="email" autocomplete="email" :placeholder="$tr(&quot;you@example.com&quot;)" maxlength="254" required /></label>
-      <label for="inquiry-subject" class="full-field">{{ $tr("Subject ") }}<span>*</span><input id="inquiry-subject" v-model="subject" name="subject" :placeholder="$tr(&quot;How can we help?&quot;)" maxlength="200" required /></label>
-      <label for="inquiry-message" class="full-field">{{ $tr("Message ") }}<span>*</span><textarea id="inquiry-message" v-model="message" name="message" rows="6" :placeholder="$tr(&quot;Tell us a little more about your inquiry…&quot;)" maxlength="5000" required></textarea></label>
+  <form class="contact-form" @submit.prevent="submit">
+    <p class="form-eyebrow">{{ copy('ADMISSION INQUIRY', 'ভর্তি অনুসন্ধান') }}</p>
+    <h2>{{ copy('Send details for admission support.', 'ভর্তি সহায়তার জন্য বিস্তারিত পাঠান।') }}</h2>
+    <div class="form-fields">
+      <label for="guardian-name">{{ copy('Guardian Name', 'অভিভাবকের নাম') }}<input id="guardian-name" v-model="fields.name" name="name" autocomplete="name" :placeholder="copy('Your name', 'আপনার নাম')" maxlength="150" required /></label>
+      <label for="guardian-phone">{{ copy('Phone Number', 'ফোন নম্বর') }}<input id="guardian-phone" v-model="fields.phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+880" maxlength="30" required /></label>
+      <label for="guardian-email">{{ copy('Email Address', 'ইমেইল ঠিকানা') }}<input id="guardian-email" v-model="fields.email" name="email" type="email" autocomplete="email" placeholder="guardian@example.com" maxlength="254" required /></label>
+      <label for="interested-class">{{ copy('Interested Class', 'ভর্তির শ্রেণি') }}<select id="interested-class" v-model="fields.grade" name="interested_class" required><option value="" disabled>{{ copy('Select a class', 'শ্রেণি নির্বাচন করুন') }}</option><option v-for="grade in grades" :key="grade" :value="`Grade ${grade}`">{{ copy(`Grade ${grade}`, `${grade} শ্রেণি`) }}</option></select></label>
+      <label class="callback-choice"><input v-model="fields.callback" name="callback_requested" type="checkbox" /><span>{{ copy('Request a parent callback from the admission office', 'ভর্তি বিভাগ থেকে অভিভাবকের কাছে ফোনকল চাই') }}</span></label>
+      <label for="callback-time">{{ copy('Preferred Callback Time', 'ফোনের সুবিধাজনক সময়') }}<select id="callback-time" v-model="fields.callbackTime" name="preferred_callback_time"><option value="Any convenient time">{{ copy('Any convenient time', 'যেকোনো সুবিধাজনক সময়') }}</option><option value="Morning">{{ copy('Morning', 'সকাল') }}</option><option value="Afternoon">{{ copy('Afternoon', 'বিকাল') }}</option></select></label>
+      <label for="inquiry-message">{{ copy('Message', 'বার্তা') }}<textarea id="inquiry-message" v-model="fields.message" name="message" rows="5" :placeholder="copy('Write your inquiry', 'আপনার অনুসন্ধান লিখুন')" maxlength="5000" required></textarea></label>
     </div>
-    <p class="inquiry-note">{{ $tr("By submitting, you agree to be contacted by PIISC about your inquiry. Submit opens your email app with your message ready to send.") }}</p>
-    <button class="inquiry-submit" type="submit">{{ $tr("Submit inquiry ") }}<Send :size="17" aria-hidden="true" /></button>
-    <p v-if="status" role="status" class="inquiry-status">{{ $tr(status) }}</p>
+    <div class="honeypot" aria-hidden="true"><label for="contact-website">Leave blank</label><input id="contact-website" v-model="fields.website" name="_honey" tabindex="-1" autocomplete="off" /></div>
+    <button type="submit" :disabled="sending" class="submit-button">{{ sending ? copy('Sending…', 'পাঠানো হচ্ছে…') : copy('Send Inquiry', 'অনুসন্ধান পাঠান') }} <Send :size="18" aria-hidden="true" /></button>
+    <p v-if="status" role="status" aria-live="polite" class="form-status" :class="statusKind">{{ status }}</p>
   </form>
 </template>
+
 <style scoped>
-.inquiry-form{padding:clamp(24px,4vw,50px);background:white;border:1px solid #dde6df;border-radius:6px;box-shadow:0 16px 45px #18313e08;border-top:4px solid #0e5b4a}
-h2{font-size:clamp(28px,3vw,38px);color:#0a2948;margin:12px 0 14px}.form-intro{color:#53616a;margin-bottom:30px}
-.inquiry-fields{display:grid;grid-template-columns:1fr 1fr;gap:24px}.full-field{grid-column:1/-1}label{font-size:13px;font-weight:700;color:#18313e}label>span{color:#956b24}input,textarea{display:block;width:100%;margin-top:9px;padding:14px 16px;border:1px solid #ccd8d1;border-radius:6px;background:#fbfcfa;color:#18313e;font-weight:400;transition:border-color .25s,box-shadow .25s,background .25s}textarea{resize:vertical;min-height:155px}input:hover,textarea:hover{border-color:#78998a}input:focus,textarea:focus{outline:none;border-color:#0e5b4a;box-shadow:0 0 0 3px #0e5b4a15;background:#fff}.inquiry-note{font-size:12px;color:#64706d;margin:23px 0}.inquiry-submit{display:inline-flex;align-items:center;justify-content:center;gap:28px;padding:16px 25px;background:#0e5b4a;border:1px solid #0e5b4a;border-radius:6px;color:white;font-weight:700;cursor:pointer;transition:transform .3s,background .3s,box-shadow .3s}.inquiry-submit:hover{background:#0a4639;transform:translateY(-3px);box-shadow:0 9px 20px #0e5b4a25}.inquiry-status{margin-top:20px;padding:16px;border-radius:6px;background:#eef5ef;color:#0e5b4a;font-size:14px}
-@media(max-width:540px){.inquiry-fields{grid-template-columns:1fr}.inquiry-submit{width:100%}}
+.contact-form{background:#fff;border:1px solid #dce3f0;border-radius:7px;padding:clamp(24px,3vw,40px);box-shadow:0 18px 48px #173a6a0d}.form-eyebrow{font-size:12px;letter-spacing:.16em;font-weight:800;color:#c39722;margin-bottom:11px}.contact-form h2{font-size:clamp(23px,2vw,29px);line-height:1.32;color:#294e9e;margin:0 0 50px}.form-fields{display:grid;gap:16px}.form-fields>label{display:block;color:#1a2334;font-size:14px;font-weight:800}.form-fields input:not([type=checkbox]),.form-fields select,.form-fields textarea{display:block;width:100%;margin-top:12px;padding:16px;border:1px solid #dce1e9;border-radius:6px;background:#fdfaf4;color:#1a2334;font-size:15px;font-weight:450}.form-fields input:not([type=checkbox]),.form-fields select{height:58px}.form-fields textarea{min-height:135px;resize:vertical}.form-fields :is(input,select,textarea):focus-visible{outline:2px solid #294e9e;outline-offset:2px;background:#fff}.form-fields select:disabled{opacity:.65;cursor:not-allowed}.form-fields .callback-choice{display:flex;align-items:flex-start;gap:11px;padding:15px;border:1px solid #dce1e9;border-radius:6px;background:#fdfaf4;min-height:68px}.callback-choice input{width:16px;height:16px;flex:none;accent-color:#294e9e;margin:1px 0 0}.callback-choice span{line-height:1.5}.honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}.submit-button{display:flex;justify-content:center;align-items:center;gap:9px;width:100%;min-height:56px;margin-top:18px;background:#294e9e;border:0;border-radius:6px;color:white;font-size:15px;font-weight:800}.submit-button:hover:not(:disabled){background:#173f8e}.submit-button:disabled{opacity:.7;cursor:wait}.form-status{padding:13px 16px;border-radius:6px;margin-top:17px;font-size:14px;line-height:1.6}.form-status.success{background:#eaf1ff;color:#173f8e}.form-status.error{background:#fff2e9;color:#8b3d1d}@media(max-width:600px){.contact-form h2{margin-bottom:30px}}
 </style>

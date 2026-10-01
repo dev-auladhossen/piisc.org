@@ -1,6 +1,6 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
-import { X } from 'lucide-vue-next'
+import { ArrowUp, X } from 'lucide-vue-next'
 import WhatsAppIcon from './WhatsAppIcon.vue'
 import { headerContacts } from '../data/navigation.js'
 import { useI18n } from '../composables/useI18n.js'
@@ -8,6 +8,7 @@ import { useI18n } from '../composables/useI18n.js'
 const { language } = useI18n()
 const open = ref(false)
 const contactVisible = ref(false)
+const showBackToTop = ref(false)
 let contactTimer
 const widget = ref(null)
 const trigger = ref(null)
@@ -46,10 +47,19 @@ function close(restoreFocus = false) {
 }
 function onOutside(event) { if (open.value && !widget.value?.contains(event.target)) close() }
 function onEscape(event) { if (open.value && event.key === 'Escape') { event.stopPropagation(); close(true) } }
-onMounted(() => document.addEventListener('pointerdown', onOutside))
+function onScroll() { showBackToTop.value = window.scrollY > 400 }
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+}
+onMounted(() => {
+  document.addEventListener('pointerdown', onOutside)
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+})
 onBeforeUnmount(() => {
   window.clearTimeout(contactTimer)
   document.removeEventListener('pointerdown', onOutside)
+  window.removeEventListener('scroll', onScroll)
 })
 </script>
 
@@ -77,8 +87,13 @@ onBeforeUnmount(() => {
     </Transition>
     <div class="whatsapp-controls">
       <div class="help-label-window">
-        <Transition name="whatsapp-hint"><button v-if="!open" type="button" class="whatsapp-hint" aria-controls="whatsapp-contact-panel" :aria-expanded="open" @click="toggle">{{ copy.help }} <strong>{{ copy.chat }}</strong></button></Transition>
+        <Transition name="whatsapp-hint"><button v-if="!open && !showBackToTop" type="button" class="whatsapp-hint" aria-controls="whatsapp-contact-panel" :aria-expanded="open" @click="toggle">{{ copy.help }} <strong>{{ copy.chat }}</strong></button></Transition>
       </div>
+      <Transition name="back-to-top">
+        <button v-if="showBackToTop" type="button" class="back-to-top-trigger" :aria-label="language === 'bn' ? 'উপরে যান' : 'Back to top'" @click="scrollToTop">
+          <ArrowUp :size="25" :stroke-width="2.2" aria-hidden="true" />
+        </button>
+      </Transition>
       <button ref="trigger" type="button" class="whatsapp-trigger" :class="{ active: open }" :aria-label="open ? copy.close : copy.label" :aria-expanded="open" aria-controls="whatsapp-contact-panel" @click="toggle">
         <Transition name="whatsapp-icon" mode="out-in">
           <X v-if="open" :size="30" aria-hidden="true" />
@@ -91,7 +106,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.whatsapp-widget { position: fixed; right: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom)); z-index: 100; font-family: Arial, sans-serif; width: min(350px, calc(100vw - 32px)); pointer-events: none; }
+.whatsapp-widget { position: fixed; right: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom)); z-index: 100; font-family: Inter, Arial, sans-serif; width: min(350px, calc(100vw - 32px)); pointer-events: none; }
 .admissions-slot { min-height: 76px; }
 .admissions-slot > a { visibility: hidden; opacity: 0; transform: translateY(10px); transition: opacity .3s ease, transform .3s ease, background .25s ease, box-shadow .25s ease; }
 .admissions-slot > a.is-visible { visibility: visible; opacity: 1; transform: translateY(0); }
@@ -117,6 +132,11 @@ onBeforeUnmount(() => {
 .admissions-copy strong { font-size: 16px; font-weight: 400; }.admissions-copy small { font-size: 13px; color: #999da3; }.admissions-copy > span { font-size: 13px; font-weight: 600; }
 .contact-arrow { flex-shrink: 0; margin-left: auto; color: #2ab640; transition: transform .25s; }.whatsapp-admissions:hover .contact-arrow { transform: translate(2px,-2px); }
 .whatsapp-controls { height: 54px; display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+.back-to-top-trigger { pointer-events: auto; flex-shrink: 0; width: 54px; height: 54px; display: grid; place-items: center; border: 2px solid #dcb532; border-radius: 50%; background: #294e9e; color: #fff; box-shadow: 0 7px 22px #09264526; cursor: pointer; transition: transform .3s ease, background .3s ease, box-shadow .3s ease; }
+.back-to-top-trigger:hover { transform: translateY(-4px); background: #1d3f86; box-shadow: 0 10px 28px #09264535; }
+.back-to-top-trigger:focus-visible { outline: 3px solid #dcb532; outline-offset: 3px; }
+.back-to-top-enter-active, .back-to-top-leave-active { transition: opacity .3s ease, transform .3s ease; }
+.back-to-top-enter-from, .back-to-top-leave-to { opacity: 0; transform: translateY(14px) scale(.85); }
 .help-label-window { overflow: hidden; padding: 7px 0; }
 .whatsapp-hint { pointer-events: auto; padding: 13px 16px; border: 1px solid #e9edf1; border-radius: 7px; background: #f5f7fa; color: #33465c; font-size: 12px; cursor: pointer; white-space: nowrap; }
 .whatsapp-hint strong { margin-left: 3px; }.whatsapp-hint:hover { background: #eaf1ed; }
@@ -130,4 +150,13 @@ button:focus-visible, a:focus-visible { outline: 3px solid #bb9952; outline-offs
 .whatsapp-icon-enter-active, .whatsapp-icon-leave-active { transition: opacity .14s ease, transform .18s ease; }.whatsapp-icon-enter-from, .whatsapp-icon-leave-to { opacity: 0; transform: rotate(-35deg) scale(.75); }
 @media(max-width:540px) { .whatsapp-heading { padding: 20px; gap: 14px; }.whatsapp-heading h2 { font-size: 20px; }.whatsapp-body { padding: 20px; }.admissions-copy small { font-size: 11px; } .whatsapp-widget { right: max(16px,env(safe-area-inset-right)); bottom: max(16px,env(safe-area-inset-bottom)); }.whatsapp-trigger { width: 50px; height: 50px; }.whatsapp-hint { font-size: 11px; padding: 11px 12px; } }
 @media(prefers-reduced-motion:reduce) { *, *::before, *::after { transition: none !important; }.whatsapp-trigger:hover, .whatsapp-admissions:hover, .whatsapp-admissions:hover .contact-arrow { transform: none; } }
+</style>
+<style scoped>
+@media (max-width: 540px) {
+  .back-to-top-trigger { width: 50px; height: 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top-trigger, .back-to-top-enter-active, .back-to-top-leave-active { transition: none; }
+  .back-to-top-trigger:hover { transform: none; }
+}
 </style>

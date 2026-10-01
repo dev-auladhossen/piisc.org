@@ -115,32 +115,45 @@ const enrichment = [
   <section class="academic-cover">
     <img
       :src="cover"
-      :alt="$tr(&quot;PIISC students learning together through a classroom activity&quot;)"
+      :alt="
+        $tr('PIISC students learning together through a classroom activity')
+      "
       fetchpriority="high"
     />
     <div class="academic-cover-shade"></div>
     <div class="container academic-cover-content">
-      <nav :aria-label="$tr(&quot;Breadcrumb&quot;)">
+      <nav :aria-label="$tr('Breadcrumb')">
         <RouterLink to="/">{{ $tr("Home") }}</RouterLink
-        ><ChevronRight :size="15" aria-hidden="true" /><span aria-current="page"
+        ><ChevronRight :size="15" aria-hidden="true" /><span
+          aria-current="page"
           >{{ $tr("Academics") }}</span
         >
       </nav>
       <span class="academic-kicker">{{ $tr("LEARNING AT PIISC") }}</span>
-      <h1>{{ $tr("Academics") }}<br /><em>{{ $tr("Learning with purpose.") }}</em></h1>
-      <p>{{ $tr(" Discover an approach to education that connects curiosity, character and a sense of purpose. ") }}</p>
+      <h1>
+        {{ $tr("Academics") }}<br /><em>{{ $tr("Learning with purpose.") }}</em>
+      </h1>
+      <p>
+        {{
+          $tr(
+            " Discover an approach to education that connects curiosity, character and a sense of purpose. ",
+          )
+        }}
+      </p>
       <a class="cover-link" href="#learning-stages"
-        >{{ $tr("Explore our learning journey ") }}<ArrowUpRight :size="19" aria-hidden="true"
+        >{{ $tr("Explore our learning journey ")
+        }}<ArrowUpRight :size="19" aria-hidden="true"
       /></a>
     </div>
   </section>
-  <nav class="academic-links" :aria-label="$tr(&quot;On this page&quot;)">
+  <nav class="academic-links" :aria-label="$tr('On this page')">
     <div class="container">
       <a href="#curriculum">{{ $tr("Our approach") }}</a
       ><a href="#learning-stages">{{ $tr("Learning stages") }}</a
       ><a href="#character">{{ $tr("Beyond the classroom") }}</a
       ><RouterLink to="/academic-calendar"
-        >{{ $tr("Academic calendar ") }}<ArrowUpRight :size="15" aria-hidden="true"
+        >{{ $tr("Academic calendar ")
+        }}<ArrowUpRight :size="15" aria-hidden="true"
       /></RouterLink>
     </div>
   </nav>
@@ -149,11 +162,27 @@ const enrichment = [
       <div class="intro-heading">
         <div>
           <span class="eyebrow">{{ $tr("Academic Affairs") }}</span>
-          <h2>{{ $tr("Learning with depth.") }}<br />{{ $tr("Growing with purpose.") }}</h2>
+          <h2>
+            {{ $tr("Learning with depth.") }}<br />{{
+              $tr("Growing with purpose.")
+            }}
+          </h2>
         </div>
         <div>
-          <p>{{ $tr(" At PIISC, our educational vision brings academic learning and Islamic values together. We aim to help children develop understanding, confidence and care in the way they approach the world. ") }}</p>
-          <p>{{ $tr(" A strong foundation grows through questions, practice, encouragement and the opportunity to learn alongside others. ") }}</p>
+          <p>
+            {{
+              $tr(
+                " At PIISC, our educational vision brings academic learning and Islamic values together. We aim to help children develop understanding, confidence and care in the way they approach the world. ",
+              )
+            }}
+          </p>
+          <p>
+            {{
+              $tr(
+                " A strong foundation grows through questions, practice, encouragement and the opportunity to learn alongside others. ",
+              )
+            }}
+          </p>
         </div>
       </div>
       <div class="academic-pillars">
@@ -173,24 +202,45 @@ const enrichment = [
     <div class="container">
       <span class="eyebrow">{{ $tr("The learning journey") }}</span>
       <h2>{{ $tr("Room to grow, at every stage.") }}</h2>
-      <p class="section-lead">{{ $tr(" Explore the focus of each stage, from the first school experiences to preparation for further study. ") }}</p>
+      <p class="section-lead">
+        {{
+          $tr(
+            " Explore the focus of each stage, from the first school experiences to preparation for further study. ",
+          )
+        }}
+      </p>
       <div class="academic-directory">
         <div class="academic-stage-list">
-          <article v-for="(stage, index) in stages" :key="stage.id" class="academic-stage-entry">
+          <article
+            v-for="(stage, index) in stages"
+            :key="stage.id"
+            class="academic-stage-entry"
+          >
             <div class="stage-entry-heading">
               <span class="stage-number">0{{ $tr(index + 1) }}</span>
-              <div><h3>{{ $tr(stage.label) }}</h3><span class="stage-range">{{ $tr(stage.range) }}</span></div>
+              <div>
+                <h3>{{ $tr(stage.label) }}</h3>
+                <span class="stage-range">{{ $tr(stage.range) }}</span>
+              </div>
             </div>
             <p>{{ $tr(stage.text) }}</p>
             <h4>{{ $tr("Learning focus") }}</h4>
             <ul>
-              <li v-for="point in stage.points" :key="point"><Check :size="17" aria-hidden="true" />{{ $tr(point) }}</li>
+              <li v-for="point in stage.points" :key="point">
+                <Check :size="17" aria-hidden="true" />{{ $tr(point) }}
+              </li>
             </ul>
           </article>
         </div>
         <div class="academic-admissions"><AdmissionContactPanel /></div>
       </div>
-      <p class="academic-note">{{ $tr(" For current class availability, subject choices, curriculum specifications and examination pathways, please contact our academic team. ") }}</p>
+      <p class="academic-note">
+        {{
+          $tr(
+            " For current class availability, subject choices, curriculum specifications and examination pathways, please contact our academic team. ",
+          )
+        }}
+      </p>
     </div>
   </section>
   <section id="character" class="section character-section">
@@ -198,14 +248,22 @@ const enrichment = [
       <div class="character-photo">
         <img
           :src="creativePhoto"
-          :alt="$tr(&quot;PIISC students displaying their creative classroom projects&quot;)"
+          :alt="
+            $tr('PIISC students displaying their creative classroom projects')
+          "
           loading="lazy"
         /><span>{{ $tr("Discover. Create. Grow.") }}</span>
       </div>
       <div>
         <span class="eyebrow">{{ $tr("Beyond the classroom") }}</span>
         <h2>{{ $tr("Education shapes more than knowledge.") }}</h2>
-        <p>{{ $tr(" Creativity, kindness and personal responsibility are part of our vision for a well-rounded education. ") }}</p>
+        <p>
+          {{
+            $tr(
+              " Creativity, kindness and personal responsibility are part of our vision for a well-rounded education. ",
+            )
+          }}
+        </p>
         <div class="enrichment-list">
           <article v-for="item in enrichment" :key="item.title">
             <component :is="item.icon" :size="24" aria-hidden="true" />
@@ -215,21 +273,9 @@ const enrichment = [
             </div>
           </article>
         </div>
-        <RouterLink to="/extra-curricular-activities" class="cover-link">{{ $tr("Explore athletics & activities ") }}<ArrowUpRight :size="19" aria-hidden="true" /></RouterLink>
-      </div>
-    </div>
-  </section>
-  <section class="academic-next">
-    <div class="container">
-      <div>
-        <span class="eyebrow">{{ $tr("Let's talk about learning") }}</span>
-        <h2>{{ $tr("Your child's next chapter starts with a conversation.") }}</h2>
-        <p>{{ $tr(" Our team can help you explore the right next step for your family. ") }}</p>
-      </div>
-      <div class="academic-actions">
-        <BaseButton to="/contact" light>{{ $tr("Make an inquiry") }}</BaseButton
-        ><RouterLink to="/admissions"
-          >{{ $tr("Admission information ") }}<ArrowUpRight :size="18" aria-hidden="true"
+        <RouterLink to="/extra-curricular-activities" class="cover-link"
+          >{{ $tr("Explore athletics & activities ")
+          }}<ArrowUpRight :size="19" aria-hidden="true"
         /></RouterLink>
       </div>
     </div>
@@ -242,7 +288,7 @@ const enrichment = [
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #082a47;
+  background: #0a2948;
   color: white;
 }
 .academic-cover > img,
@@ -255,7 +301,7 @@ const enrichment = [
   object-position: center 40%;
 }
 .academic-cover-shade {
-  background: linear-gradient(90deg, #082a47ed, #082a4780 65%, #082a4730);
+  background: linear-gradient(100deg, #294e9ef5, #294e9edb 65%, #0a2948b8);
 }
 .academic-cover-content {
   position: relative;
@@ -265,12 +311,12 @@ const enrichment = [
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #e1e8e5;
+  color: #edf2fa;
   font-size: 13px;
   margin-bottom: 36px;
 }
 .academic-kicker {
-  color: #e4c683;
+  color: #f3cc48;
   font-weight: 800;
   letter-spacing: 0.19em;
   font-size: 12px;
@@ -282,12 +328,12 @@ const enrichment = [
   color: white;
 }
 .academic-cover h1 em {
-  color: #e4c683;
+  color: #f3cc48;
 }
 .academic-cover p {
   max-width: 520px;
   font-size: 17px;
-  color: #e0e9e7;
+  color: #edf2fa;
 }
 .cover-link {
   display: inline-flex;
@@ -295,8 +341,8 @@ const enrichment = [
   gap: 22px;
   padding: 13px 0;
   margin-top: 18px;
-  border-bottom: 1px solid #e4c683;
-  color: #e4c683;
+  border-bottom: 1px solid #f3cc48;
+  color: #f3cc48;
   font-size: 14px;
   font-weight: 700;
   transition: gap 0.3s;
@@ -306,7 +352,7 @@ const enrichment = [
 }
 .academic-links {
   background: #fff;
-  border-bottom: 1px solid #e0e6df;
+  border-bottom: 1px solid #dce5f3;
 }
 .academic-links > .container {
   display: flex;
@@ -322,14 +368,14 @@ const enrichment = [
   border-bottom: 2px solid transparent;
   font-size: 14px;
   font-weight: 700;
-  color: #53615b;
+  color: #5d6e86;
   transition:
     color 0.25s,
     border-color 0.25s;
 }
 .academic-links a:hover {
-  color: #0e5b4a;
-  border-color: #b89345;
+  color: #294e9e;
+  border-color: #d9b33d;
 }
 section[id] {
   scroll-margin-top: 160px;
@@ -337,11 +383,11 @@ section[id] {
 h2 {
   font-size: clamp(30px, 3.2vw, 45px);
   line-height: 1.2;
-  color: #082a47;
+  color: #294e9e;
   margin: 14px 0 20px;
 }
 p {
-  color: #62736b;
+  color: #5d6e86;
 }
 .intro-heading {
   display: grid;
@@ -360,7 +406,7 @@ p {
 }
 .academic-pillars article {
   padding: 30px;
-  border: 1px solid #dce5de;
+  border: 1px solid #dde5f1;
   border-radius: 6px;
   background: white;
   transition:
@@ -370,19 +416,19 @@ p {
 }
 .academic-pillars article:hover {
   transform: translateY(-6px);
-  border-color: #b89345;
-  box-shadow: 0 16px 32px #18313e0d;
+  border-color: #d9b33d;
+  box-shadow: 0 16px 32px #173a6a0d;
 }
 .pillar-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 28px;
-  color: #0e5b4a;
+  color: #294e9e;
 }
 .pillar-top span {
   font-size: 12px;
-  color: #a77d31;
+  color: #b18a28;
 }
 .academic-pillars h3 {
   font-size: 21px;
@@ -392,29 +438,113 @@ p {
   font-size: 15px;
 }
 .stages-section {
-  background: #f3f6f2;
+  background: #f4f7fc;
 }
 .section-lead {
   max-width: 650px;
 }
-.academic-directory { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 48px; align-items: start; margin-top: 35px; }
-.academic-stage-list { background: #fff; border: 1px solid #dce5de; border-radius: 6px; padding: 0 32px; }
-.academic-stage-entry { padding: 30px 0; }
-.academic-stage-entry + .academic-stage-entry { border-top: 1px solid #dce5de; }
-.stage-entry-heading { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
-.stage-number { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; background: #edf3ef; color: #0e5b4a; font-size: 17px; }
-.stage-entry-heading h3 { font-size: 25px; color: #092645; line-height: 1.3; margin-bottom: 4px; }
-.stage-range { font-size: 13px; color: #69796f; }
-.academic-stage-entry p { font-size: 15px; line-height: 1.8; }
-.academic-stage-entry h4 { font-size: 14px; color: #092645; font-weight: 700; margin-top: 20px; }
-.academic-stage-entry ul { list-style: none; display: grid; gap: 9px; margin-top: 12px; padding: 0; }
-.academic-stage-entry li { display: flex; gap: 10px; font-size: 14px; color: #53655b; }
-.academic-stage-entry li svg { flex-shrink: 0; color: #0e5b4a; margin-top: 3px; }
-.academic-admissions { position: sticky; top: 160px; }
-.character-section .cover-link { color: #0e5b4a; }
-a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
-@media (max-width: 1000px) { .academic-directory { grid-template-columns: minmax(0, 1fr) 300px; gap: 25px; } }
-@media (max-width: 760px) { .academic-directory { grid-template-columns: 1fr; } .academic-admissions { position: static; } .academic-stage-list { padding-inline: 22px; } }
+.academic-directory {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 48px;
+  align-items: start;
+  margin-top: 35px;
+}
+.academic-stage-list {
+  background: #fff;
+  border: 1px solid #dde5f1;
+  border-radius: 6px;
+  padding: 0 32px;
+}
+.academic-stage-entry {
+  padding: 30px 0;
+}
+.academic-stage-entry + .academic-stage-entry {
+  border-top: 1px solid #dde5f1;
+}
+.stage-entry-heading {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.stage-number {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff8d8;
+  color: #294e9e;
+  font-size: 17px;
+}
+.stage-entry-heading h3 {
+  font-size: 25px;
+  color: #294e9e;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.stage-range {
+  font-size: 13px;
+  color: #667894;
+}
+.academic-stage-entry p {
+  font-size: 15px;
+  line-height: 1.8;
+}
+.academic-stage-entry h4 {
+  font-size: 14px;
+  color: #0a2948;
+  font-weight: 700;
+  margin-top: 20px;
+}
+.academic-stage-entry ul {
+  list-style: none;
+  display: grid;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 0;
+}
+.academic-stage-entry li {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  color: #5d6e86;
+}
+.academic-stage-entry li svg {
+  flex-shrink: 0;
+  color: #294e9e;
+  margin-top: 3px;
+}
+.academic-admissions {
+  position: sticky;
+  top: 160px;
+}
+.character-section .cover-link {
+  color: #294e9e;
+}
+a:focus-visible {
+  outline: 2px solid #d9b33d;
+  outline-offset: 5px;
+}
+@media (max-width: 1000px) {
+  .academic-directory {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 25px;
+  }
+}
+@media (max-width: 760px) {
+  .academic-directory {
+    grid-template-columns: 1fr;
+  }
+  .academic-admissions {
+    position: static;
+  }
+  .academic-stage-list {
+    padding-inline: 22px;
+  }
+}
 .stage-selectors {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -424,10 +554,10 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
 .stage-selectors button {
   text-align: left;
   padding: 17px;
-  border: 1px solid #dce5de;
+  border: 1px solid #dde5f1;
   border-radius: 6px;
   background: white;
-  color: #18313e;
+  color: #173a6a;
   font-weight: 700;
   font-size: 15px;
   transition:
@@ -444,18 +574,18 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
 }
 .stage-selectors button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px #0e5b4a12;
+  box-shadow: 0 8px 20px #294e9e12;
 }
 .stage-selectors button.active {
   color: white;
-  background: #0e5b4a;
-  border-color: #0e5b4a;
+  background: #294e9e;
+  border-color: #294e9e;
 }
 .stage-panel {
   display: grid;
   grid-template-columns: 1fr 1.15fr;
   background: white;
-  border: 1px solid #dce5de;
+  border: 1px solid #dde5f1;
   border-radius: 8px;
   overflow: hidden;
   min-height: 410px;
@@ -478,7 +608,7 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
   font:
     500 32px/1.2 Georgia,
     serif;
-  color: #082a47;
+  color: #294e9e;
   margin: 12px 0 16px;
 }
 .stage-copy p {
@@ -494,18 +624,18 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
   gap: 10px;
   align-items: baseline;
   margin-top: 10px;
-  color: #43564d;
+  color: #536989;
   font-size: 14px;
 }
 .stage-copy li svg {
   flex-shrink: 0;
-  color: #0e5b4a;
+  color: #294e9e;
 }
 .stage-copy > a {
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  color: #0e5b4a;
+  color: #294e9e;
   font-size: 14px;
   font-weight: 700;
 }
@@ -518,8 +648,8 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
   align-items: center;
   justify-content: center;
   gap: 24px;
-  color: #e4c683;
-  background: radial-gradient(circle at top right, #205c60, #082a47);
+  color: #f3cc48;
+  background: radial-gradient(circle at top right, #315caf, #0a2948);
   min-height: 280px;
 }
 .stage-symbol span {
@@ -557,8 +687,8 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
   left: 0;
   right: 0;
   padding: 40px 25px 22px;
-  background: linear-gradient(transparent, #082a47e6);
-  color: #e4c683;
+  background: linear-gradient(transparent, #0a2948e6);
+  color: #f3cc48;
   font:
     24px Georgia,
     serif;
@@ -570,7 +700,7 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
   display: flex;
   gap: 16px;
   padding: 18px 0;
-  border-bottom: 1px solid #e0e6df;
+  border-bottom: 1px solid #dce5f3;
   transition: transform 0.25s;
 }
 .enrichment-list article:hover {
@@ -578,7 +708,7 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
 }
 .enrichment-list svg {
   flex-shrink: 0;
-  color: #0e5b4a;
+  color: #294e9e;
 }
 .enrichment-list h3 {
   font-size: 18px;
@@ -589,7 +719,7 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
 }
 .academic-next {
   padding: 60px 0;
-  background: #082a47;
+  background: #0a2948;
   color: white;
 }
 .academic-next > .container {
@@ -604,7 +734,7 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
   font-size: 36px;
 }
 .academic-next p {
-  color: #cedbdc;
+  color: #dce6f8;
 }
 .academic-actions {
   flex-shrink: 0;
@@ -616,7 +746,7 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #e4c683;
+  color: #f3cc48;
   font-size: 13px;
 }
 .stage-reveal-enter-active,
@@ -656,7 +786,7 @@ a:focus-visible { outline: 2px solid #bb9952; outline-offset: 5px; }
     min-height: 450px;
   }
   .academic-cover-shade {
-    background: #082a47b8;
+    background: #294e9ee0;
   }
   .academic-links > .container {
     justify-content: flex-start;

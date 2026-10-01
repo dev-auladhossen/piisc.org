@@ -14,6 +14,7 @@ import {
   Instagram,
   Menu,
   MessageCircle,
+  Send,
   X,
   Youtube,
 } from "lucide-vue-next";
@@ -36,9 +37,6 @@ const localizedNavigation = computed(() => {
 });
 const route = useRoute();
 const header = ref(null);
-const headerTop = ref(null);
-const headerTopHeight = ref(0);
-let headerObserver;
 const mobileOpen = ref(false);
 const expanded = ref(null);
 const socialIcons = {
@@ -101,16 +99,10 @@ function focusOut(event) {
   if (!event.currentTarget.contains(event.relatedTarget)) expanded.value = null;
 }
 onMounted(() => {
-  headerObserver = new ResizeObserver(() => {
-    headerTopHeight.value =
-      headerTop.value?.getBoundingClientRect().height || 0;
-  });
-  headerObserver.observe(headerTop.value);
   document.addEventListener("pointerdown", onOutside);
   document.addEventListener("keydown", onEscape);
 });
 onBeforeUnmount(() => {
-  headerObserver?.disconnect();
   document.removeEventListener("pointerdown", onOutside);
   document.removeEventListener("keydown", onEscape);
 });
@@ -148,12 +140,8 @@ onBeforeUnmount(() => {
       </div>
     </div>
   </div>
-  <header
-    ref="header"
-    class="reference-header"
-    :style="{ top: `-${headerTopHeight}px` }"
-  >
-    <div ref="headerTop" class="reference-header-inner">
+  <header ref="header" class="reference-header">
+    <div class="reference-header-inner">
       <RouterLink
         to="/"
         class="reference-brand"
@@ -264,10 +252,12 @@ onBeforeUnmount(() => {
 
       <div class="header-actions">
         <RouterLink
-          to="/recruitment"
+          to="/online-admission"
           class="header-capsule apply-capsule"
           @click="closeMenus"
-          >{{ $tr(language === "bn" ? "আবেদন" : "Apply Now") }}</RouterLink
+          ><Send :size="25" :stroke-width="1.8" aria-hidden="true" />{{
+            $tr(language === "bn" ? "আবেদন" : "Apply Now")
+          }}</RouterLink
         >
       </div>
     </div>
@@ -279,7 +269,7 @@ onBeforeUnmount(() => {
   background: linear-gradient(100deg, #102442, #294e9e);
   border-bottom: 2px solid #d9b33d;
   color: white;
-  font-family: Raleway, Arial, sans-serif;
+  font-family: Inter, Arial, sans-serif;
 }
 .reference-top-layout {
   display: flex;
@@ -343,13 +333,12 @@ onBeforeUnmount(() => {
   z-index: 60;
   background: #fff;
   border-bottom: 1px solid #ececec;
-  font-family: Raleway, Arial, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   color: #141414;
 }
 .reference-header-inner {
   width: 100%;
   min-height: 82px;
-  /* padding: 20px clamp(24px, 2.6vw, 50px); */
   display: flex;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
@@ -397,7 +386,14 @@ onBeforeUnmount(() => {
   background: #bd253e;
 }
 .apply-capsule {
-  background: #e7b234;
+  gap: 12px;
+  min-height: 58px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: #dcb532;
+  color: #11223b;
+  font-size: 20px;
+  font-weight: 700;
 }
 .admission-capsule:hover {
   background: #a51c33;
@@ -405,7 +401,7 @@ onBeforeUnmount(() => {
 }
 .apply-capsule:hover {
   background: #eccd4e;
-  box-shadow: 0 5px 15px #0e5b4a30;
+  box-shadow: 0 5px 15px #294e9e30;
 }
 .header-capsule:is(:hover, :focus-visible) {
   transform: translateY(-2px);
@@ -438,9 +434,9 @@ onBeforeUnmount(() => {
 }
 .reference-brand-name strong {
   display: block;
-  font-family: Georgia, serif;
+  font-family: Newsreader, Georgia, serif;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.1;
   color: #294e9e;
   letter-spacing: 0.025em;
@@ -619,7 +615,7 @@ onBeforeUnmount(() => {
 }
 @media (min-width: 1200px) and (max-width: 1450px) {
   .reference-header-inner {
-    gap: 22px;
+    gap: 36px;
     padding-inline: 24px;
   }
   .reference-brand {
@@ -660,7 +656,7 @@ onBeforeUnmount(() => {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     padding: 14px 24px;
-    gap: 14px;
+    gap: 34px;
   }
   .reference-brand {
     grid-column: 1;
@@ -866,6 +862,18 @@ onBeforeUnmount(() => {
     transition: none;
   }
 }
+@media (max-width: 540px) {
+  .apply-capsule {
+    min-height: 46px;
+    padding: 9px 13px;
+    gap: 8px;
+    font-size: 15px;
+  }
+  .apply-capsule svg {
+    width: 20px;
+    height: 20px;
+  }
+}
 
 @media (min-width: 1200px) {
   .reference-brand {
@@ -874,6 +882,158 @@ onBeforeUnmount(() => {
   }
   .reference-brand-name {
     min-width: max-content;
+  }
+}
+/* Keep the brand, navigation and action in separate spaces at desktop widths. */
+@media (min-width: 1400px) {
+  .reference-header-inner {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    gap: clamp(20px, 2vw, 36px);
+    padding: 10px clamp(20px, 2vw, 40px);
+  }
+  .reference-brand {
+    grid-column: 1;
+    margin-right: 0;
+  }
+  .reference-nav-shell {
+    grid-column: 2;
+    padding: 0;
+  }
+  .reference-nav-list {
+    justify-content: space-between;
+    gap: clamp(12px, 1.25vw, 24px);
+  }
+  .reference-nav-link {
+    font-size: clamp(13px, 0.83vw, 16px);
+    gap: 5px;
+  }
+  .header-actions {
+    grid-column: 3;
+    margin-right: 0;
+  }
+  .apply-capsule {
+    min-height: 54px;
+    padding: 10px 17px;
+    font-size: clamp(16px, 1vw, 19px);
+    gap: 9px;
+  }
+  .apply-capsule svg {
+    width: 22px;
+    height: 22px;
+    flex: none;
+  }
+}
+@media (min-width: 1400px) and (max-width: 1650px) {
+  .reference-brand img {
+    width: 68px;
+    height: 68px;
+  }
+  .reference-brand-name strong {
+    font-size: 17px;
+  }
+  .reference-brand-name > span {
+    font-size: 10px;
+    letter-spacing: 0.11em;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .reference-header-inner {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    gap: 34px;
+    padding: 9px 18px;
+  }
+  .reference-brand {
+    grid-column: 1;
+    grid-row: 1;
+    margin-right: 0;
+  }
+  .reference-brand img {
+    width: 56px;
+    height: 56px;
+  }
+  .reference-brand-name strong {
+    font-size: 20px;
+  }
+  .reference-brand-name > span {
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+  }
+  .reference-nav-shell {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0;
+  }
+  .reference-nav-list {
+    justify-content: space-around;
+    gap: 7px;
+  }
+  .reference-nav-link {
+    font-size: 14px;
+    gap: 6px;
+  }
+  .reference-nav-link svg {
+    width: 16px;
+    height: 16px;
+  }
+  .header-actions {
+    grid-column: 3;
+    grid-row: 1;
+    margin-right: 0;
+  }
+  .apply-capsule {
+    min-height: 45px;
+    padding: 8px 11px;
+    font-size: 14px;
+    gap: 6px;
+  }
+  .apply-capsule svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+}
+@media (max-width: 1199px) {
+  .reference-header-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 14px;
+  }
+  .reference-brand {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .reference-nav-shell {
+    grid-column: 1;
+    grid-row: 2;
+    justify-content: flex-start;
+    padding: 0;
+  }
+  .reference-menu-toggle {
+    width: auto;
+    min-width: 96px;
+    gap: 10px;
+  }
+  .header-actions {
+    grid-column: 2;
+    grid-row: 2;
+    width: auto;
+    flex: none;
+    margin: 0;
+  }
+  .apply-capsule {
+    min-height: 44px;
+    padding: 9px 14px;
+    gap: 7px;
+    font-size: 15px;
+  }
+  .apply-capsule svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+  }
+  .reference-navigation.is-mobile-open {
+    flex: 0 0 100%;
   }
 }
 </style>

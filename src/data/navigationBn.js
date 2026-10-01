@@ -1,4 +1,5 @@
 export const navigationBn = {
+  'News & Events': 'সংবাদ ও অনুষ্ঠান',
   'Notice': 'নোটিশ',
   'Primary School (Grades 1–5)': 'প্রাথমিক (প্রথম–পঞ্চম শ্রেণি)',
   'Middle School (Grades 6–8)': 'নিম্ন মাধ্যমিক (ষষ্ঠ–অষ্টম শ্রেণি)',

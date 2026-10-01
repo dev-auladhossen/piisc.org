@@ -56,15 +56,15 @@ const links = computed(() => [
   align-items: center;
   gap: clamp(18px, 2.5vw, 40px);
   padding: 24px clamp(24px, 3.5vw, 64px);
-  background: #0e5b4a;
+  background: #294e9e;
   color: #fff;
   isolation: isolate;
 }
 .home-explore-link:nth-child(2) {
-  background: #0b423e;
+  background: #214485;
 }
 .home-explore-link:nth-child(3) {
-  background: #092645;
+  background: #173969;
 }
 .home-explore-link::before {
   content: "";

@@ -2,12 +2,12 @@
 @font-face { font-family: Raleway; src: url('./Raleway-SemiBold.ttf') format('truetype'); font-style: normal; font-weight: 600; font-display: swap; }
 @font-face { font-family: Raleway; src: url('./Raleway-Bold.ttf') format('truetype'); font-style: normal; font-weight: 700; font-display: swap; }
 @font-face { font-family: Gyst; src: url('./Gyst-Bold.otf') format('opentype'); font-style: normal; font-weight: 700; font-display: swap; }
-:root { font-family: Raleway, 'Noto Sans Bengali', Arial, sans-serif; }
+:root, body, button, input, select, textarea { font-family: Inter, 'Hind Siliguri', Arial, sans-serif; }
 /* Keep headings readable and consistent, including component-specific font shorthands. */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, 'Hind Siliguri', sans-serif !important;
+  font-family: Newsreader, 'Hind Siliguri', Georgia, serif !important;
   font-weight: 700 !important;
-  letter-spacing: normal !important;
+  letter-spacing: -0.025em !important;
 }
 
 /* Bangla face used by the reference portal; self-hosted under the SIL OFL. */

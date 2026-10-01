@@ -41,3 +41,41 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
 @media(max-width:640px){.visit-intro,.experience-grid,.booking-layout,.admissions-faq{grid-template-columns:1fr}.visit-photo img{height:300px}.process-heading{display:block}.admission-steps{gap:20px}.admission-steps h3{font-size:18px}.admissions-bottom>.container{align-items:flex-start;flex-direction:column}.admissions-bottom h2{font-size:30px}.cover-shade{background:#082a47b8}.cover-content h1{font-size:44px}.admissions-cover{min-height:460px}.prepare-note{padding:18px}}
 @media(max-width:380px){.admission-steps{grid-template-columns:1fr}}
 </style>
+<style scoped>
+/* Match the current PIISC blue, gold and light-neutral page system. */
+.container { width: calc(100% - clamp(32px, 6.5vw, 128px)); max-width: 1500px; }
+.admissions-cover { background: #0a2948; }
+.cover-shade { background: linear-gradient(100deg, #294e9ef5, #294e9edb 63%, #0a2948b8); }
+.cover-content nav, .cover-content > p { color: #edf2fa; }
+.admissions-eyebrow, .cover-content h1 em { color: #f3cc48; }
+.visit-button { border-radius: 7px; background: #d9b33d; color: #12284d; }
+.visit-button:hover { background: #edca54; }
+h2 { color: #294e9e; font-size: clamp(32px, 3.4vw, 52px); }
+p { color: #5d6e86; }
+.visit-photo { border-radius: 9px; box-shadow: 0 16px 35px #173a6a15; }
+.visit-photo figcaption { background: linear-gradient(transparent, #0a2948eb); }
+.visit-experience { background: #f4f7fc; }
+.experience-grid article { border-color: #dce5f3; border-radius: 9px; box-shadow: 0 12px 28px #173a6a08; }
+.experience-grid article:hover { border-color: #d9b33d; box-shadow: 0 18px 38px #173a6a15; }
+.experience-icon { color: #294e9e; }
+.experience-icon span { color: #a77d31; }
+.experience-grid h3, .admission-steps h3 { color: #294e9e; }
+.admission-steps li { border-color: #dce5f3; }
+.admission-steps li:hover { border-color: #d9b33d; }
+.step-number { background: #fff8d8; color: #294e9e; }
+.prepare-note { background: #fff9e9; border-color: #d9b33d; border-radius: 0 7px 7px 0; }
+.prepare-note svg { color: #294e9e; }
+.book-visit { background: #fff9ec; }
+.visit-contact-list a { border-color: #dce5f3; border-radius: 8px; box-shadow: 0 8px 22px #173a6a07; }
+.visit-contact-list a:hover { border-color: #d9b33d; }
+.visit-contact-list svg { color: #294e9e; }
+.visit-contact-list small { color: #667894; }
+.admissions-questions details { border-color: #dce5f3; }
+.admissions-questions summary { color: #173a6a; }
+.admissions-questions summary:hover, .admissions-questions summary svg { color: #294e9e; }
+.admissions-bottom { background: #edf3ff; border-top: 1px solid #dce5f3; }
+.admissions-bottom h2 { color: #294e9e; }
+:deep(.base-button.outline) { border-color: #294e9e; color: #294e9e; background: transparent; border-radius: 7px; }
+:deep(.base-button.outline:hover) { border-color: #294e9e; color: #fff; background: #294e9e; }
+@media (max-width: 640px) { .cover-shade { background: #294e9ee8; } }
+</style>

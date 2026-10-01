@@ -1,5 +1,12 @@
 <script setup>
-import { ArrowRight, BookOpen, ClipboardCheck, Headphones, Megaphone, Phone } from "lucide-vue-next";
+import {
+  ArrowRight,
+  BookOpen,
+  ClipboardCheck,
+  Headphones,
+  Megaphone,
+  Phone,
+} from "lucide-vue-next";
 import { headerContacts } from "../data/navigation.js";
 </script>
 
@@ -7,20 +14,21 @@ import { headerContacts } from "../data/navigation.js";
   <section class="admission-gateway" aria-labelledby="gateway-title">
     <nav class="gateway-links" :aria-label="$tr('Admission information')">
       <RouterLink to="/admission-requirement">
-        <span class="card-icon"><ClipboardCheck aria-hidden="true" /></span>
         <span class="card-number" aria-hidden="true">01</span>
+        <span class="card-icon"> <ClipboardCheck aria-hidden="true" /></span>
+
         <h3>{{ $tr("Admission procedure and requirements") }}</h3>
         <ArrowRight class="card-arrow" aria-hidden="true" />
       </RouterLink>
       <RouterLink to="/curriculum">
-        <span class="card-icon"><BookOpen aria-hidden="true" /></span>
         <span class="card-number" aria-hidden="true">02</span>
+        <span class="card-icon"><BookOpen aria-hidden="true" /></span>
         <h3>{{ $tr("Curriculum and class structure") }}</h3>
         <ArrowRight class="card-arrow" aria-hidden="true" />
       </RouterLink>
       <RouterLink to="/contact">
-        <span class="card-icon"><Headphones aria-hidden="true" /></span>
         <span class="card-number" aria-hidden="true">03</span>
+        <span class="card-icon"><Headphones aria-hidden="true" /></span>
         <h3>{{ $tr("Contact school administration") }}</h3>
         <ArrowRight class="card-arrow" aria-hidden="true" />
       </RouterLink>
@@ -66,7 +74,8 @@ import { headerContacts } from "../data/navigation.js";
   align-items: center;
   gap: 26px;
   padding: 32px;
-  margin-top: 22px;
+  margin-top: 20px;
+  margin-bottom: 32px;
   border: 1px solid #e6dfcc;
   border-left: 4px solid #d9b33d;
   border-radius: 6px;
@@ -145,18 +154,15 @@ import { headerContacts } from "../data/navigation.js";
   background: #fff9e4;
 }
 .gateway-links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
   gap: 20px;
 }
 .gateway-links a {
   position: relative;
-  min-height: 196px;
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
   align-items: center;
   gap: 22px 16px;
-  padding: 26px 28px;
+  padding: 20px 24px;
   border: 1px solid #e0e6ed;
   border-top: 3px solid #d9b33d;
   border-radius: 6px;
@@ -178,10 +184,23 @@ import { headerContacts } from "../data/navigation.js";
   border-radius: 12px;
   background: #fbf4df;
   color: #a47b1d;
-  transition: background .3s ease, color .3s ease, transform .3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
 }
-.card-icon svg { width: 28px; height: 28px; stroke-width: 1.7; }
-.card-number { align-self: start; color: #a3afbd; font-size: 13px; font-weight: 700; letter-spacing: .12em; }
+.card-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.7;
+}
+.card-number {
+  align-self: start;
+  color: #a3afbd;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
 .gateway-links h3 {
   margin: 0;
   font-size: clamp(18px, 1.4vw, 22px);
@@ -193,19 +212,24 @@ import { headerContacts } from "../data/navigation.js";
   color: #294e9e;
   transition: transform 0.3s ease;
 }
-.gateway-links a:hover, .gateway-links a:focus-visible {
+.gateway-links a:hover,
+.gateway-links a:focus-visible {
   z-index: 1;
   color: #294e9e;
   border-color: #d9b33d;
   transform: translateY(-5px);
   box-shadow: 0 18px 38px #243c6822;
 }
-.gateway-links a:hover .card-icon, .gateway-links a:focus-visible .card-icon {
+.gateway-links a:hover .card-icon,
+.gateway-links a:focus-visible .card-icon {
   background: #0a2948;
   color: #e4c683;
   transform: translateY(-2px);
 }
-.gateway-links a:hover .card-arrow, .gateway-links a:focus-visible .card-arrow { transform: translateX(4px); }
+.gateway-links a:hover .card-arrow,
+.gateway-links a:focus-visible .card-arrow {
+  transform: translateX(4px);
+}
 @media (max-width: 1050px) {
   .gateway-main {
     grid-template-columns: auto 1fr;
@@ -249,7 +273,9 @@ import { headerContacts } from "../data/navigation.js";
     gap: 16px;
     padding: 22px;
   }
-  .card-number { display: none; }
+  .card-number {
+    display: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .gateway-actions a,

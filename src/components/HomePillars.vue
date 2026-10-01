@@ -1,0 +1,43 @@
+<script setup>
+import { GraduationCap, Moon, Puzzle, Sparkles, BookOpen, Lightbulb, Users, Heart, MessagesSquare, Phone } from 'lucide-vue-next'
+import study from '../assets/images/studytime.jpg'
+import creative from '../assets/images/creative-2.jpg'
+import group from '../assets/images/group-work.jpg'
+import families from '../assets/images/gurdians-2.jpg'
+import { useI18n } from '../composables/useI18n.js'
+const { language } = useI18n()
+const text = pair => pair[language.value === 'bn' ? 1 : 0]
+const pillars = [
+ {icon:GraduationCap,title:['Academic foundations','শিক্ষার মজবুত ভিত্তি'],body:['A pathway from Grades 1–12 that develops understanding, study habits, and confidence.','প্রথম–দ্বাদশ শ্রেণির পথচলায় বোঝাপড়া, অধ্যয়নের অভ্যাস ও আত্মবিশ্বাসের বিকাশ।']},
+ {icon:Moon,title:['Modern education with Islamic values','ইসলামী মূল্যবোধের সঙ্গে আধুনিক শিক্ষা'],body:['Knowledge and faith come together through respect, honesty, and responsible conduct.','শ্রদ্ধা, সততা ও দায়িত্বশীল আচরণের মাধ্যমে জ্ঞান ও বিশ্বাসের সমন্বয়।']},
+ {icon:Puzzle,title:['Learning through activity','কাজের মাধ্যমে শিক্ষা'],body:['Practical tasks and shared projects help students explore ideas by taking part.','ব্যবহারিক কাজ ও যৌথ প্রকল্পে অংশ নিয়ে শিক্ষার্থীরা নতুন ধারণা অন্বেষণ করে।']},
+ {icon:Sparkles,title:['Curiosity & discovery','কৌতূহল ও আবিষ্কার'],body:['Questions, stories, and exploration make room for the joy of learning.','প্রশ্ন, গল্প ও অনুসন্ধান শেখার আনন্দের সুযোগ তৈরি করে।']},
+ {icon:BookOpen,title:['Language & communication','ভাষা ও যোগাযোগ'],body:['Reading, writing, and conversation help learners express themselves clearly.','পড়া, লেখা ও আলোচনা শিক্ষার্থীদের স্পষ্টভাবে ভাব প্রকাশে সাহায্য করে।']},
+ {icon:Lightbulb,title:['Reasoning & creativity','যুক্তি ও সৃজনশীলতা'],body:['Thoughtful problem-solving encourages original ideas and independent thinking.','চিন্তাশীল সমস্যা সমাধান নতুন ধারণা ও স্বাধীন চিন্তাকে উৎসাহিত করে।']},
+ {icon:Users,title:['Leadership & teamwork','নেতৃত্ব ও দলগত দক্ষতা'],body:['Working together develops patience, responsibility, and consideration for others.','একসঙ্গে কাজ ধৈর্য, দায়িত্ববোধ ও অন্যের প্রতি বিবেচনা গড়ে তোলে।']},
+ {icon:Heart,title:['Character & wellbeing','চরিত্র ও সুস্থতা'],body:['Kindness, reflection, and healthy habits support growth beyond academic results.','সহমর্মিতা, চিন্তা ও স্বাস্থ্যকর অভ্যাস ফলাফলের বাইরেও বিকাশে সহায়তা করে।']},
+]
+const reasons = [
+ {icon:MessagesSquare,title:['English-medium learning','ইংরেজি মাধ্যমে শিক্ষা'],body:['A focus on clear communication alongside academic understanding.','শিক্ষাগত বোঝাপড়ার পাশাপাশি স্পষ্ট যোগাযোগে গুরুত্ব।']},
+ {icon:Heart,title:['Care for each learner','প্রতিটি শিক্ষার্থীর যত্ন'],body:['An educational approach that values confidence, respect, and belonging.','আত্মবিশ্বাস, শ্রদ্ধা ও আপনত্ববোধকে গুরুত্ব দেয় এমন শিক্ষাদর্শন।']},
+ {icon:GraduationCap,title:['School through college','স্কুল থেকে কলেজ'],body:['Four connected academic stages spanning Grades 1–12.','প্রথম–দ্বাদশ শ্রেণিজুড়ে চারটি সংযুক্ত শিক্ষার পর্যায়।']},
+ {icon:Moon,title:['Islamic values','ইসলামী মূল্যবোধ'],body:['Faith and good character guide our aspirations for every student.','বিশ্বাস ও সুন্দর চরিত্র প্রতিটি শিক্ষার্থীর জন্য আমাদের লক্ষ্যকে পথ দেখায়।']},
+ {icon:Puzzle,title:['Active learning','সক্রিয় শিক্ষা'],body:['Creative work, discussion, and practical exploration bring ideas to life.','সৃজনশীল কাজ, আলোচনা ও ব্যবহারিক অন্বেষণ ধারণাকে অর্থবহ করে।']},
+ {icon:Phone,title:['Family communication','পরিবারের সঙ্গে যোগাযোগ'],body:['Connect with the school office to discuss admission, visits, and learning needs.','ভর্তি, পরিদর্শন ও শিক্ষার প্রয়োজন নিয়ে স্কুল অফিসে যোগাযোগ করুন।']},
+]
+const photos = [{src:study,alt:['Classroom learning at PIISC','পিআইআইএসসিতে পাঠদান']},{src:creative,alt:['Creative activities at PIISC','পিআইআইএসসিতে সৃজনশীল কার্যক্রম']},{src:group,alt:['PIISC students working together','পিআইআইএসসির শিক্ষার্থীদের দলগত কাজ']}]
+</script>
+<template>
+ <section class="pillars-section" aria-labelledby="pillars-title"><div class="home-section-width">
+  <div class="pillars-heading"><p class="home-eyebrow">{{ text(['OUR PILLARS','আমাদের ভিত্তি']) }}</p><h2 id="pillars-title">{{ text(['Eight foundations for learning and life at PIISC.','পিআইআইএসসিতে শিক্ষা ও জীবনের আটটি ভিত্তি।']) }}</h2><p>{{ text(['Academic growth, Islamic values, and the confidence to explore come together in our learning journey from school to college.','স্কুল থেকে কলেজের পথচলায় শিক্ষাগত বিকাশ, ইসলামী মূল্যবোধ ও অন্বেষণের আত্মবিশ্বাস একত্র হয়।']) }}</p></div>
+  <div class="pillars-photos"><img v-for="photo in photos" :key="photo.src" :src="photo.src" :alt="text(photo.alt)" loading="lazy" width="600" height="360"/></div>
+  <div class="pillar-grid"><article v-for="pillar in pillars" :key="pillar.title[0]"><span class="pillar-icon"><component :is="pillar.icon" :size="24" aria-hidden="true"/></span><h3>{{ text(pillar.title) }}</h3><p>{{ text(pillar.body) }}</p></article></div>
+ </div></section>
+ <section class="why-section" aria-labelledby="why-piisc-title"><div class="home-section-width why-layout">
+  <div class="why-copy"><p class="home-eyebrow">{{ text(['WHY CHOOSE PIISC','কেন পিআইআইএসসি']) }}</p><h2 id="why-piisc-title">{{ text(['Learning with confidence, character, and care.','আত্মবিশ্বাস, চরিত্র ও যত্নের সঙ্গে শিক্ষা।']) }}</h2><p>{{ text(['PIISC brings an English-medium pathway through Grade 12 together with Islamic values and a belief in the partnership between school and family.','পিআইআইএসসি দ্বাদশ শ্রেণি পর্যন্ত ইংরেজি মাধ্যমে শিক্ষার সঙ্গে ইসলামী মূল্যবোধ এবং স্কুল ও পরিবারের অংশীদারিত্বকে একত্র করে।']) }}</p><img :src="families" :alt="text(['Families at a PIISC school gathering','পিআইআইএসসির অনুষ্ঠানে পরিবারগুলো'])" loading="lazy" width="600" height="400"/></div>
+  <div class="why-grid"><article v-for="reason in reasons" :key="reason.title[0]"><span class="pillar-icon"><component :is="reason.icon" :size="22" aria-hidden="true"/></span><h3>{{ text(reason.title) }}</h3><p>{{ text(reason.body) }}</p></article></div>
+ </div></section>
+</template>
+<style scoped>
+.home-section-width{width:calc(100% - clamp(32px,6.5vw,128px));max-width:1500px;margin-inline:auto}.pillars-section{padding:76px 0 84px;background:#f4f6f9}.home-eyebrow{color:#bb9952;font-size:12px;font-weight:700;letter-spacing:.18em;margin-bottom:16px}.pillars-heading{text-align:center;max-width:820px;margin:0 auto 44px}.pillars-heading h2,.why-copy h2{color:#092645;font-size:clamp(30px,3.5vw,52px);line-height:1.15;margin:0 0 24px}.pillars-heading>p:last-child{font-size:18px;color:#607086;line-height:1.85}.pillars-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-bottom:28px}.pillars-photos img{width:100%;height:auto;aspect-ratio:1.7;object-fit:cover;border-radius:6px}.pillar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.pillar-grid article,.why-grid article{background:#fff;border:1px solid #dce2ea;border-radius:6px;padding:26px;box-shadow:0 16px 40px #0926450d;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}.pillar-grid article:hover,.why-grid article:hover{transform:translateY(-4px);border-color:#bb9952;box-shadow:0 22px 45px #09264518}.pillar-icon{display:grid;place-items:center;width:52px;height:52px;background:#edf1f7;color:#163c63;border-radius:50%;margin-bottom:20px}.pillar-grid h3,.why-grid h3{font-size:20px;color:#163c63;line-height:1.45;margin:0 0 14px}.pillar-grid p,.why-grid p,.why-copy>p:not(.home-eyebrow){font-size:16px;line-height:1.85;color:#607086}.why-section{padding:80px 0;background:#fff}.why-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(32px,4vw,64px);align-items:start}.why-copy img{width:100%;height:auto;aspect-ratio:1.5;object-fit:cover;border-radius:6px;margin-top:28px}.why-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.why-grid article{padding:24px}.why-grid .pillar-icon{background:#fcf5e6;color:#294e9e;width:44px;height:44px}.why-grid h3{font-size:18px}.why-grid p{font-size:15px}@media(max-width:1050px){.pillar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.why-layout{grid-template-columns:1fr}.why-copy{max-width:800px}.why-copy img{max-width:560px}}@media(max-width:600px){.pillars-section,.why-section{padding-block:48px}.pillar-grid,.why-grid{grid-template-columns:1fr;gap:16px}.pillars-photos{gap:8px}.pillars-photos img{aspect-ratio:.85}.pillars-heading{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){.pillar-grid article,.why-grid article{transition:none}.pillar-grid article:hover,.why-grid article:hover{transform:none}}
+</style>

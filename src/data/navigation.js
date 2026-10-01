@@ -42,6 +42,7 @@ export const navigation = [
       { label: "Facilities", to: "/campus" },
     { label: "Curriculum", to: "/curriculum" },
       { label: "Our Learning Areas", to: "/learning-areas" },
+      { label: "News & Events", to: "/news" },
     ],
   },
   { id: "gallery", label: "Gallery", to: "/gallery" },

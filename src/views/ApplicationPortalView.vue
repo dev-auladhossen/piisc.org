@@ -1,6 +1,6 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
-import { ArrowUpRight, BriefcaseBusiness, ChevronRight, GraduationCap, Mail, Phone } from 'lucide-vue-next'
+import { ArrowUpRight, BriefcaseBusiness, ChevronRight, Download, Eye, FileText, GraduationCap, Mail, Phone } from 'lucide-vue-next'
 import { headerContacts } from '../data/navigation.js'
 import { useI18n } from '../composables/useI18n.js'
 
@@ -55,6 +55,22 @@ function prepareEmail() {
       <component :is="isAdmission ? GraduationCap : BriefcaseBusiness" class="portal-decoration" :size="210" :stroke-width=".8" aria-hidden="true" />
     </div>
   </section>
+  <section v-if="isAdmission" class="form-download-section" :aria-label="language === 'bn' ? 'ভর্তি ফরম' : 'Admission form PDF'">
+    <div class="container">
+      <div class="pdf-card">
+        <div class="pdf-card-icon"><FileText :size="34" :stroke-width="1.7" aria-hidden="true" /></div>
+        <div class="pdf-card-copy">
+          <span class="pdf-eyebrow">{{ language === 'bn' ? 'ডাউনলোডযোগ্য পিডিএফ' : 'PRINTABLE PDF' }}</span>
+          <h2>{{ language === 'bn' ? 'ভর্তি আবেদন ফরম' : 'Admission application form' }}</h2>
+          <p>{{ language === 'bn' ? 'ফরমটি দেখুন বা ডাউনলোড করে পূরণ করুন। জমা দেওয়ার নিয়ম জানতে ভর্তি অফিসে যোগাযোগ করুন।' : 'Preview the form or download a copy to complete. Contact the admission office to confirm how to submit it.' }}</p>
+        </div>
+        <div class="pdf-card-actions">
+          <a href="/forms/admission-form.pdf" target="_blank" rel="noopener noreferrer" class="pdf-preview"><Eye :size="18" aria-hidden="true" />{{ language === 'bn' ? 'ফরম দেখুন' : 'Preview form' }}</a>
+          <a href="/forms/admission-form.pdf" download="PIISC-Admission-Form.pdf" class="pdf-download"><Download :size="18" aria-hidden="true" />{{ language === 'bn' ? 'পিডিএফ ডাউনলোড' : 'Download PDF' }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="section portal-section">
     <div class="container portal-layout">
       <form class="portal-form" @submit.prevent="prepareEmail">
@@ -83,43 +99,56 @@ function prepareEmail() {
 </template>
 
 <style scoped>
-.portal-banner { position: relative; overflow: hidden; background: #092645; color: #fff; border-bottom: 4px solid #bd253e; }
-.portal-banner.recruitment { border-color: #0e5b4a; }
+.portal-banner { position: relative; overflow: hidden; background: linear-gradient(110deg, #294e9e, #173a80); color: #fff; border-bottom: 4px solid #d9b33d; }
+.portal-banner.recruitment { border-color: #d9b33d; }
 .portal-banner .container { position: relative; padding-block: 30px 58px; }
 .portal-banner nav { display: flex; gap: 8px; align-items: center; font-size: 13px; margin-bottom: 35px; }
-.portal-eyebrow { font-size: 11px; color: #e3c88d; letter-spacing: .13em; }
+.portal-eyebrow { font-size: 11px; color: #f3cc48; letter-spacing: .13em; }
 .portal-banner h1 { font-size: clamp(36px, 4.5vw, 62px); margin: 14px 0 20px; line-height: 1.2; }
-.portal-banner p { max-width: 680px; color: #d6e3e8; font-size: 17px; line-height: 1.8; position: relative; z-index: 1; }
+.portal-banner p { max-width: 680px; color: #edf2fa; font-size: 17px; line-height: 1.8; position: relative; z-index: 1; }
 .portal-decoration { position: absolute; right: 15px; bottom: 35px; opacity: .1; pointer-events: none; }
-.portal-section { background: #f4f6f8; }
+.portal-section { background: #f4f7fc; }
 .portal-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 50px; align-items: start; }
-.portal-form { padding: 36px; background: #fff; border: 1px solid #dce2ea; border-radius: 10px; box-shadow: 0 14px 35px #09264508; }
-h2 { font-size: 29px; line-height: 1.3; color: #092645; margin-bottom: 15px; }
+.portal-form { padding: 36px; background: #fff; border: 1px solid #dce5f3; border-radius: 10px; box-shadow: 0 14px 35px #173a6a0d; }
+h2 { font-size: 29px; line-height: 1.3; color: #294e9e; margin-bottom: 15px; }
 .portal-form-note { font-size: 14px; line-height: 1.8; color: #617084; margin-bottom: 25px; }
 .portal-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-label { font-size: 13px; font-weight: 700; color: #263d55; }
-input, textarea { display: block; width: 100%; margin-top: 8px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 5px; color: #092645; background: #fff; font: inherit; font-weight: 400; transition: border-color .2s, box-shadow .2s; }
+label { font-size: 13px; font-weight: 700; color: #173a6a; }
+input, textarea { display: block; width: 100%; margin-top: 8px; padding: 12px; border: 1px solid #dce5f3; border-radius: 6px; color: #173a6a; background: #fff; font: inherit; font-weight: 400; transition: border-color .2s, box-shadow .2s; }
 textarea { resize: vertical; }
-input:focus, textarea:focus { outline: 2px solid #bb9952; outline-offset: 2px; border-color: #bb9952; }
+input:focus, textarea:focus { outline: 2px solid #d9b33d; outline-offset: 2px; border-color: #d9b33d; }
 .full-field { grid-column: 1 / -1; }
-.portal-submit { display: inline-flex; align-items: center; justify-content: center; gap: 14px; margin-top: 25px; padding: 13px 23px; border: 0; border-radius: 30px; background: #092645; color: white; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .25s, transform .25s; }
-.portal-submit:hover { background: #163c63; transform: translateY(-2px); }
+.portal-submit { display: inline-flex; align-items: center; justify-content: center; gap: 14px; margin-top: 25px; padding: 13px 23px; border: 0; border-radius: 7px; background: #294e9e; color: white; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .25s, transform .25s; }
+.portal-submit:hover { background: #173a80; transform: translateY(-2px); }
 .portal-recipient { font-size: 12px; color: #617084; margin-top: 20px; overflow-wrap: anywhere; }
 .portal-recipient a { text-decoration: underline; }
-.portal-status { margin-top: 20px; padding: 15px; background: #f8f4e9; color: #715721; font-size: 13px; }
+.portal-status { margin-top: 20px; padding: 15px; background: #fff8e3; color: #715721; font-size: 13px; }
 .portal-aside { padding-top: 10px; }
 .portal-aside ol { list-style: none; padding: 0; margin: 25px 0; }
-.portal-aside li { display: flex; gap: 17px; border-bottom: 1px solid #dce2ea; padding: 19px 0; }
+.portal-aside li { display: flex; gap: 17px; border-bottom: 1px solid #dce5f3; padding: 19px 0; }
 .portal-aside li > span { color: #987234; font: 25px Georgia, serif; }
 .portal-aside li p { color: #56667a; font-size: 15px; line-height: 1.8; }
-.portal-details { display: inline-flex; gap: 12px; align-items: center; font-size: 14px; color: #092645; font-weight: 700; border-bottom: 1px solid #bb9952; padding-bottom: 9px; }
-.portal-help { margin-top: 32px; background: #e8edf3; padding: 25px; border-radius: 7px; }
-.portal-help h3 { font-size: 23px; color: #092645; margin-bottom: 18px; }
+.portal-details { display: inline-flex; gap: 12px; align-items: center; font-size: 14px; color: #294e9e; font-weight: 700; border-bottom: 1px solid #d9b33d; padding-bottom: 9px; }
+.portal-help { margin-top: 32px; background: #e9f0ff; padding: 25px; border-radius: 7px; }
+.portal-help h3 { font-size: 23px; color: #294e9e; margin-bottom: 18px; }
 .portal-help a { display: flex; gap: 12px; align-items: center; font-size: 14px; color: #263d55; margin-top: 12px; overflow-wrap: anywhere; }
 .portal-help svg { flex-shrink: 0; }
 a:hover { text-decoration: underline; }
-a:focus-visible, button:focus-visible { outline: 2px solid #bb9952; outline-offset: 4px; }
+a:focus-visible, button:focus-visible { outline: 2px solid #d9b33d; outline-offset: 4px; }
+.form-download-section { background: #f4f7fc; padding: 48px 0 0; }
+.pdf-card { display: flex; align-items: center; gap: 24px; padding: clamp(24px, 3vw, 38px); border: 1px solid #dce5f3; border-left: 5px solid #d9b33d; border-radius: 12px; background: #fff; box-shadow: 0 16px 36px #173a6a0d; }
+.pdf-card-icon { display: grid; place-items: center; width: 68px; height: 68px; border-radius: 14px; background: #fff7d7; color: #294e9e; flex: none; }
+.pdf-card-copy { min-width: 0; flex: 1; }
+.pdf-eyebrow { display: block; color: #a77d31; font-size: 11px; font-weight: 800; letter-spacing: .16em; margin-bottom: 8px; }
+.pdf-card h2 { margin: 0 0 7px; font-size: clamp(24px, 2.1vw, 32px); }
+.pdf-card p { max-width: 650px; color: #5d6e86; font-size: 14px; line-height: 1.65; }
+.pdf-card-actions { display: flex; align-items: center; gap: 10px; flex: none; }
+.pdf-card-actions a { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 47px; padding: 11px 15px; border: 1px solid #294e9e; border-radius: 7px; color: #294e9e; font-size: 13px; font-weight: 700; white-space: nowrap; text-decoration: none; transition: background .25s ease, color .25s ease, transform .25s ease, box-shadow .25s ease; }
+.pdf-card-actions .pdf-download { color: #fff; background: #294e9e; }
+.pdf-card-actions a:hover { transform: translateY(-2px); color: #fff; background: #173a80; box-shadow: 0 9px 20px #173a6a1f; }
+@media (max-width: 1100px) { .pdf-card { flex-wrap: wrap; } .pdf-card-actions { width: 100%; margin-left: 92px; } }
+@media (max-width: 600px) { .pdf-card { gap: 15px; } .pdf-card-icon { width: 52px; height: 52px; } .pdf-card-icon svg { width: 26px; height: 26px; } .pdf-card-actions { margin: 5px 0 0; flex-wrap: wrap; } .pdf-card-actions a { flex: 1; } }
 @media(max-width: 850px) { .portal-layout { grid-template-columns: 1fr; gap: 35px; } }
 @media(max-width: 540px) { .portal-form { padding: 25px 20px; } .portal-fields { grid-template-columns: 1fr; } .portal-submit { width: 100%; } }
-@media(prefers-reduced-motion: reduce) { input, textarea, .portal-submit { transition: none; } .portal-submit:hover { transform: none; } }
+@media(prefers-reduced-motion: reduce) { input, textarea, .portal-submit, .pdf-card-actions a { transition: none; } .portal-submit:hover, .pdf-card-actions a:hover { transform: none; } }
 </style>
