@@ -1,14 +1,11 @@
 <script setup>
 import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-vue-next'
-import { address } from '../data/content.js'
+import { address, schoolDirectionsUrl, schoolMapEmbedUrl, schoolMapUrl } from '../data/content.js'
 import { headerContacts } from '../data/navigation.js'
 import { useI18n } from '../composables/useI18n.js'
 
 const { language } = useI18n()
 const tr = (en, bn) => language.value === 'bn' ? bn : en
-const mapQuery = encodeURIComponent(address)
-const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`
-const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`
 const phoneUrl = `tel:${headerContacts.phone.replace(/\s/g, '')}`
 </script>
 
@@ -23,19 +20,22 @@ const phoneUrl = `tel:${headerContacts.phone.replace(/\s/g, '')}`
       <div class="location-card">
         <div class="map-wrap">
           <iframe
-            :src="mapEmbedUrl"
+            :src="schoolMapEmbedUrl"
             :title="tr('Google Map showing the PIISC address in Ashulia', 'আশুলিয়ায় পিআইআইএসসির ঠিকানার গুগল ম্যাপ')"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen
           ></iframe>
+          <a class="map-open" :href="schoolMapUrl" target="_blank" rel="noopener noreferrer" :aria-label="tr('Open the exact school location in Google Maps', 'গুগল ম্যাপে স্কুলের সঠিক অবস্থান খুলুন')">
+            <span>{{ tr('Open in Google Maps', 'গুগল ম্যাপে খুলুন') }} <ArrowUpRight :size="18" aria-hidden="true" /></span>
+          </a>
         </div>
         <aside class="location-details">
           <div class="location-details-heading"><MapPin :size="24" aria-hidden="true" /><h3>{{ tr('Our location', 'আমাদের অবস্থান') }}</h3></div>
-          <div class="location-detail"><MapPin :size="20" aria-hidden="true" /><div><strong>{{ tr('Peace International Islamic School & College', 'পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজ') }}</strong><p>{{ tr(address, 'ইউনিক, ডিইপিজেড রোড, আশুলিয়া, সাভার, ঢাকা-১৩৪৯, বাংলাদেশ') }}</p></div></div>
+          <div class="location-detail"><MapPin :size="20" aria-hidden="true" /><div><strong>{{ tr('Peace International Islamic School & College', 'পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজ') }}</strong><p>{{ tr(address, 'দ্য হোয়াইট প্যালেস ইউনিক, ১৩৪৯ ঢাকা–আশুলিয়া মহাসড়ক, বাইপাইল') }}</p></div></div>
           <div class="location-detail"><Phone :size="20" aria-hidden="true" /><a :href="phoneUrl">{{ headerContacts.phone.trim() }}</a></div>
           <div class="location-detail"><Mail :size="20" aria-hidden="true" /><a :href="`mailto:${headerContacts.email}`">{{ headerContacts.email }}</a></div>
-          <a class="map-directions" :href="directionsUrl" target="_blank" rel="noopener noreferrer">{{ tr('Get directions on Google Maps', 'গুগল ম্যাপে পথ দেখুন') }} <ArrowUpRight :size="19" aria-hidden="true" /></a>
+          <a class="map-directions" :href="schoolDirectionsUrl" target="_blank" rel="noopener noreferrer">{{ tr('Get directions on Google Maps', 'গুগল ম্যাপে পথ দেখুন') }} <ArrowUpRight :size="19" aria-hidden="true" /></a>
         </aside>
       </div>
     </div>
@@ -47,4 +47,26 @@ const phoneUrl = `tel:${headerContacts.phone.replace(/\s/g, '')}`
 </style>
 <style scoped>
 .home-location { background: #fff9ec; }
+.map-wrap { position: relative; }
+.map-open {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 16px;
+  color: #fff;
+}
+.map-open span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #234b91;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 4px 16px #0003;
+}
+.map-open:hover span, .map-open:focus-visible span { background: #173969; }
 </style>

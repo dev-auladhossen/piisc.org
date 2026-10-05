@@ -3,7 +3,7 @@ export const headerContacts = {
   phone: "+880 1747740774 ",
   email: "admissions@piisc.org",
   eiin: "110608",
-  socials: { whatsapp: "", facebook: "", instagram: "", youtube: "" },
+  socials: { whatsapp: "", facebook: "https://www.facebook.com/piisc2026/", instagram: "", youtube: "" },
 };
 export const navigation = [
   { id: "home", label: "Home", to: "/" },

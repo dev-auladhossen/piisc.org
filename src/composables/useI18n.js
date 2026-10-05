@@ -22,6 +22,7 @@ export function translate(value) {
   if (translated) return `${value.match(/^\s*/)[0]}${translated}${value.match(/\s*$/)[0]}`
   if (/^[\d\s/–—:.-]+$/.test(value)) return digits(value)
   const patterns = [
+    [/^(\d+) of (\d+): (.+)$/i, match => `${digits(match[1])} / ${digits(match[2])}: ${translate(match[3])}`],
     [/^Open photo: (.+)$/i, match => `ছবি খুলুন: ${translate(match[1])}`],
     [/^Show slide (\d+): (.+)$/i, match => `স্লাইড ${digits(match[1])} দেখুন: ${translate(match[2])}`],
     [/^Read message from (.+)$/i, match => `${translate(match[1])}-এর বাণী পড়ুন`],

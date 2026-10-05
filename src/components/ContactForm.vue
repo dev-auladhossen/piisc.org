@@ -55,7 +55,7 @@ async function submit() {
       <label for="callback-time">{{ copy('Preferred Callback Time', 'ফোনের সুবিধাজনক সময়') }}<select id="callback-time" v-model="fields.callbackTime" name="preferred_callback_time"><option value="Any convenient time">{{ copy('Any convenient time', 'যেকোনো সুবিধাজনক সময়') }}</option><option value="Morning">{{ copy('Morning', 'সকাল') }}</option><option value="Afternoon">{{ copy('Afternoon', 'বিকাল') }}</option></select></label>
       <label for="inquiry-message">{{ copy('Message', 'বার্তা') }}<textarea id="inquiry-message" v-model="fields.message" name="message" rows="5" :placeholder="copy('Write your inquiry', 'আপনার অনুসন্ধান লিখুন')" maxlength="5000" required></textarea></label>
     </div>
-    <div class="honeypot" aria-hidden="true"><label for="contact-website">Leave blank</label><input id="contact-website" v-model="fields.website" name="_honey" tabindex="-1" autocomplete="off" /></div>
+    <div class="honeypot" aria-hidden="true"><label for="contact-website">{{ copy('Leave blank', 'ফাঁকা রাখুন') }}</label><input id="contact-website" v-model="fields.website" name="_honey" tabindex="-1" autocomplete="off" /></div>
     <button type="submit" :disabled="sending" class="submit-button">{{ sending ? copy('Sending…', 'পাঠানো হচ্ছে…') : copy('Send Inquiry', 'অনুসন্ধান পাঠান') }} <Send :size="18" aria-hidden="true" /></button>
     <p v-if="status" role="status" aria-live="polite" class="form-status" :class="statusKind">{{ status }}</p>
   </form>

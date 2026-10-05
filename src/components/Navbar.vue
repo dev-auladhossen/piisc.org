@@ -9,6 +9,7 @@ import {
 } from "vue";
 import { useRoute } from "vue-router";
 import {
+  ArrowLeft,
   ChevronDown,
   Facebook,
   Instagram,
@@ -64,6 +65,11 @@ function onOutside(event) {
 }
 function onEscape(event) {
   if (event.key !== "Escape") return;
+  if (mobileOpen.value && window.matchMedia("(max-width: 1199px)").matches) {
+    closeMenus();
+    header.value?.querySelector(".reference-menu-toggle")?.focus();
+    return;
+  }
   if (expanded.value) {
     const trigger = header.value.querySelector(
       `[aria-controls="dropdown-${expanded.value}"]`,
@@ -79,6 +85,11 @@ async function focusDropdown(item) {
   expanded.value = item.id;
   await nextTick();
   document.getElementById(`dropdown-${item.id}`)?.querySelector("a")?.focus();
+}
+async function closeDropdown(item) {
+  expanded.value = null;
+  await nextTick();
+  header.value?.querySelector(`[aria-controls="dropdown-${item.id}"]`)?.focus();
 }
 function hover(item, event) {
   if (
@@ -141,7 +152,7 @@ onBeforeUnmount(() => {
     </div>
   </div>
   <header ref="header" class="reference-header">
-    <div class="reference-header-inner">
+    <div class="reference-header-inner" :class="{ 'is-mobile-open': mobileOpen }">
       <RouterLink
         to="/"
         class="reference-brand"
@@ -173,6 +184,7 @@ onBeforeUnmount(() => {
               v-for="item in localizedNavigation"
               :key="item.id"
               class="reference-nav-item"
+              :inert="mobileOpen && expanded !== null && expanded !== item.id"
               @pointerenter="hover(item, $event)"
               @pointerleave="leave(item, $event)"
               @focusout="focusOut"
@@ -208,6 +220,12 @@ onBeforeUnmount(() => {
                   :id="`dropdown-${item.id}`"
                   class="reference-dropdown-panel"
                 >
+                  <li class="reference-dropdown-back">
+                    <button type="button" @click="closeDropdown(item)">
+                      <ArrowLeft :size="18" aria-hidden="true" />
+                      {{ language === "bn" ? "মেনুতে ফিরুন" : "Back to menu" }}
+                    </button>
+                  </li>
                   <li
                     v-for="child in item.children"
                     :key="child.id || child.to"
@@ -562,6 +580,7 @@ onBeforeUnmount(() => {
 .reference-dropdown-panel > li + li {
   border-top: 1px solid #e5e5e5;
 }
+.reference-dropdown-back { display: none; }
 .reference-nav-item:last-child .reference-dropdown-panel {
   left: auto;
   right: 0;
@@ -676,6 +695,7 @@ onBeforeUnmount(() => {
     gap: 8px;
   }
   .reference-navigation {
+    position: relative;
     order: 4;
   }
   .reference-brand {
@@ -887,6 +907,8 @@ onBeforeUnmount(() => {
 /* Keep the brand, navigation and action in separate spaces at desktop widths. */
 @media (min-width: 1400px) {
   .reference-header-inner {
+    max-width: 1600px;
+    margin-inline: auto;
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr) auto;
     gap: clamp(20px, 2vw, 36px);
@@ -901,7 +923,7 @@ onBeforeUnmount(() => {
     padding: 0;
   }
   .reference-nav-list {
-    justify-content: space-between;
+    justify-content: center;
     gap: clamp(12px, 1.25vw, 24px);
   }
   .reference-nav-link {
@@ -922,6 +944,12 @@ onBeforeUnmount(() => {
     width: 22px;
     height: 22px;
     flex: none;
+  }
+}
+@media (min-width: 1600px) {
+  .reference-top-layout {
+    max-width: 1600px;
+    margin-inline: auto;
   }
 }
 @media (min-width: 1400px) and (max-width: 1650px) {
@@ -996,44 +1024,206 @@ onBeforeUnmount(() => {
 }
 @media (max-width: 1199px) {
   .reference-header-inner {
+    min-height: 0;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px 14px;
+    align-items: center;
+    gap: 0 12px;
+    padding: 10px clamp(16px, 4vw, 32px);
   }
   .reference-brand {
-    grid-column: 1 / -1;
+    grid-column: 1;
     grid-row: 1;
+    flex-basis: auto;
+    width: auto;
+    min-width: 0;
   }
   .reference-nav-shell {
-    grid-column: 1;
-    grid-row: 2;
-    justify-content: flex-start;
-    padding: 0;
+    display: contents;
   }
   .reference-menu-toggle {
+    grid-column: 2;
+    grid-row: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
     width: auto;
     min-width: 96px;
+    min-height: 44px;
+    padding: 9px 12px;
+    border: 1px solid #dce5f2;
+    border-radius: 10px;
+    color: #173969;
+    background: #f4f7fc;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background .22s ease, border-color .22s ease, color .22s ease;
+  }
+  .reference-menu-toggle:hover,
+  .reference-menu-toggle[aria-expanded="true"] {
+    background: #e8effc;
+    border-color: #b9cdf1;
+    color: #214b9c;
+  }
+  .reference-menu-toggle svg { width: 20px; height: 20px; }
+  .reference-navigation {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: block;
+    width: 100%;
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height .36s ease, opacity .26s ease,
+      transform .36s ease, visibility .36s;
+  }
+  .reference-navigation.is-mobile-open {
+    height: min(62dvh, 470px);
+    max-height: min(62dvh, 470px);
+    margin-top: 12px;
+    padding: 10px 0 0;
+    border-top: 1px solid #e4eaf2;
+    overflow: hidden;
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reference-nav-list {
+    display: grid;
+    gap: 2px;
+    align-content: start;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .reference-nav-item { position: static; border: 0; }
+  .reference-nav-link {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 16px;
+    justify-content: space-between;
+    border-radius: 9px;
+    color: #17324f;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background .2s ease, color .2s ease;
+  }
+  .reference-nav-link:hover,
+  .reference-nav-link.is-active,
+  .reference-nav-link.is-expanded {
+    background: #edf3ff;
+    color: #214b9c;
+  }
+  .reference-nav-link::after { display: none; }
+  .reference-nav-link svg { width: 18px; height: 18px; }
+  .reference-dropdown-panel {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 10px 12px 18px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: none;
+  }
+  .reference-dropdown-panel > li + li { border-top: 1px solid #edf1f6; }
+  .reference-dropdown-back { display: block; }
+  .reference-dropdown-back button {
+    display: flex;
+    align-items: center;
     gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 9px;
+    background: #edf3ff;
+    color: #214b9c;
+    font-size: 15px;
+    font-weight: 800;
+    text-align: left;
+  }
+  .reference-dropdown-back button:hover { background: #dfeafb; }
+  .reference-dropdown-panel a,
+  .reference-submenu summary {
+    min-height: 44px;
+    padding: 10px 14px;
+    border-radius: 7px;
+    color: #304663;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .reference-submenu ul { border-radius: 6px; }
+  .reference-dropdown-enter-active,
+  .reference-dropdown-leave-active {
+    transition: opacity .25s ease, transform .3s ease;
+  }
+  .reference-dropdown-enter-from,
+  .reference-dropdown-leave-to {
+    opacity: 0;
+    transform: translateX(20px);
   }
   .header-actions {
-    grid-column: 2;
-    grid-row: 2;
-    width: auto;
-    flex: none;
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-content: stretch;
+    width: 100%;
+    max-height: 0;
     margin: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: max-height .32s ease, opacity .26s ease,
+      transform .32s ease, visibility .32s;
+  }
+  .reference-header-inner.is-mobile-open .header-actions {
+    max-height: 90px;
+    margin-top: 8px;
+    padding: 12px 0 4px;
+    border-top: 1px solid #e4eaf2;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
   }
   .apply-capsule {
-    min-height: 44px;
-    padding: 9px 14px;
-    gap: 7px;
-    font-size: 15px;
+    width: 100%;
+    min-height: 50px;
+    padding: 10px 18px;
+    gap: 10px;
+    border-radius: 9px;
+    font-size: 16px;
   }
   .apply-capsule svg {
     width: 20px;
     height: 20px;
     flex: none;
   }
-  .reference-navigation.is-mobile-open {
-    flex: 0 0 100%;
-  }
+}
+@media (max-width: 540px) {
+  .reference-header-inner { padding: 10px 14px; }
+  .reference-brand-main { grid-template-columns: 48px minmax(0, 1fr); gap: 8px; }
+  .reference-brand img { width: 48px; height: 48px; }
+  .reference-brand-name strong { font-size: clamp(13px, 3.7vw, 17px); }
+  .reference-brand-name > span { font-size: clamp(7px, 2vw, 10px); }
+  .reference-menu-toggle { min-width: 44px; padding-inline: 10px; }
+  .reference-menu-toggle span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 1199px) {
+  .reference-navigation,
+  .reference-dropdown-enter-active,
+  .reference-dropdown-leave-active,
+  .reference-menu-toggle,
+  .header-actions { transition: none; }
 }
 </style>

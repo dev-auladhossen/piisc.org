@@ -149,12 +149,9 @@ onBeforeUnmount(() => {
           :fetchpriority="index === 0 ? 'high' : 'auto'"
         />
         <div class="school-slide-shade"></div>
-        <div class="school-slide-caption">
-          <p class="school-slide-label">{{ $tr(slides[index].label) }}</p>
-          <h2>{{ $tr(slides[index].title) }}</h2>
-        </div>
       </article>
     </TransitionGroup>
+    <div class="hero-content">
     <div class="hero-identity">
       <p class="school-established">
         {{ $tr("ESTABLISHED 2026 IN ASHULIA-SAVAR") }}
@@ -169,6 +166,10 @@ onBeforeUnmount(() => {
         <small>{{ $tr(" ISLAMIC SCHOOL AND COLLEGE (PIISC)") }}</small>
       </h1>
     </div>
+    <div :key="current" class="school-slide-caption">
+      <p class="school-slide-label">{{ $tr(slides[current].label) }}</p>
+      <h2>{{ $tr(slides[current].title) }}</h2>
+    </div>
     <div class="hero-actions">
       <RouterLink to="/online-admission" class="hero-apply">
         {{ $tr("Apply Now") }}
@@ -177,6 +178,7 @@ onBeforeUnmount(() => {
       <RouterLink to="/contact" class="hero-visit">
         {{ $tr("Book a Visit") }}
       </RouterLink>
+    </div>
     </div>
     <button
       class="hero-arrow hero-arrow-prev"
@@ -239,7 +241,7 @@ onBeforeUnmount(() => {
   position: relative;
   isolation: isolate;
   width: 100%;
-  height: clamp(520px, 36vw, 650px);
+  min-height: clamp(520px, 36vw, 650px);
   overflow: hidden;
   background: #172a27;
   color: white;
@@ -273,19 +275,20 @@ onBeforeUnmount(() => {
     ),
     linear-gradient(180deg, transparent 42%, rgba(8, 23, 24, 0.58) 100%);
 }
+.hero-content {
+  position: relative;
+  width: min(86%, 1320px);
+  margin-inline: auto;
+  padding-block: clamp(34px, 5vw, 74px) 170px;
+  display: grid;
+  gap: 28px;
+}
 .school-slide-caption {
-  position: absolute;
-  top: clamp(270px, 19vw, 315px);
-  left: max(7%, calc((100vw - 1320px) / 2));
-  right: 10%;
+  min-height: 64px;
   animation: caption-arrive 0.85s 0.15s both;
 }
 .hero-identity {
-  position: absolute;
   z-index: 2;
-  top: clamp(34px, 5vw, 74px);
-  left: max(7%, calc((100vw - 1320px) / 2));
-  right: 10%;
 }
 .school-established {
   margin: 0 0 13px;
@@ -321,7 +324,7 @@ onBeforeUnmount(() => {
 }
 .school-slide-label {
   margin: 0 0 10px;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -346,11 +349,9 @@ onBeforeUnmount(() => {
   text-shadow: 0 2px 18px #0004;
 }
 .hero-actions {
-  position: absolute;
   z-index: 2;
-  top: clamp(385px, 20vw, 440px);
-  left: max(7%, calc((100vw - 1320px) / 2));
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
 }
 .hero-actions a {
@@ -419,8 +420,8 @@ onBeforeUnmount(() => {
 .hero-controls {
   position: absolute;
   bottom: 80px;
-  left: 7%;
-  right: 7%;
+  left: max(7%, calc((100% - 1320px) / 2));
+  right: max(7%, calc((100% - 1320px) / 2));
   display: flex;
   align-items: center;
   gap: 24px;
@@ -517,7 +518,11 @@ onBeforeUnmount(() => {
 }
 @media (max-width: 640px) {
   .school-hero {
-    height: 600px;
+    min-height: 600px;
+  }
+  .hero-content {
+    padding-block: 40px 140px;
+    gap: 24px;
   }
   .school-slide-caption {
     left: 7%;
@@ -538,7 +543,7 @@ onBeforeUnmount(() => {
     margin-bottom: 0;
   }
   .school-name > span {
-    font-size: 46px;
+    font-size: clamp(30px, 8.5vw, 46px);
   }
   .school-name > small {
     max-width: 340px;
@@ -597,7 +602,7 @@ onBeforeUnmount(() => {
 }
 @media (min-width: 641px) and (max-height: 760px) {
   .school-hero {
-    height: 560px;
+    min-height: 560px;
   }
   .school-slide-caption {
     top: 270px;

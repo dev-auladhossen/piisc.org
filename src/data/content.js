@@ -4,7 +4,11 @@ import campusView from '../assets/images/campus-view.png'
 import students from '../assets/images/student-concept.png'
 import artwork from '../assets/images/english-medium-artwork.png'
 export const images = { logo, campusFront, campusView, students, artwork }
-export const address = 'Unique, DEPZ Road, Ashulia, Savar, Dhaka-1349, Bangladesh'
+export const address = 'The White Palace Unik, 1349 Dhaka - Ashulia Hwy, Baipayl'
+export const schoolCoordinates = '23.936452688021127,90.27826757919289'
+export const schoolMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+export const schoolDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`
+export const schoolMapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`
 export const routes = ['home','about','academics','admissions','campus','news','contact']
 export const news = [
  {slug:'welcome-to-piisc',category:'news',image:campusFront,title:{en:'Welcome to Peace International Islamic School & College',bn:'পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজে স্বাগতম'},excerpt:{en:'Get to know our educational vision and the campus in Ashulia.',bn:'আমাদের শিক্ষাদর্শন ও আশুলিয়ার ক্যাম্পাস সম্পর্কে জানুন।'},body:{en:'PIISC is establishing an English-medium learning community for Classes 1–12, bringing academic learning and Islamic values together. More official announcements will be added here as they are confirmed.',bn:'PIISC প্রথম থেকে দ্বাদশ শ্রেণির শিক্ষার্থীদের জন্য ইংরেজি মাধ্যমের একটি শিক্ষাঙ্গন গড়ে তুলছে। নিশ্চিত হওয়া মাত্র আনুষ্ঠানিক ঘোষণা এখানে যোগ করা হবে।'}},

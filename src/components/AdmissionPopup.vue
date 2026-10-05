@@ -2,6 +2,10 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { X } from "lucide-vue-next";
 import poster from "../assets/images/poster.png";
+import { images } from "../data/content.js";
+import { useI18n } from "../composables/useI18n.js";
+
+const { language } = useI18n();
 
 const dialog = ref(null);
 let previousOverflow;
@@ -37,27 +41,27 @@ onBeforeUnmount(() => {
     <dialog
       ref="dialog"
       class="admission-popup"
-      aria-label="Admission poster"
+      :aria-label="language === 'bn' ? 'ভর্তির বিজ্ঞপ্তি' : 'Admission poster'"
       @keydown.esc.stop.prevent="close"
       @cancel.prevent="close"
       @close="restorePage"
       @click="(event) => event.target === dialog && close()"
     >
       <div class="poster-body">
-        <img :src="poster" alt="PIISC admission poster" />
+        <img :src="poster" :alt="language === 'bn' ? 'পিআইআইএসসি ভর্তির পোস্টার' : 'PIISC admission poster'" />
         <button
           type="button"
           class="popup-close"
-          aria-label="Close admission poster"
+          :aria-label="language === 'bn' ? 'ভর্তির বিজ্ঞপ্তি বন্ধ করুন' : 'Close admission poster'"
           autofocus
           @click="close"
         >
           <X aria-hidden="true" />
         </button>
       </div>
-      <div class="poster-actions" aria-label="Admission poster actions">
-        <RouterLink to="/admissions" @click="close">Learn More</RouterLink>
-        <RouterLink to="/contact" @click="close">Contact Us</RouterLink>
+      <div class="poster-actions" :aria-label="language === 'bn' ? 'ভর্তির বিজ্ঞপ্তির লিংক' : 'Admission poster actions'">
+        <RouterLink to="/admissions" @click="close">{{ language === 'bn' ? 'আরও জানুন' : 'Learn More' }}</RouterLink>
+        <RouterLink to="/contact" @click="close">{{ language === 'bn' ? 'যোগাযোগ করুন' : 'Contact Us' }}</RouterLink>
       </div>
     </dialog>
   </Teleport>

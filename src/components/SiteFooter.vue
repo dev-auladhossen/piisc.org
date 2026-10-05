@@ -7,9 +7,9 @@ import { useI18n } from "../composables/useI18n.js";
 const { language } = useI18n();
 const copy = (en, bn) => (language.value === "bn" ? bn : en);
 const socials = [
-  { name: "Facebook", icon: Facebook, url: headerContacts.socials.facebook },
-  { name: "Instagram", icon: Instagram, url: headerContacts.socials.instagram },
-  { name: "YouTube", icon: Youtube, url: headerContacts.socials.youtube },
+  { name: "Facebook", nameBn: "ফেসবুক", icon: Facebook, url: headerContacts.socials.facebook },
+  { name: "Instagram", nameBn: "ইনস্টাগ্রাম", icon: Instagram, url: headerContacts.socials.instagram },
+  { name: "YouTube", nameBn: "ইউটিউব", icon: Youtube, url: headerContacts.socials.youtube },
 ];
 </script>
 
@@ -91,7 +91,7 @@ const socials = [
               <a
                 v-if="social.url"
                 :href="social.url"
-                :aria-label="`PIISC on ${social.name}`"
+                :aria-label="`${copy('PIISC on', 'পিআইআইএসসি')} ${copy(social.name, social.nameBn)}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 :class="{ 'facebook-icon': social.name === 'Facebook' }"
@@ -101,9 +101,9 @@ const socials = [
               <span
                 v-else
                 :class="{ 'facebook-icon': social.name === 'Facebook' }"
-                :title="`${social.name} — ${copy('profile link coming soon', 'প্রোফাইল লিংক শীঘ্রই আসছে')}`"
+                :title="`${copy(social.name, social.nameBn)} — ${copy('profile link coming soon', 'প্রোফাইল লিংক শীঘ্রই আসছে')}`"
                 role="img"
-                :aria-label="`${social.name} — ${copy('profile link coming soon', 'প্রোফাইল লিংক শীঘ্রই আসছে')}`"
+                :aria-label="`${copy(social.name, social.nameBn)} — ${copy('profile link coming soon', 'প্রোফাইল লিংক শীঘ্রই আসছে')}`"
               >
                 <component :is="social.icon" :size="21" aria-hidden="true" />
               </span>

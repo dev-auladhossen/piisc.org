@@ -1,6 +1,6 @@
 ﻿<script setup>
 import { BookOpen, Users, HeartHandshake, MapPin, Phone, Mail, ArrowUpRight, ChevronRight, Plus, Check } from 'lucide-vue-next'
-import { address } from '../data/content.js'
+import { address, schoolMapUrl } from '../data/content.js'
 import { headerContacts } from '../data/navigation.js'
 import BaseButton from '../components/BaseButton.vue'
 import ContactForm from '../components/ContactForm.vue'
@@ -24,7 +24,7 @@ const faqs = [
  { question: 'What documents and assessments are required?', answer: 'The team will confirm the documents and any assessment requirements for the class you are applying to. Please request the current checklist before submitting an application.' },
  { question: 'Where can I find deadlines and fee information?', answer: 'Contact the school for confirmed deadlines, fees and any available financial support. School announcements are also shared on the notice board.' },
 ]
-const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+const mapUrl = schoolMapUrl
 </script>
 <template>
   <section class="admissions-cover"><img :src="cover" :alt="$tr(&quot;PIISC students enjoying books together in their classroom&quot;)" fetchpriority="high"/><div class="cover-shade"></div><div class="container cover-content"><nav :aria-label="$tr(&quot;Breadcrumb&quot;)"><RouterLink to="/">{{ $tr("Home") }}</RouterLink><ChevronRight :size="15" aria-hidden="true"/><span aria-current="page">{{ $tr("Admission") }}</span></nav><span class="admissions-eyebrow">{{ $tr("WELCOME TO PIISC") }}</span><h1>{{ $tr("A new chapter.") }}<br /><em>{{ $tr("A place to belong.") }}</em></h1><p>{{ $tr("Get to know our school, ask your questions and explore the next step in your child’s learning journey.") }}</p><a class="visit-button" href="#visit">{{ $tr("Arrange a school visit ") }}<ArrowUpRight :size="19" aria-hidden="true"/></a></div></section>

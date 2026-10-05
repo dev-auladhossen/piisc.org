@@ -4,6 +4,7 @@ import router from './router/index.js'
 import { translate } from './composables/useI18n.js'
 import './style.css'
 import './assets/fonts/fonts.css'
+import './large-screen.css'
 const app = createApp(App)
 app.config.globalProperties.$tr = translate
 app.use(router)

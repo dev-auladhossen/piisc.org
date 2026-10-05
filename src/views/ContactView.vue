@@ -1,6 +1,6 @@
 <script setup>
 import { Clock3, Facebook, Mail, MapPin, MessageCircle, Phone } from 'lucide-vue-next'
-import { address } from '../data/content.js'
+import { address, schoolMapUrl } from '../data/content.js'
 import { headerContacts } from '../data/navigation.js'
 import { useI18n } from '../composables/useI18n.js'
 import ContactForm from '../components/ContactForm.vue'
@@ -11,8 +11,7 @@ const copy = (en, bn) => language.value === 'bn' ? bn : en
 const phone = headerContacts.phone.trim()
 const phoneUrl = `tel:${phone.replace(/\s/g, '')}`
 const whatsappUrl = `https://wa.me/${phone.replace(/\D/g, '')}`
-const mapQuery = encodeURIComponent(address)
-const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`
+const mapUrl = schoolMapUrl
 </script>
 
 <template>
@@ -24,7 +23,7 @@ const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`
           <a :href="phoneUrl"><span class="method-icon"><Phone aria-hidden="true" /></span><strong>{{ phone }}</strong></a>
           <a :href="`mailto:${headerContacts.email}`"><span class="method-icon"><Mail aria-hidden="true" /></span><strong>{{ headerContacts.email }}</strong></a>
           <a :href="whatsappUrl" target="_blank" rel="noopener noreferrer"><span class="method-icon"><MessageCircle aria-hidden="true" /></span><strong>{{ copy('WhatsApp admission support', 'হোয়াটসঅ্যাপে ভর্তি সহায়তা') }}</strong></a>
-          <a :href="mapUrl" target="_blank" rel="noopener noreferrer"><span class="method-icon"><MapPin aria-hidden="true" /></span><strong>{{ copy(address, 'ইউনিক, ডিইপিজেড রোড, আশুলিয়া, সাভার, ঢাকা-১৩৪৯, বাংলাদেশ') }}</strong></a>
+          <a :href="mapUrl" target="_blank" rel="noopener noreferrer"><span class="method-icon"><MapPin aria-hidden="true" /></span><strong>{{ copy(address, 'দ্য হোয়াইট প্যালেস ইউনিক, ১৩৪৯ ঢাকা–আশুলিয়া মহাসড়ক, বাইপাইল') }}</strong></a>
           <div class="office-hours"><span class="method-icon"><Clock3 aria-hidden="true" /></span><strong>{{ copy('Call to confirm office hours before visiting.', 'পরিদর্শনের আগে ফোন করে অফিসের সময় নিশ্চিত করুন।') }}</strong></div>
         </div>
         <a v-if="headerContacts.socials.facebook" class="facebook-link" :href="headerContacts.socials.facebook" target="_blank" rel="noopener noreferrer" :aria-label="copy('PIISC on Facebook', 'ফেসবুকে পিআইআইএসসি')"><Facebook :size="18" aria-hidden="true" /></a>
