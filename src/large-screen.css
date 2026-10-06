@@ -1,19 +1,21 @@
 /* Large desktop / TV enhancements. Keep laptop and mobile component rules intact.
    App specificity makes these shared rules independent of lazy-loaded scoped CSS. */
+
 @media (min-width: 1600px) {
   :root {
-    --wide-content: clamp(1500px, 88vw, 2400px);
-    --wide-body: clamp(18px, 1.05vw, 26px);
-    --wide-small: clamp(16px, .9vw, 22px);
-    --wide-label: clamp(13px, .75vw, 18px);
-    --wide-card-title: clamp(23px, 1.35vw, 34px);
-    --wide-heading: clamp(52px, 3vw, 76px);
-    --wide-gap: clamp(24px, 1.5vw, 40px);
-    --wide-padding: clamp(28px, 1.8vw, 48px);
+    @apply [--wide-content:clamp(1500px,_88vw,_2400px)];
+    @apply [--wide-body:clamp(18px,_1.05vw,_26px)];
+    @apply [--wide-small:clamp(16px,_.9vw,_22px)];
+    @apply [--wide-label:clamp(13px,_.75vw,_18px)];
+    @apply [--wide-card-title:clamp(23px,_1.35vw,_34px)];
+    @apply [--wide-heading:clamp(52px,_3vw,_76px)];
+    @apply [--wide-gap:clamp(24px,_1.5vw,_40px)];
+    @apply [--wide-padding:clamp(28px,_1.8vw,_48px)];
   }
-
   /* Reading text and shared components across routes. */
-  #app { font-size: var(--wide-body); }
+  #app {
+    @apply [font-size:var(--wide-body)];
+  }
   #app :is(.section-heading > p, .program-card p, .feature-card p,
     .facility-card p, .news-info p, .testimonial-card p, .purpose-grid p,
     .contact-details p, .page-hero p, .article-page figure + p,
@@ -22,114 +24,163 @@
     .facilities-grid p, .facilities-copy > p:not(.journey-eyebrow),
     .event-excerpt, .location-heading p, .gateway-copy > span,
     .portal-banner p, .portal-aside li p, .pillars-heading > p:last-child) {
-    font-size: var(--wide-body);
-    line-height: 1.7;
+    @apply [font-size:var(--wide-body)];
+    @apply leading-[1.7];
   }
   #app :is(.eyebrow, .home-eyebrow, .journey-eyebrow, .news-label,
     .location-label, .gateway-copy > p, .event-meta, .programme-tag,
     .footer-eyebrow, .leadership-eyebrow, .form-eyebrow) {
-    font-size: var(--wide-label);
+    @apply [font-size:var(--wide-label)];
   }
   #app :is(.base-button, .text-link, .journey-button, .card-link,
     .event-read, .view-all, .programme-card li, .desk-fact, .form-note,
     .filter-row button, .gallery figcaption, .article-page figcaption) {
-    font-size: var(--wide-small);
+    @apply [font-size:var(--wide-small)];
   }
-
   /* Give grids more room while retaining narrower prose columns. */
   #app :is(.container, .home-section-width, .journey-width, .news-width,
     .location-width, .contact-width, .admission-gateway, .footer-shell) {
-    width: min(calc(100% - 96px), var(--wide-content));
-    max-width: var(--wide-content);
-    margin-inline: auto;
+    @apply w-[min(calc(100%_-_96px),_var(--wide-content))] max-w-[var(--wide-content)] [margin-inline:auto];
   }
-  #app .narrow-content { max-width: 70ch; }
-  #app :is(.section-heading, .pillars-heading) { max-width: 54rem; }
+  #app .narrow-content {
+    @apply max-w-[70ch];
+  }
+  #app :is(.section-heading, .pillars-heading) {
+    @apply max-w-[54rem];
+  }
   #app :is(.section-heading > p, .gateway-copy > span, .page-hero p,
-    .facilities-copy > p:not(.journey-eyebrow)) { max-width: 65ch; }
-  #app :is(.journey-title, .why-copy h2) { max-width: 22ch; }
+    .facilities-copy > p:not(.journey-eyebrow)) {
+    @apply max-w-[65ch];
+  }
+  #app :is(.journey-title, .why-copy h2) {
+    @apply max-w-[22ch];
+  }
   #app :is(.section-heading h2, .pillars-heading h2, .why-copy h2,
     .journey-title, .news-heading h2, .location-heading h2,
-    .footer-admission h2) { font-size: var(--wide-heading); }
+    .footer-admission h2) {
+    @apply [font-size:var(--wide-heading)];
+  }
   #app :is(.pillars-section, .why-section, .journey-section, .home-news,
     .home-location, .section, .contact-section) {
-    padding-block: clamp(80px, 5vw, 132px);
+    @apply [padding-block:clamp(80px,_5vw,_132px)];
   }
   #app :is(.pillar-grid, .why-grid, .programme-grid, .communication-grid,
     .home-news-grid, .program-grid, .feature-grid, .news-grid, .gateway-links) {
-    gap: var(--wide-gap);
+    @apply gap-[var(--wide-gap)];
   }
   #app :is(.pillar-grid article, .why-grid article, .programme-card,
     .communication-grid article, .event-content, .program-card,
-    .feature-card, .facility-card-content) { padding: var(--wide-padding); }
-  #app :is(.pillar-icon, .journey-icon) {
-    width: clamp(52px, 3vw, 72px);
-    height: clamp(52px, 3vw, 72px);
+    .feature-card, .facility-card-content) {
+    @apply p-[var(--wide-padding)];
   }
-  #app :is(.pillar-icon, .journey-icon) svg { width: 50%; height: 50%; }
+  #app :is(.pillar-icon, .journey-icon) {
+    @apply w-[clamp(52px,_3vw,_72px)] h-[clamp(52px,_3vw,_72px)];
+  }
+  #app :is(.pillar-icon, .journey-icon) svg {
+    @apply w-[50%] h-[50%];
+  }
   #app :is(.pillar-grid h3, .why-grid h3, .step-card h3, .admission-desk h3,
     .programme-card h3, .communication-grid h3, .facilities-grid h3,
     .event-content h3, .feature-card h3, .facility-card h3) {
-    font-size: var(--wide-card-title);
-    line-height: 1.35;
+    @apply [font-size:var(--wide-card-title)];
+    @apply leading-[1.35];
   }
-
   /* Header: bounded growth rather than spreading links across the viewport. */
   #app :is(.reference-header-inner, .reference-top-layout) {
-    max-width: min(calc(100% - 48px), 2480px);
+    @apply max-w-[min(calc(100%_-_48px),_2480px)];
   }
-  #app .reference-header-inner { gap: var(--wide-gap); }
-  #app .reference-nav-list { gap: clamp(18px, 1.2vw, 38px); }
-  #app .reference-nav-link { font-size: var(--wide-small); }
-  #app .reference-brand-name strong { font-size: clamp(20px, 1.2vw, 30px); }
-  #app .reference-brand-name > span { font-size: clamp(11px, .7vw, 17px); }
-  #app .reference-brand img { width: clamp(76px, 4.5vw, 112px); height: auto; }
-  #app .apply-capsule { font-size: var(--wide-body); padding: 14px 24px; }
-  #app .reference-dropdown-panel { width: clamp(280px, 17vw, 400px); }
+  #app .reference-header-inner {
+    @apply gap-[var(--wide-gap)];
+  }
+  #app .reference-nav-list {
+    @apply gap-[clamp(18px,_1.2vw,_38px)];
+  }
+  #app .reference-nav-link {
+    @apply [font-size:var(--wide-small)];
+  }
+  #app .reference-brand-name strong {
+    @apply [font-size:clamp(20px,_1.2vw,_30px)];
+  }
+  #app .reference-brand-name > span {
+    @apply [font-size:clamp(11px,_.7vw,_17px)];
+  }
+  #app .reference-brand img {
+    @apply w-[clamp(76px,_4.5vw,_112px)] h-[auto];
+  }
+  #app .apply-capsule {
+    @apply [font-size:var(--wide-body)] p-[14px_24px];
+  }
+  #app .reference-dropdown-panel {
+    @apply w-[clamp(280px,_17vw,_400px)];
+  }
   #app :is(.reference-dropdown-panel a, .reference-submenu summary) {
-    font-size: var(--wide-small);
+    @apply [font-size:var(--wide-small)];
   }
-
   /* Admission gateway: text, icons and buttons grow together. */
-  #app .gateway-links a { padding: var(--wide-padding); gap: var(--wide-gap); }
-  #app .gateway-links h3 { font-size: var(--wide-card-title); }
-  #app .gateway-links :is(.card-icon, .card-arrow) { flex-shrink: 0; }
+  #app .gateway-links a {
+    @apply p-[var(--wide-padding)] gap-[var(--wide-gap)];
+  }
+  #app .gateway-links h3 {
+    @apply [font-size:var(--wide-card-title)];
+  }
+  #app .gateway-links :is(.card-icon, .card-arrow) {
+    @apply shrink-0;
+  }
   #app .gateway-links .card-icon {
-    width: clamp(56px, 3.5vw, 84px);
-    height: clamp(56px, 3.5vw, 84px);
+    @apply w-[clamp(56px,_3.5vw,_84px)] h-[clamp(56px,_3.5vw,_84px)];
   }
-  #app .gateway-links .card-icon svg { width: 50%; height: 50%; }
-  #app .card-number { font-size: var(--wide-label); }
-  #app .gateway-main { padding: var(--wide-padding); gap: var(--wide-gap); }
-  #app .gateway-copy h2 { font-size: clamp(32px, 2vw, 48px); }
-  #app .gateway-actions { flex-wrap: wrap; max-width: 34rem; }
+  #app .gateway-links .card-icon svg {
+    @apply w-[50%] h-[50%];
+  }
+  #app .card-number {
+    @apply [font-size:var(--wide-label)];
+  }
+  #app .gateway-main {
+    @apply p-[var(--wide-padding)] gap-[var(--wide-gap)];
+  }
+  #app .gateway-copy h2 {
+    @apply [font-size:clamp(32px,_2vw,_48px)];
+  }
+  #app .gateway-actions {
+    @apply flex-wrap max-w-[34rem];
+  }
   #app .gateway-actions a {
-    font-size: var(--wide-small);
-    min-height: clamp(58px, 3.5vw, 80px);
-    padding: 16px 24px;
+    @apply [font-size:var(--wide-small)] min-h-[clamp(58px,_3.5vw,_80px)] p-[16px_24px];
   }
-
   /* Hero stays in normal flow as headings and captions grow. */
-  #app .hero-content { width: min(86%, var(--wide-content)); gap: var(--wide-gap); }
-  #app .school-name { max-width: 1200px; }
-  #app .school-name > span { font-size: clamp(86px, 5vw, 124px); }
+  #app .hero-content {
+    @apply w-[min(86%,_var(--wide-content))] gap-[var(--wide-gap)];
+  }
+  #app .school-name {
+    @apply max-w-[1200px];
+  }
+  #app .school-name > span {
+    @apply [font-size:clamp(86px,_5vw,_124px)];
+  }
   #app .school-name > small {
-    font-size: clamp(40px, 2.3vw, 56px);
-    max-width: 28ch;
+    @apply [font-size:clamp(40px,_2.3vw,_56px)] max-w-[28ch];
   }
   #app :is(.school-established, .school-slide-label, .hero-count) {
-    font-size: var(--wide-label);
+    @apply [font-size:var(--wide-label)];
   }
-  #app .school-slide-caption h2 { font-size: clamp(26px, 1.5vw, 38px); max-width: 45ch; }
-  #app .hero-actions a { font-size: var(--wide-body); padding: 16px 28px; }
+  #app .school-slide-caption h2 {
+    @apply [font-size:clamp(26px,_1.5vw,_38px)] max-w-[45ch];
+  }
+  #app .hero-actions a {
+    @apply [font-size:var(--wide-body)] p-[16px_28px];
+  }
   #app .hero-controls {
-    left: max(7%, calc((100% - var(--wide-content)) / 2));
-    right: max(7%, calc((100% - var(--wide-content)) / 2));
+    @apply left-[max(7%,_calc((100%_-_var(--wide-content))_/_2))] right-[max(7%,_calc((100%_-_var(--wide-content))_/_2))];
   }
-  #app .hero-dots button { width: 40px; height: 40px; }
-  #app .hero-play { width: 44px; height: 44px; }
-  #app .hero-arrow { width: 56px; height: 68px; }
-
+  #app .hero-dots button {
+    @apply w-[40px] h-[40px];
+  }
+  #app .hero-play {
+    @apply w-[44px] h-[44px];
+  }
+  #app .hero-arrow {
+    @apply w-[56px] h-[68px];
+  }
   /* Forms, leadership, exploration links and footer. */
   #app :is(.contact-form label, .form-fields input:not([type=checkbox]),
     .form-fields select, .form-fields textarea, .submit-button,
@@ -139,21 +190,42 @@
     .footer-admission-actions a, .explore-copy > span, .portal-fields label,
     .portal-form-note, .portal-submit, .portal-recipient, .portal-details,
     .location-detail, .location-detail strong, .map-directions) {
-    font-size: var(--wide-small);
+    @apply [font-size:var(--wide-small)];
   }
   #app :is(.form-fields input:not([type=checkbox]), .form-fields select) {
-    height: auto;
-    min-height: 64px;
+    @apply h-[auto] min-h-[64px];
   }
-  #app .contact-copy .intro { max-width: 60ch; }
-  #app .portal-form { padding: var(--wide-padding); }
-  #app .portal-fields { gap: var(--wide-gap); }
-  #app .contact-copy .contact-methods { max-width: none; }
-  #app .leadership-grid { max-width: 1200px; }
-  #app .leader-card h4 { font-size: var(--wide-card-title); max-width: 28ch; }
-  #app .leader-card > h3 { font-size: var(--wide-small); }
-  #app .explore-copy strong { font-size: var(--wide-card-title); }
-  #app .footer-admission-copy > p:last-child { font-size: var(--wide-body); max-width: 65ch; }
-  #app .footer-admission-actions { flex-wrap: wrap; }
-  #app .footer-main { flex-wrap: wrap; }
+  #app .contact-copy .intro {
+    @apply max-w-[60ch];
+  }
+  #app .portal-form {
+    @apply p-[var(--wide-padding)];
+  }
+  #app .portal-fields {
+    @apply gap-[var(--wide-gap)];
+  }
+  #app .contact-copy .contact-methods {
+    @apply max-w-[none];
+  }
+  #app .leadership-grid {
+    @apply max-w-[1200px];
+  }
+  #app .leader-card h4 {
+    @apply [font-size:var(--wide-card-title)] max-w-[28ch];
+  }
+  #app .leader-card > h3 {
+    @apply [font-size:var(--wide-small)];
+  }
+  #app .explore-copy strong {
+    @apply [font-size:var(--wide-card-title)];
+  }
+  #app .footer-admission-copy > p:last-child {
+    @apply [font-size:var(--wide-body)] max-w-[65ch];
+  }
+  #app .footer-admission-actions {
+    @apply flex-wrap;
+  }
+  #app .footer-main {
+    @apply flex-wrap;
+  }
 }

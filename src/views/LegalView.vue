@@ -36,34 +36,18 @@ const sections = computed(() => isPrivacy.value ? [
 </script>
 
 <template>
-  <main class="legal-page">
-    <div class="legal-width">
-      <p class="legal-eyebrow">{{ copy('PIISC INFORMATION', 'পিআইআইএসসি তথ্য') }}</p>
-      <h1>{{ isPrivacy ? copy('Privacy Policy', 'গোপনীয়তা নীতি') : copy('Terms and Conditions', 'শর্তাবলি') }}</h1>
-      <p class="legal-intro">{{ isPrivacy ? copy('How the contact options on this website relate to the information you share.', 'এই ওয়েবসাইটের যোগাযোগ মাধ্যম ও আপনার দেওয়া তথ্য সম্পর্কে।') : copy('Guidance for using the PIISC website and its information.', 'পিআইআইএসসি ওয়েবসাইট ও এর তথ্য ব্যবহারের নির্দেশনা।') }}</p>
-      <div class="legal-sections">
-        <section v-for="section in sections" :key="section.title[0]">
-          <h2>{{ copy(...section.title) }}</h2>
-          <p>{{ copy(...section.body) }}</p>
+  <main class="legal-page [&&]:min-h-[60vh] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:initial] [&&]:[background-image:linear-gradient(rgb(244,_247,_252),_rgb(255,_255,_255)_60%)] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:p-[clamp(48px,_6vw,_88px)_0px_100px_0px]">
+    <div class="legal-width [&&]:w-[calc(100%_-_clamp(32px,_6.5vw,_128px))] [&&]:max-w-[1000px] [&&]:[margin-inline-end:auto] [&&]:[margin-inline-start:auto]">
+      <p class="legal-eyebrow [&&]:[color:rgb(177,_138,_40)] [&&]:[font-size:12px] [&&]:font-[800] [&&]:tracking-[0.18em]">{{ copy('PIISC INFORMATION', 'পিআইআইএসসি তথ্য') }}</p>
+      <h1 class="[&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:clamp(38px,_4.5vw,_66px)] [&&]:m-[12px_0px_18px_0px]">{{ isPrivacy ? copy('Privacy Policy', 'গোপনীয়তা নীতি') : copy('Terms and Conditions', 'শর্তাবলি') }}</h1>
+      <p class="legal-intro [&&]:max-w-[750px] [&&]:[color:rgb(93,_110,_134)] [&&]:[font-size:19px]">{{ isPrivacy ? copy('How the contact options on this website relate to the information you share.', 'এই ওয়েবসাইটের যোগাযোগ মাধ্যম ও আপনার দেওয়া তথ্য সম্পর্কে।') : copy('Guidance for using the PIISC website and its information.', 'পিআইআইএসসি ওয়েবসাইট ও এর তথ্য ব্যবহারের নির্দেশনা।') }}</p>
+      <div class="legal-sections [&&]:grid [&&]:gap-x-[18px] [&&]:gap-y-[18px] [&&]:m-[42px_0px_34px_0px]">
+        <section class="[&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:9px] [&&]:[border-bottom-right-radius:9px] [&&]:[border-top-left-radius:9px] [&&]:[border-top-right-radius:9px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [@media(max-width:600px)]:[&&]:p-[22px] [@media(width>600px)]:[&&]:p-[26px_30px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_229,_243)]" v-for="section in sections" :key="section.title[0]">
+          <h2 class="[&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:25px] [&&]:m-[0px_0px_9px_0px]">{{ copy(...section.title) }}</h2>
+          <p class="[&&]:leading-[1.75] [&&]:[color:rgb(93,_110,_134)]">{{ copy(...section.body) }}</p>
         </section>
       </div>
-      <RouterLink to="/contact" class="legal-contact">{{ copy('Contact the school', 'বিদ্যালয়ে যোগাযোগ করুন') }}</RouterLink>
+      <RouterLink to="/contact" class="legal-contact [&&]:inline-flex [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:font-[700] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(41,_78,_158)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:white] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:background,_transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:p-[13px_20px] [&.legal-contact:hover]:[background-color:rgb(23,_58,_128)] [@media(prefers-reduced-motion:no-preference)]:[&.legal-contact:hover]:[transform:translateY(-2px)] [@media(prefers-reduced-motion:reduce)]:[&.legal-contact:hover]:[transform:none]">{{ copy('Contact the school', 'বিদ্যালয়ে যোগাযোগ করুন') }}</RouterLink>
     </div>
   </main>
 </template>
-
-<style scoped>
-.legal-page { min-height: 60vh; padding: clamp(48px, 6vw, 88px) 0 100px; background: linear-gradient(180deg, #f4f7fc, #fff 60%); }
-.legal-width { width: calc(100% - clamp(32px, 6.5vw, 128px)); max-width: 1000px; margin-inline: auto; }
-.legal-eyebrow { color: #b18a28; font-size: 12px; font-weight: 800; letter-spacing: .18em; }
-h1 { color: #294e9e; font-size: clamp(38px, 4.5vw, 66px); margin: 12px 0 18px; }
-.legal-intro { max-width: 750px; color: #5d6e86; font-size: 19px; }
-.legal-sections { display: grid; gap: 18px; margin: 42px 0 34px; }
-.legal-sections section { border: 1px solid #dce5f3; border-radius: 9px; background: #fff; padding: 26px 30px; }
-h2 { color: #294e9e; font-size: 25px; margin: 0 0 9px; }
-.legal-sections p { color: #5d6e86; line-height: 1.75; }
-.legal-contact { display: inline-flex; padding: 13px 20px; background: #294e9e; color: white; border-radius: 6px; font-weight: 700; transition: background .25s ease, transform .25s ease; }
-.legal-contact:hover { background: #173a80; transform: translateY(-2px); }
-@media (max-width: 600px) { .legal-sections section { padding: 22px; } }
-@media (prefers-reduced-motion: reduce) { .legal-contact { transition: none; } .legal-contact:hover { transform: none; } }
-</style>

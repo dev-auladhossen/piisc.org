@@ -112,71 +112,71 @@ const enrichment = [
 ];
 </script>
 <template>
-  <section class="academic-cover">
-    <img
+  <section class="academic-cover [&&]:relative [&&]:flex [@media(max-width:640px)]:[&&]:min-h-[450px] [@media(width>640px)]:[&&]:min-h-[480px] [&&]:items-center [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(10,_41,_72)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:white] [section&[id]]:[scroll-margin-top:160px]">
+    <img class="[&&]:absolute [&&]:bottom-[0px] [&&]:left-[0px] [&&]:right-[0px] [&&]:top-[0px] [&&]:h-[100%] [&&]:w-[100%] [&&]:object-cover [&&]:[object-position:center_40%]"
       :src="cover"
       :alt="
         $tr('PIISC students learning together through a classroom activity')
       "
       fetchpriority="high"
     />
-    <div class="academic-cover-shade"></div>
-    <div class="container academic-cover-content">
-      <nav :aria-label="$tr('Breadcrumb')">
-        <RouterLink to="/">{{ $tr("Home") }}</RouterLink
+    <div class="academic-cover-shade [&&]:absolute [&&]:bottom-[0px] [&&]:left-[0px] [&&]:right-[0px] [&&]:top-[0px] [&&]:h-[100%] [&&]:w-[100%] [&&]:object-cover [&&]:[object-position:center_40%] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [@media(max-width:640px)]:[&&]:[background-color:rgba(41,_78,_158,_0.88)] [@media(width>640px)]:[&&]:[background-color:initial] [@media(max-width:640px)]:[&&]:[background-image:initial] [@media(width>640px)]:[&&]:[background-image:linear-gradient(100deg,_rgba(41,_78,_158,_0.96),_rgba(41,_78,_158,_0.86)_65%,_rgba(10,_41,_72,_0.72))] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial]"></div>
+    <div class="container academic-cover-content [&&]:relative [&&]:[padding-block-end:55px] [&&]:[padding-block-start:35px]">
+      <nav class="[&&]:mb-[36px] [&&]:flex [&&]:items-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[color:rgb(237,_242,_250)] [&&]:[font-size:13px]" :aria-label="$tr('Breadcrumb')">
+        <RouterLink class="[a&:focus-visible]:[outline-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" to="/">{{ $tr("Home") }}</RouterLink
         ><ChevronRight :size="15" aria-hidden="true" /><span
           aria-current="page"
           >{{ $tr("Academics") }}</span
         >
       </nav>
-      <span class="academic-kicker">{{ $tr("LEARNING AT PIISC") }}</span>
-      <h1>
-        {{ $tr("Academics") }}<br /><em>{{ $tr("Learning with purpose.") }}</em>
+      <span class="academic-kicker [&&]:font-[800] [&&]:tracking-[0.19em] [&&]:[color:rgb(243,_204,_72)] [&&]:[font-size:12px]">{{ $tr("LEARNING AT PIISC") }}</span>
+      <h1 class="[&&]:[font-size:clamp(38px,_4.7vw,_66px)] [&&]:leading-[1.12] [&&]:[color:white] [&&]:m-[16px_0px_20px_0px]">
+        {{ $tr("Academics") }}<br /><em class="[&&]:[color:rgb(243,_204,_72)]">{{ $tr("Learning with purpose.") }}</em>
       </h1>
-      <p>
+      <p class="[&&]:[color:rgb(237,_242,_250)] [&&]:max-w-[520px] [&&]:[font-size:17px]">
         {{
           $tr(
             " Discover an approach to education that connects curiosity, character and a sense of purpose. ",
           )
         }}
       </p>
-      <a class="cover-link" href="#learning-stages"
+      <a class="cover-link [&&]:mt-[18px] [&&]:inline-flex [&&]:items-center [&&]:gap-x-[22px] [&&]:gap-y-[22px] [&&]:[border-bottom-color:rgb(243,_204,_72)] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:1px] [&&]:[color:rgb(243,_204,_72)] [&&]:[font-size:14px] [&&]:font-[700] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [&&]:[transition-duration:0.3s] [&&]:[transition-property:gap] [&&]:[transition-timing-function:ease] [&&]:p-[13px_0px] [&.cover-link:hover]:gap-x-[30px] [&.cover-link:hover]:gap-y-[30px] [a&:focus-visible]:[outline-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" href="#learning-stages"
         >{{ $tr("Explore our learning journey ")
         }}<ArrowUpRight :size="19" aria-hidden="true"
       /></a>
     </div>
   </section>
-  <nav class="academic-links" :aria-label="$tr('On this page')">
-    <div class="container">
-      <a href="#curriculum">{{ $tr("Our approach") }}</a
-      ><a href="#learning-stages">{{ $tr("Learning stages") }}</a
-      ><a href="#character">{{ $tr("Beyond the classroom") }}</a
-      ><RouterLink to="/academic-calendar"
+  <nav class="academic-links [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[border-bottom-color:rgb(220,_229,_243)] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:1px]" :aria-label="$tr('On this page')">
+    <div class="container [&&&]:flex [&&&]:flex-wrap [@media(max-width:640px)]:[&&&]:justify-start [@media(width>640px)]:[&&&]:justify-between [@media(max-width:640px)]:[&&&]:gap-x-[24px] [@media(width>640px)]:[&&&]:gap-x-[12px] [@media(max-width:640px)]:[&&&]:gap-y-[0px] [@media(width>640px)]:[&&&]:gap-y-[12px]">
+      <a class="[&&]:inline-flex [&&]:items-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[border-bottom-color:transparent] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:2px] [@media(max-width:640px)]:[&&]:[font-size:12px] [@media(width>640px)]:[&&]:[font-size:14px] [&&]:font-[700] [&&]:[color:rgb(93,_110,_134)] [&&]:[transition-behavior:normal,_normal] [&&]:[transition-delay:0s,_0s] [&&]:[transition-duration:0.25s,_0.25s] [&&]:[transition-property:color,_border-color] [&&]:[transition-timing-function:ease,_ease] [@media(max-width:640px)]:[&&]:p-[14px_0px] [@media(width>640px)]:[&&]:p-[21px_0px] [.academic-links_a&:hover]:[color:rgb(41,_78,_158)] [.academic-links_a&:hover]:[border-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" href="#curriculum">{{ $tr("Our approach") }}</a
+      ><a class="[&&]:inline-flex [&&]:items-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[border-bottom-color:transparent] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:2px] [@media(max-width:640px)]:[&&]:[font-size:12px] [@media(width>640px)]:[&&]:[font-size:14px] [&&]:font-[700] [&&]:[color:rgb(93,_110,_134)] [&&]:[transition-behavior:normal,_normal] [&&]:[transition-delay:0s,_0s] [&&]:[transition-duration:0.25s,_0.25s] [&&]:[transition-property:color,_border-color] [&&]:[transition-timing-function:ease,_ease] [@media(max-width:640px)]:[&&]:p-[14px_0px] [@media(width>640px)]:[&&]:p-[21px_0px] [.academic-links_a&:hover]:[color:rgb(41,_78,_158)] [.academic-links_a&:hover]:[border-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" href="#learning-stages">{{ $tr("Learning stages") }}</a
+      ><a class="[&&]:inline-flex [&&]:items-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[border-bottom-color:transparent] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:2px] [@media(max-width:640px)]:[&&]:[font-size:12px] [@media(width>640px)]:[&&]:[font-size:14px] [&&]:font-[700] [&&]:[color:rgb(93,_110,_134)] [&&]:[transition-behavior:normal,_normal] [&&]:[transition-delay:0s,_0s] [&&]:[transition-duration:0.25s,_0.25s] [&&]:[transition-property:color,_border-color] [&&]:[transition-timing-function:ease,_ease] [@media(max-width:640px)]:[&&]:p-[14px_0px] [@media(width>640px)]:[&&]:p-[21px_0px] [.academic-links_a&:hover]:[color:rgb(41,_78,_158)] [.academic-links_a&:hover]:[border-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" href="#character">{{ $tr("Beyond the classroom") }}</a
+      ><RouterLink class="[&&]:inline-flex [&&]:items-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[border-bottom-color:transparent] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:2px] [@media(max-width:640px)]:[&&]:[font-size:12px] [@media(width>640px)]:[&&]:[font-size:14px] [&&]:font-[700] [&&]:[color:rgb(93,_110,_134)] [&&]:[transition-behavior:normal,_normal] [&&]:[transition-delay:0s,_0s] [&&]:[transition-duration:0.25s,_0.25s] [&&]:[transition-property:color,_border-color] [&&]:[transition-timing-function:ease,_ease] [@media(max-width:640px)]:[&&]:p-[14px_0px] [@media(width>640px)]:[&&]:p-[21px_0px] [.academic-links_a&:hover]:[color:rgb(41,_78,_158)] [.academic-links_a&:hover]:[border-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" to="/academic-calendar"
         >{{ $tr("Academic calendar ")
         }}<ArrowUpRight :size="15" aria-hidden="true"
       /></RouterLink>
     </div>
   </nav>
-  <section id="curriculum" class="section academic-intro">
+  <section id="curriculum" class="section academic-intro [section&[id]]:[scroll-margin-top:160px]">
     <div class="container">
-      <div class="intro-heading">
+      <div class="intro-heading [&&]:grid [@media(max-width:640px)]:[&&]:grid-cols-[1fr] [@media(width>640px)]:[&&]:grid-cols-[1fr_1fr] [&&]:items-center [@media(max-width:900px)]:[&&]:gap-x-[30px] [@media(width>900px)]:[&&]:gap-x-[75px] [@media(max-width:900px)]:[&&]:gap-y-[30px] [@media(width>900px)]:[&&]:gap-y-[75px]">
         <div>
           <span class="eyebrow">{{ $tr("Academic Affairs") }}</span>
-          <h2>
+          <h2 class="[&&]:[font-size:clamp(30px,_3.2vw,_45px)] [&&]:leading-[1.2] [&&]:[color:rgb(41,_78,_158)] [&&]:m-[14px_0px_20px_0px]">
             {{ $tr("Learning with depth.") }}<br />{{
               $tr("Growing with purpose.")
             }}
           </h2>
         </div>
         <div>
-          <p>
+          <p class="[&&]:[color:rgb(93,_110,_134)] [.intro-heading_p_+_p&]:mt-[14px]">
             {{
               $tr(
                 " At PIISC, our educational vision brings academic learning and Islamic values together. We aim to help children develop understanding, confidence and care in the way they approach the world. ",
               )
             }}
           </p>
-          <p>
+          <p class="[&&]:[color:rgb(93,_110,_134)] [.intro-heading_p_+_p&]:mt-[14px]">
             {{
               $tr(
                 " A strong foundation grows through questions, practice, encouragement and the opportunity to learn alongside others. ",
@@ -185,56 +185,56 @@ const enrichment = [
           </p>
         </div>
       </div>
-      <div class="academic-pillars">
-        <article v-for="(pillar, index) in pillars" :key="pillar.title">
-          <div class="pillar-top">
-            <component :is="pillar.icon" :size="28" aria-hidden="true" /><span
+      <div class="academic-pillars [&&]:mt-[38px] [&&]:grid [@media(max-width:640px)]:[&&]:grid-cols-[1fr] [@media(width>640px)]:[&&]:grid-cols-[repeat(3,_1fr)] [@media(max-width:900px)]:[&&]:gap-x-[14px] [@media(width>900px)]:[&&]:gap-x-[24px] [@media(max-width:900px)]:[&&]:gap-y-[14px] [@media(width>900px)]:[&&]:gap-y-[24px]">
+        <article class="[&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:white] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[transition-behavior:normal,_normal,_normal] [&&]:[transition-delay:0s,_0s,_0s] [&&]:[transition-duration:0.3s,_0.3s,_0.3s] [&&]:[transition-property:transform,_box-shadow,_border-color] [&&]:[transition-timing-function:ease,_ease,_ease] [@media(max-width:900px)]:[&&]:p-[22px] [@media(width>900px)]:[&&]:p-[30px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(221,_229,_241)] [.academic-pillars_article&:hover]:[box-shadow:rgba(23,_58,_106,_0.05)_0px_16px_32px] [.academic-pillars_article&:hover]:[transform:translateY(-6px)] [.academic-pillars_article&:hover]:[border-color:rgb(217,_179,_61)]" v-for="(pillar, index) in pillars" :key="pillar.title">
+          <div class="pillar-top [&&]:mb-[28px] [&&]:flex [&&]:items-center [&&]:justify-between [&&]:[color:rgb(41,_78,_158)]">
+            <component :is="pillar.icon" :size="28" aria-hidden="true" /><span class="[&&]:[color:rgb(177,_138,_40)] [&&]:[font-size:12px]"
               >0{{ $tr(index + 1) }}</span
             >
           </div>
-          <h3>{{ $tr(pillar.title) }}</h3>
-          <p>{{ $tr(pillar.text) }}</p>
+          <h3 class="[&&]:mb-[12px] [&&]:[font-size:21px]">{{ $tr(pillar.title) }}</h3>
+          <p class="[&&]:[color:rgb(93,_110,_134)] [&&]:[font-size:15px]">{{ $tr(pillar.text) }}</p>
         </article>
       </div>
     </div>
   </section>
-  <section id="learning-stages" class="section stages-section">
+  <section id="learning-stages" class="section stages-section [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(244,_247,_252)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [section&[id]]:[scroll-margin-top:160px]">
     <div class="container">
       <span class="eyebrow">{{ $tr("The learning journey") }}</span>
-      <h2>{{ $tr("Room to grow, at every stage.") }}</h2>
-      <p class="section-lead">
+      <h2 class="[&&]:[font-size:clamp(30px,_3.2vw,_45px)] [&&]:leading-[1.2] [&&]:[color:rgb(41,_78,_158)] [&&]:m-[14px_0px_20px_0px]">{{ $tr("Room to grow, at every stage.") }}</h2>
+      <p class="section-lead [&&]:[color:rgb(93,_110,_134)] [&&]:max-w-[650px]">
         {{
           $tr(
             " Explore the focus of each stage, from the first school experiences to preparation for further study. ",
           )
         }}
       </p>
-      <div class="academic-directory">
-        <div class="academic-stage-list">
+      <div class="academic-directory [&&]:mt-[35px] [&&]:grid [@media(max-width:760px)]:[&&]:grid-cols-[1fr] [@media(width>760px)_and_(max-width:1000px)]:[&&]:grid-cols-[minmax(0px,_1fr)_300px] [@media(width>1000px)]:[&&]:grid-cols-[minmax(0px,_1fr)_340px] [@media(max-width:1000px)]:[&&]:gap-x-[25px] [@media(width>1000px)]:[&&]:gap-x-[48px] [@media(max-width:1000px)]:[&&]:gap-y-[25px] [@media(width>1000px)]:[&&]:gap-y-[48px] [&&]:[align-items:start]">
+        <div class="academic-stage-list [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [@media(max-width:760px)]:[&&]:[padding-inline-end:22px] [@media(max-width:760px)]:[&&]:[padding-inline-start:22px] [&&]:p-[0px_32px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(221,_229,_241)]">
           <article
             v-for="(stage, index) in stages"
             :key="stage.id"
-            class="academic-stage-entry"
+            class="academic-stage-entry [&&]:p-[30px_0px] [.academic-stage-entry_+_&.academic-stage-entry]:[border-top-color:rgb(221,_229,_241)] [.academic-stage-entry_+_&.academic-stage-entry]:[border-top-style:solid] [.academic-stage-entry_+_&.academic-stage-entry]:[border-top-width:1px]"
           >
-            <div class="stage-entry-heading">
-              <span class="stage-number">0{{ $tr(index + 1) }}</span>
+            <div class="stage-entry-heading [&&]:mb-[18px] [&&]:flex [&&]:items-center [&&]:gap-x-[18px] [&&]:gap-y-[18px]">
+              <span class="stage-number [&&]:grid [&&]:h-[48px] [&&]:w-[48px] [&&]:[flex-shrink:0] [&&]:items-center [&&]:[justify-items:center] [&&]:[border-bottom-left-radius:50%] [&&]:[border-bottom-right-radius:50%] [&&]:[border-top-left-radius:50%] [&&]:[border-top-right-radius:50%] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_248,_216)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:17px]">0{{ $tr(index + 1) }}</span>
               <div>
-                <h3>{{ $tr(stage.label) }}</h3>
-                <span class="stage-range">{{ $tr(stage.range) }}</span>
+                <h3 class="[&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:25px] [&&]:mb-[4px] [&&]:leading-[1.3]">{{ $tr(stage.label) }}</h3>
+                <span class="stage-range [&&]:[color:rgb(102,_120,_148)] [&&]:[font-size:13px]">{{ $tr(stage.range) }}</span>
               </div>
             </div>
-            <p>{{ $tr(stage.text) }}</p>
-            <h4>{{ $tr("Learning focus") }}</h4>
-            <ul>
-              <li v-for="point in stage.points" :key="point">
-                <Check :size="17" aria-hidden="true" />{{ $tr(point) }}
+            <p class="[&&]:[color:rgb(93,_110,_134)] [&&]:[font-size:15px] [&&]:leading-[1.8]">{{ $tr(stage.text) }}</p>
+            <h4 class="[&&]:[color:rgb(10,_41,_72)] [&&]:[font-size:14px] [&&]:mt-[20px] [&&]:font-[700]">{{ $tr("Learning focus") }}</h4>
+            <ul class="[&&]:mt-[12px] [&&]:grid [&&]:gap-x-[9px] [&&]:gap-y-[9px] [&&]:[list-style-image:initial] [&&]:[list-style-position:initial] [&&]:[list-style-type:none] [&&]:p-[0px]">
+              <li class="[&&]:flex [&&]:gap-x-[10px] [&&]:gap-y-[10px] [&&]:[color:rgb(93,_110,_134)] [&&]:[font-size:14px]" v-for="point in stage.points" :key="point">
+                <Check class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(41,_78,_158)]" :size="17" aria-hidden="true" />{{ $tr(point) }}
               </li>
             </ul>
           </article>
         </div>
-        <div class="academic-admissions"><AdmissionContactPanel /></div>
+        <div class="academic-admissions [@media(max-width:760px)]:[&&]:static [@media(width>760px)]:[&&]:sticky [&&]:top-[160px]"><AdmissionContactPanel /></div>
       </div>
-      <p class="academic-note">
+      <p class="academic-note [&&]:[color:rgb(93,_110,_134)] [&&]:mt-[20px] [&&]:max-w-[850px] [&&]:[font-size:13px]">
         {{
           $tr(
             " For current class availability, subject choices, curriculum specifications and examination pathways, please contact our academic team. ",
@@ -243,37 +243,37 @@ const enrichment = [
       </p>
     </div>
   </section>
-  <section id="character" class="section character-section">
-    <div class="container character-layout">
-      <div class="character-photo">
-        <img
+  <section id="character" class="section character-section [section&[id]]:[scroll-margin-top:160px]">
+    <div class="container character-layout [&&]:grid [@media(max-width:640px)]:[&&]:grid-cols-[1fr] [@media(width>640px)]:[&&]:grid-cols-[1fr_1fr] [&&]:items-center [@media(max-width:900px)]:[&&]:gap-x-[30px] [@media(width>900px)]:[&&]:gap-x-[65px] [@media(max-width:900px)]:[&&]:gap-y-[30px] [@media(width>900px)]:[&&]:gap-y-[65px]">
+      <div class="character-photo [&&]:relative [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[border-bottom-left-radius:8px] [&&]:[border-bottom-right-radius:8px] [&&]:[border-top-left-radius:8px] [&&]:[border-top-right-radius:8px]">
+        <img class="[@media(max-width:640px)]:[&&]:h-[330px] [@media(width>640px)]:[&&]:h-[490px] [&&]:w-[100%] [&&]:object-cover [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [&&]:[transition-duration:0.7s] [&&]:[transition-property:transform] [&&]:[transition-timing-function:ease-out] [.character-photo:hover_img&]:[transform:scale(1.035)]"
           :src="creativePhoto"
           :alt="
             $tr('PIISC students displaying their creative classroom projects')
           "
           loading="lazy"
-        /><span>{{ $tr("Discover. Create. Grow.") }}</span>
+        /><span class="[&&]:absolute [&&]:bottom-[0px] [&&]:left-[0px] [&&]:right-[0px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:initial] [&&]:[background-image:linear-gradient(transparent,_rgba(10,_41,_72,_0.9))] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(243,_204,_72)] [&&]:[font-family:Georgia,_serif] [&&]:[font-feature-settings:normal] [&&]:[font-kerning:auto] [&&]:[font-language-override:normal] [&&]:[font-optical-sizing:auto] [&&]:[font-size:24px] [&&]:[font-size-adjust:none] [&&]:[font-stretch:normal] [&&]:[font-style:normal] [&&]:[font-variant:normal] [&&]:[font-variant-alternates:normal] [&&]:[font-variant-caps:normal] [&&]:[font-variant-east-asian:normal] [&&]:[font-variant-emoji:normal] [&&]:[font-variant-ligatures:normal] [&&]:[font-variant-numeric:normal] [&&]:[font-variant-position:normal] [&&]:[font-variation-settings:normal] [&&]:font-[normal] [&&]:leading-[normal] [&&]:p-[40px_25px_22px_25px]">{{ $tr("Discover. Create. Grow.") }}</span>
       </div>
       <div>
         <span class="eyebrow">{{ $tr("Beyond the classroom") }}</span>
-        <h2>{{ $tr("Education shapes more than knowledge.") }}</h2>
-        <p>
+        <h2 class="[&&]:[font-size:clamp(30px,_3.2vw,_45px)] [&&]:leading-[1.2] [&&]:[color:rgb(41,_78,_158)] [&&]:m-[14px_0px_20px_0px]">{{ $tr("Education shapes more than knowledge.") }}</h2>
+        <p class="[&&]:[color:rgb(93,_110,_134)]">
           {{
             $tr(
               " Creativity, kindness and personal responsibility are part of our vision for a well-rounded education. ",
             )
           }}
         </p>
-        <div class="enrichment-list">
-          <article v-for="item in enrichment" :key="item.title">
-            <component :is="item.icon" :size="24" aria-hidden="true" />
+        <div class="enrichment-list [&&]:mt-[26px]">
+          <article class="[&&]:flex [&&]:gap-x-[16px] [&&]:gap-y-[16px] [&&]:[border-bottom-color:rgb(220,_229,_243)] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:1px] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [&&]:[transition-duration:0.25s] [&&]:[transition-property:transform] [&&]:[transition-timing-function:ease] [&&]:p-[18px_0px] [.enrichment-list_article&:hover]:[transform:translateX(4px)]" v-for="item in enrichment" :key="item.title">
+            <component class="[&&]:[flex-shrink:0] [&&]:[color:rgb(41,_78,_158)]" :is="item.icon" :size="24" aria-hidden="true" />
             <div>
-              <h3>{{ $tr(item.title) }}</h3>
-              <p>{{ $tr(item.text) }}</p>
+              <h3 class="[&&]:mb-[5px] [&&]:[font-size:18px]">{{ $tr(item.title) }}</h3>
+              <p class="[&&]:[color:rgb(93,_110,_134)] [&&]:[font-size:14px]">{{ $tr(item.text) }}</p>
             </div>
           </article>
         </div>
-        <RouterLink to="/extra-curricular-activities" class="cover-link"
+        <RouterLink to="/extra-curricular-activities" class="cover-link [&&&]:mt-[18px] [&&&]:inline-flex [&&&]:items-center [&&&]:gap-x-[22px] [&&&]:gap-y-[22px] [&&&]:[border-bottom-color:rgb(243,_204,_72)] [&&&]:[border-bottom-style:solid] [&&&]:[border-bottom-width:1px] [&&&]:[color:rgb(41,_78,_158)] [&&&]:[font-size:14px] [&&&]:font-[700] [&&&]:[transition-behavior:normal] [&&&]:[transition-delay:0s] [&&&]:[transition-duration:0.3s] [&&&]:[transition-property:gap] [&&&]:[transition-timing-function:ease] [&&&]:p-[13px_0px] [&.cover-link:hover]:gap-x-[30px] [&.cover-link:hover]:gap-y-[30px] [a&:focus-visible]:[outline-color:rgb(217,_179,_61)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]"
           >{{ $tr("Explore athletics & activities ")
           }}<ArrowUpRight :size="19" aria-hidden="true"
         /></RouterLink>
@@ -281,561 +281,3 @@ const enrichment = [
     </div>
   </section>
 </template>
-<style scoped>
-.academic-cover {
-  position: relative;
-  min-height: 480px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  background: #0a2948;
-  color: white;
-}
-.academic-cover > img,
-.academic-cover-shade {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 40%;
-}
-.academic-cover-shade {
-  background: linear-gradient(100deg, #294e9ef5, #294e9edb 65%, #0a2948b8);
-}
-.academic-cover-content {
-  position: relative;
-  padding-block: 35px 55px;
-}
-.academic-cover nav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #edf2fa;
-  font-size: 13px;
-  margin-bottom: 36px;
-}
-.academic-kicker {
-  color: #f3cc48;
-  font-weight: 800;
-  letter-spacing: 0.19em;
-  font-size: 12px;
-}
-.academic-cover h1 {
-  font-size: clamp(38px, 4.7vw, 66px);
-  line-height: 1.12;
-  margin: 16px 0 20px;
-  color: white;
-}
-.academic-cover h1 em {
-  color: #f3cc48;
-}
-.academic-cover p {
-  max-width: 520px;
-  font-size: 17px;
-  color: #edf2fa;
-}
-.cover-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 22px;
-  padding: 13px 0;
-  margin-top: 18px;
-  border-bottom: 1px solid #f3cc48;
-  color: #f3cc48;
-  font-size: 14px;
-  font-weight: 700;
-  transition: gap 0.3s;
-}
-.cover-link:hover {
-  gap: 30px;
-}
-.academic-links {
-  background: #fff;
-  border-bottom: 1px solid #dce5f3;
-}
-.academic-links > .container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.academic-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 21px 0;
-  border-bottom: 2px solid transparent;
-  font-size: 14px;
-  font-weight: 700;
-  color: #5d6e86;
-  transition:
-    color 0.25s,
-    border-color 0.25s;
-}
-.academic-links a:hover {
-  color: #294e9e;
-  border-color: #d9b33d;
-}
-section[id] {
-  scroll-margin-top: 160px;
-}
-h2 {
-  font-size: clamp(30px, 3.2vw, 45px);
-  line-height: 1.2;
-  color: #294e9e;
-  margin: 14px 0 20px;
-}
-p {
-  color: #5d6e86;
-}
-.intro-heading {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 75px;
-  align-items: center;
-}
-.intro-heading p + p {
-  margin-top: 14px;
-}
-.academic-pillars {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 38px;
-}
-.academic-pillars article {
-  padding: 30px;
-  border: 1px solid #dde5f1;
-  border-radius: 6px;
-  background: white;
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s,
-    border-color 0.3s;
-}
-.academic-pillars article:hover {
-  transform: translateY(-6px);
-  border-color: #d9b33d;
-  box-shadow: 0 16px 32px #173a6a0d;
-}
-.pillar-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 28px;
-  color: #294e9e;
-}
-.pillar-top span {
-  font-size: 12px;
-  color: #b18a28;
-}
-.academic-pillars h3 {
-  font-size: 21px;
-  margin-bottom: 12px;
-}
-.academic-pillars p {
-  font-size: 15px;
-}
-.stages-section {
-  background: #f4f7fc;
-}
-.section-lead {
-  max-width: 650px;
-}
-.academic-directory {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 48px;
-  align-items: start;
-  margin-top: 35px;
-}
-.academic-stage-list {
-  background: #fff;
-  border: 1px solid #dde5f1;
-  border-radius: 6px;
-  padding: 0 32px;
-}
-.academic-stage-entry {
-  padding: 30px 0;
-}
-.academic-stage-entry + .academic-stage-entry {
-  border-top: 1px solid #dde5f1;
-}
-.stage-entry-heading {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 18px;
-}
-.stage-number {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: #fff8d8;
-  color: #294e9e;
-  font-size: 17px;
-}
-.stage-entry-heading h3 {
-  font-size: 25px;
-  color: #294e9e;
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-.stage-range {
-  font-size: 13px;
-  color: #667894;
-}
-.academic-stage-entry p {
-  font-size: 15px;
-  line-height: 1.8;
-}
-.academic-stage-entry h4 {
-  font-size: 14px;
-  color: #0a2948;
-  font-weight: 700;
-  margin-top: 20px;
-}
-.academic-stage-entry ul {
-  list-style: none;
-  display: grid;
-  gap: 9px;
-  margin-top: 12px;
-  padding: 0;
-}
-.academic-stage-entry li {
-  display: flex;
-  gap: 10px;
-  font-size: 14px;
-  color: #5d6e86;
-}
-.academic-stage-entry li svg {
-  flex-shrink: 0;
-  color: #294e9e;
-  margin-top: 3px;
-}
-.academic-admissions {
-  position: sticky;
-  top: 160px;
-}
-.character-section .cover-link {
-  color: #294e9e;
-}
-a:focus-visible {
-  outline: 2px solid #d9b33d;
-  outline-offset: 5px;
-}
-@media (max-width: 1000px) {
-  .academic-directory {
-    grid-template-columns: minmax(0, 1fr) 300px;
-    gap: 25px;
-  }
-}
-@media (max-width: 760px) {
-  .academic-directory {
-    grid-template-columns: 1fr;
-  }
-  .academic-admissions {
-    position: static;
-  }
-  .academic-stage-list {
-    padding-inline: 22px;
-  }
-}
-.stage-selectors {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  margin: 32px 0 20px;
-}
-.stage-selectors button {
-  text-align: left;
-  padding: 17px;
-  border: 1px solid #dde5f1;
-  border-radius: 6px;
-  background: white;
-  color: #173a6a;
-  font-weight: 700;
-  font-size: 15px;
-  transition:
-    background 0.25s,
-    color 0.25s,
-    transform 0.25s,
-    box-shadow 0.25s;
-}
-.stage-selectors button span {
-  display: block;
-  font-size: 11px;
-  font-weight: 400;
-  margin-top: 6px;
-}
-.stage-selectors button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px #294e9e12;
-}
-.stage-selectors button.active {
-  color: white;
-  background: #294e9e;
-  border-color: #294e9e;
-}
-.stage-panel {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  background: white;
-  border: 1px solid #dde5f1;
-  border-radius: 8px;
-  overflow: hidden;
-  min-height: 410px;
-}
-.stage-image {
-  min-height: 360px;
-  position: relative;
-}
-.stage-image img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 45%;
-}
-.stage-copy {
-  padding: 36px;
-}
-.stage-copy h3 {
-  font:
-    500 32px/1.2 Georgia,
-    serif;
-  color: #294e9e;
-  margin: 12px 0 16px;
-}
-.stage-copy p {
-  font-size: 15px;
-}
-.stage-copy ul {
-  list-style: none;
-  padding: 0;
-  margin: 22px 0;
-}
-.stage-copy li {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-  margin-top: 10px;
-  color: #536989;
-  font-size: 14px;
-}
-.stage-copy li svg {
-  flex-shrink: 0;
-  color: #294e9e;
-}
-.stage-copy > a {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  color: #294e9e;
-  font-size: 14px;
-  font-weight: 700;
-}
-.stage-copy > a:hover {
-  text-decoration: underline;
-}
-.stage-symbol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  color: #f3cc48;
-  background: radial-gradient(circle at top right, #315caf, #0a2948);
-  min-height: 280px;
-}
-.stage-symbol span {
-  font-size: 26px;
-  font-family: Georgia, serif;
-}
-.academic-note {
-  margin-top: 20px;
-  font-size: 13px;
-  max-width: 850px;
-}
-.character-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 65px;
-  align-items: center;
-}
-.character-photo {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-}
-.character-photo img {
-  width: 100%;
-  height: 490px;
-  object-fit: cover;
-  transition: transform 0.7s ease-out;
-}
-.character-photo:hover img {
-  transform: scale(1.035);
-}
-.character-photo > span {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px 25px 22px;
-  background: linear-gradient(transparent, #0a2948e6);
-  color: #f3cc48;
-  font:
-    24px Georgia,
-    serif;
-}
-.enrichment-list {
-  margin-top: 26px;
-}
-.enrichment-list article {
-  display: flex;
-  gap: 16px;
-  padding: 18px 0;
-  border-bottom: 1px solid #dce5f3;
-  transition: transform 0.25s;
-}
-.enrichment-list article:hover {
-  transform: translateX(4px);
-}
-.enrichment-list svg {
-  flex-shrink: 0;
-  color: #294e9e;
-}
-.enrichment-list h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-.enrichment-list p {
-  font-size: 14px;
-}
-.academic-next {
-  padding: 60px 0;
-  background: #0a2948;
-  color: white;
-}
-.academic-next > .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 55px;
-}
-.academic-next h2 {
-  color: white;
-  max-width: 700px;
-  font-size: 36px;
-}
-.academic-next p {
-  color: #dce6f8;
-}
-.academic-actions {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.academic-actions > a:last-child {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #f3cc48;
-  font-size: 13px;
-}
-.stage-reveal-enter-active,
-.stage-reveal-leave-active {
-  transition:
-    opacity 0.18s,
-    transform 0.18s;
-}
-.stage-reveal-enter-from,
-.stage-reveal-leave-to {
-  opacity: 0;
-  transform: translateY(8px);
-}
-@media (max-width: 900px) {
-  .intro-heading,
-  .character-layout {
-    gap: 30px;
-  }
-  .academic-pillars {
-    gap: 14px;
-  }
-  .academic-pillars article {
-    padding: 22px;
-  }
-  .stage-selectors {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .stage-copy {
-    padding: 26px;
-  }
-  .academic-next > .container {
-    gap: 30px;
-  }
-}
-@media (max-width: 640px) {
-  .academic-cover {
-    min-height: 450px;
-  }
-  .academic-cover-shade {
-    background: #294e9ee0;
-  }
-  .academic-links > .container {
-    justify-content: flex-start;
-    gap: 0 24px;
-  }
-  .academic-links a {
-    padding: 14px 0;
-    font-size: 12px;
-  }
-  .intro-heading,
-  .academic-pillars,
-  .stage-panel,
-  .character-layout {
-    grid-template-columns: 1fr;
-  }
-  .stage-selectors {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .stage-image {
-    min-height: 260px;
-  }
-  .stage-symbol {
-    min-height: 180px;
-  }
-  .stage-symbol svg {
-    width: 65px;
-    height: 65px;
-  }
-  .stage-copy h3 {
-    font-size: 28px;
-  }
-  .character-photo img {
-    height: 330px;
-  }
-  .academic-next > .container {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .academic-next h2 {
-    font-size: 30px;
-  }
-  .academic-actions {
-    width: 100%;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .stage-reveal-enter-active,
-  .stage-reveal-leave-active {
-    transition: none;
-  }
-}
-</style>

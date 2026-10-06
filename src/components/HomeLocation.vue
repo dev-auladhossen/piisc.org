@@ -10,63 +10,34 @@ const phoneUrl = `tel:${headerContacts.phone.replace(/\s/g, '')}`
 </script>
 
 <template>
-  <section class="home-location" aria-labelledby="home-location-title">
-    <div class="location-width">
-      <header class="location-heading">
-        <span class="location-label">{{ tr('LOCATION', 'অবস্থান') }}</span>
-        <h2 id="home-location-title">{{ tr('Find PIISC', 'পিআইআইএসসি খুঁজে নিন') }}</h2>
-        <p>{{ tr('Visit us in Ashulia, Savar, Dhaka.', 'ঢাকার সাভারের আশুলিয়ায় আমাদের ক্যাম্পাসে আসুন।') }}</p>
+  <section class="home-location [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_249,_236)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [@media(max-width:600px)]:[&&]:p-[48px_0px_60px_0px] [@media(width>600px)]:[&&]:p-[72px_0px_84px_0px]" aria-labelledby="home-location-title">
+    <div class="location-width [&&]:max-w-[1500px] [&&]:[margin-inline-end:auto] [&&]:[margin-inline-start:auto] [&&]:w-[calc(100%_-_clamp(32px,_6.5vw,_128px))]">
+      <header class="location-heading [@media(max-width:600px)]:[&&]:mb-[26px] [@media(width>600px)]:[&&]:mb-[36px] [&&]:text-center">
+        <span class="location-label [&&]:inline-block [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(237,_243,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:100px] [&&]:[border-bottom-right-radius:100px] [&&]:[border-top-left-radius:100px] [&&]:[border-top-right-radius:100px] [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:12px] [&&]:font-[800] [&&]:tracking-[0.17em] [&&]:p-[8px_18px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(199,_217,_250)]">{{ tr('LOCATION', 'অবস্থান') }}</span>
+        <h2 class="[&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:clamp(34px,_3.5vw,_52px)] [&&]:m-[13px_0px_8px_0px]" id="home-location-title">{{ tr('Find PIISC', 'পিআইআইএসসি খুঁজে নিন') }}</h2>
+        <p class="[&&]:[color:rgb(83,_105,_137)] [&&]:[font-size:16px]">{{ tr('Visit us in Ashulia, Savar, Dhaka.', 'ঢাকার সাভারের আশুলিয়ায় আমাদের ক্যাম্পাসে আসুন।') }}</p>
       </header>
-      <div class="location-card">
-        <div class="map-wrap">
-          <iframe
+      <div class="location-card [&&]:grid [@media(max-width:850px)]:[&&]:grid-cols-[1fr] [@media(width>850px)]:[&&]:grid-cols-[minmax(0px,_1.9fr)_minmax(300px,_0.9fr)] [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[border-bottom-left-radius:12px] [&&]:[border-bottom-right-radius:12px] [&&]:[border-top-left-radius:12px] [&&]:[border-top-right-radius:12px] [&&]:[box-shadow:rgba(41,_78,_158,_0.08)_0px_20px_48px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_227,_240)]">
+        <div class="map-wrap [@media(max-width:600px)]:[&&]:min-h-[300px] [@media(width>600px)_and_(max-width:850px)]:[&&]:min-h-[350px] [@media(width>850px)]:[&&]:min-h-[440px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(233,_239,_250)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:relative">
+          <iframe class="[&&]:block [&&]:h-[100%] [@media(max-width:600px)]:[&&]:min-h-[300px] [@media(width>600px)_and_(max-width:850px)]:[&&]:min-h-[350px] [@media(width>850px)]:[&&]:min-h-[440px] [&&]:w-[100%] [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-width:0px] [&&]:[border-style:none] [&&]:[border-color:currentcolor]"
             :src="schoolMapEmbedUrl"
             :title="tr('Google Map showing the PIISC address in Ashulia', 'আশুলিয়ায় পিআইআইএসসির ঠিকানার গুগল ম্যাপ')"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen
           ></iframe>
-          <a class="map-open" :href="schoolMapUrl" target="_blank" rel="noopener noreferrer" :aria-label="tr('Open the exact school location in Google Maps', 'গুগল ম্যাপে স্কুলের সঠিক অবস্থান খুলুন')">
-            <span>{{ tr('Open in Google Maps', 'গুগল ম্যাপে খুলুন') }} <ArrowUpRight :size="18" aria-hidden="true" /></span>
+          <a class="map-open [&&]:absolute [&&]:bottom-[0px] [&&]:left-[0px] [&&]:right-[0px] [&&]:top-[0px] [&&]:flex [&&]:items-end [&&]:justify-end [&&]:[color:rgb(255,_255,_255)] [&&]:p-[16px]" :href="schoolMapUrl" target="_blank" rel="noopener noreferrer" :aria-label="tr('Open the exact school location in Google Maps', 'গুগল ম্যাপে স্কুলের সঠিক অবস্থান খুলুন')">
+            <span class="[&&]:inline-flex [&&]:items-center [&&]:gap-x-[7px] [&&]:gap-y-[7px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(35,_75,_145)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[font-size:14px] [&&]:font-[800] [&&]:[box-shadow:rgba(0,_0,_0,_0.2)_0px_4px_16px] [&&]:p-[10px_14px] [.map-open:hover_span&]:[background-color:rgb(23,_57,_105)] [.map-open:focus-visible_span&]:[background-color:rgb(23,_57,_105)]">{{ tr('Open in Google Maps', 'গুগল ম্যাপে খুলুন') }} <ArrowUpRight :size="18" aria-hidden="true" /></span>
           </a>
         </div>
-        <aside class="location-details">
-          <div class="location-details-heading"><MapPin :size="24" aria-hidden="true" /><h3>{{ tr('Our location', 'আমাদের অবস্থান') }}</h3></div>
-          <div class="location-detail"><MapPin :size="20" aria-hidden="true" /><div><strong>{{ tr('Peace International Islamic School & College', 'পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজ') }}</strong><p>{{ tr(address, 'দ্য হোয়াইট প্যালেস ইউনিক, ১৩৪৯ ঢাকা–আশুলিয়া মহাসড়ক, বাইপাইল') }}</p></div></div>
-          <div class="location-detail"><Phone :size="20" aria-hidden="true" /><a :href="phoneUrl">{{ headerContacts.phone.trim() }}</a></div>
-          <div class="location-detail"><Mail :size="20" aria-hidden="true" /><a :href="`mailto:${headerContacts.email}`">{{ headerContacts.email }}</a></div>
-          <a class="map-directions" :href="schoolDirectionsUrl" target="_blank" rel="noopener noreferrer">{{ tr('Get directions on Google Maps', 'গুগল ম্যাপে পথ দেখুন') }} <ArrowUpRight :size="19" aria-hidden="true" /></a>
+        <aside class="location-details [&&]:flex [&&]:flex-col [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(35,_75,_145)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(255,_255,_255)] [@media(max-width:850px)]:[&&]:gap-x-[0px] [@media(max-width:850px)]:[&&]:gap-y-[0px] [@media(max-width:600px)]:[&&]:p-[27px_23px] [@media(width>600px)]:[&&]:p-[34px_30px]">
+          <div class="location-details-heading [&&]:flex [&&]:items-center [&&]:gap-x-[11px] [&&]:gap-y-[11px] [&&]:pb-[16px] [&&]:[border-bottom-color:rgba(255,_255,_255,_0.314)] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:1px]"><MapPin class="[&&]:[color:rgb(229,_181,_50)] [&&]:[flex-basis:auto] [&&]:[flex-grow:0] [&&]:[flex-shrink:0]" :size="24" aria-hidden="true" /><h3 class="[&&]:[font-size:24px] [&&]:m-[0px]">{{ tr('Our location', 'আমাদের অবস্থান') }}</h3></div>
+          <div class="location-detail [&&]:mt-[24px] [&&]:flex [&&]:items-start [&&]:gap-x-[16px] [&&]:gap-y-[16px] [&&]:[font-size:15px] [&&]:leading-[1.6]"><MapPin class="[&&]:[color:rgb(229,_181,_50)] [&&]:[flex-basis:auto] [&&]:[flex-grow:0] [&&]:[flex-shrink:0]" :size="20" aria-hidden="true" /><div><strong class="[&&]:[font-size:15px]">{{ tr('Peace International Islamic School & College', 'পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজ') }}</strong><p class="[&&]:mt-[5px] [&&]:[color:rgb(227,_236,_252)]">{{ tr(address, 'দ্য হোয়াইট প্যালেস ইউনিক, ১৩৪৯ ঢাকা–আশুলিয়া মহাসড়ক, বাইপাইল') }}</p></div></div>
+          <div class="location-detail [&&]:mt-[24px] [&&]:flex [&&]:items-start [&&]:gap-x-[16px] [&&]:gap-y-[16px] [&&]:[font-size:15px] [&&]:leading-[1.6]"><Phone class="[&&]:[color:rgb(229,_181,_50)] [&&]:[flex-basis:auto] [&&]:[flex-grow:0] [&&]:[flex-shrink:0]" :size="20" aria-hidden="true" /><a class="[&&]:[overflow-wrap:anywhere] [.location-detail_a&:hover]:[text-decoration:underline] [.location-detail_a&:hover]:[text-decoration-color:initial] [.location-detail_a&:hover]:[text-decoration-line:underline] [.location-detail_a&:hover]:[text-decoration-style:initial] [.location-detail_a&:hover]:[text-decoration-thickness:initial]" :href="phoneUrl">{{ headerContacts.phone.trim() }}</a></div>
+          <div class="location-detail [&&]:mt-[24px] [&&]:flex [&&]:items-start [&&]:gap-x-[16px] [&&]:gap-y-[16px] [&&]:[font-size:15px] [&&]:leading-[1.6]"><Mail class="[&&]:[color:rgb(229,_181,_50)] [&&]:[flex-basis:auto] [&&]:[flex-grow:0] [&&]:[flex-shrink:0]" :size="20" aria-hidden="true" /><a class="[&&]:[overflow-wrap:anywhere] [.location-detail_a&:hover]:[text-decoration:underline] [.location-detail_a&:hover]:[text-decoration-color:initial] [.location-detail_a&:hover]:[text-decoration-line:underline] [.location-detail_a&:hover]:[text-decoration-style:initial] [.location-detail_a&:hover]:[text-decoration-thickness:initial]" :href="`mailto:${headerContacts.email}`">{{ headerContacts.email }}</a></div>
+          <a class="map-directions [@media(max-width:850px)]:[&&]:mt-[28px] [@media(width>850px)]:[&&]:mt-[auto] [&&]:flex [&&]:min-h-[48px] [&&]:items-center [&&]:justify-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(228,_177,_46)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(20,_45,_86)] [&&]:[font-size:14px] [&&]:text-center [&&]:font-[800] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [&&]:[transition-duration:0.2s] [&&]:[transition-property:background] [&&]:[transition-timing-function:ease] [&&]:p-[10px_16px] [&.map-directions:hover]:[background-color:rgb(240,_197,_78)] [&.map-directions:focus-visible]:[outline-color:white] [&.map-directions:focus-visible]:[outline-style:solid] [&.map-directions:focus-visible]:[outline-width:3px] [&.map-directions:focus-visible]:[outline-offset:3px]" :href="schoolDirectionsUrl" target="_blank" rel="noopener noreferrer">{{ tr('Get directions on Google Maps', 'গুগল ম্যাপে পথ দেখুন') }} <ArrowUpRight :size="19" aria-hidden="true" /></a>
         </aside>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.home-location{background:#fff;padding:72px 0 84px}.location-width{width:calc(100% - clamp(32px,6.5vw,128px));max-width:1500px;margin-inline:auto}.location-heading{text-align:center;margin-bottom:36px}.location-label{display:inline-block;padding:8px 18px;border:1px solid #c7d9fa;background:#edf3ff;border-radius:100px;color:#294e9e;font-size:12px;font-weight:800;letter-spacing:.17em}.location-heading h2{font-size:clamp(34px,3.5vw,52px);color:#294e9e;margin:13px 0 8px}.location-heading p{font-size:16px;color:#536989}.location-card{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(300px,.9fr);border:1px solid #dce3f0;border-radius:12px;overflow:hidden;box-shadow:0 20px 48px #294e9e14}.map-wrap{min-height:440px;background:#e9effa}.map-wrap iframe{display:block;width:100%;height:100%;min-height:440px;border:0}.location-details{background:#234b91;color:#fff;padding:34px 30px;display:flex;flex-direction:column}.location-details-heading{display:flex;gap:11px;align-items:center;border-bottom:1px solid #ffffff50;padding-bottom:16px}.location-details-heading svg,.location-detail>svg{color:#e5b532;flex:none}.location-details-heading h3{font-size:24px;margin:0}.location-detail{display:flex;gap:16px;align-items:flex-start;margin-top:24px;font-size:15px;line-height:1.6}.location-detail strong{font-size:15px}.location-detail p{margin-top:5px;color:#e3ecfc}.location-detail a{overflow-wrap:anywhere}.location-detail a:hover{text-decoration:underline}.map-directions{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 16px;margin-top:auto;border-radius:6px;background:#e4b12e;color:#142d56;font-size:14px;font-weight:800;text-align:center;transition:background .2s}.map-directions:hover{background:#f0c54e}.map-directions:focus-visible{outline:3px solid white;outline-offset:3px}@media(max-width:850px){.location-card{grid-template-columns:1fr}.map-wrap,.map-wrap iframe{min-height:350px}.location-details{gap:0}.map-directions{margin-top:28px}}@media(max-width:600px){.home-location{padding:48px 0 60px}.location-heading{margin-bottom:26px}.map-wrap,.map-wrap iframe{min-height:300px}.location-details{padding:27px 23px}}
-</style>
-<style scoped>
-.home-location { background: #fff9ec; }
-.map-wrap { position: relative; }
-.map-open {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 16px;
-  color: #fff;
-}
-.map-open span {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 14px;
-  border-radius: 6px;
-  background: #234b91;
-  font-size: 14px;
-  font-weight: 800;
-  box-shadow: 0 4px 16px #0003;
-}
-.map-open:hover span, .map-open:focus-visible span { background: #173969; }
-</style>

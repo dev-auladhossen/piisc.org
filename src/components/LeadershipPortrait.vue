@@ -5,8 +5,8 @@ const failed = ref(false);
 </script>
 
 <template>
-  <div class="leadership-portrait">
-    <img
+  <div class="leadership-portrait w-[210px] [aspect-ratio:3_/_3.5] overflow-hidden [border:3px_solid_#bb9952] rounded-[8px] [background:#e8edf3] [box-shadow:0_12px_30px_#09264520]">
+    <img class="block w-[100%] h-[100%] object-cover [object-position:center_top]"
       v-if="!failed"
       :src="leader.photo"
       :alt="$tr(leader.name)"
@@ -17,48 +17,11 @@ const failed = ref(false);
     />
     <div
       v-else
-      class="portrait-placeholder"
+      class="portrait-placeholder grid place-items-center h-[100%] [background:linear-gradient(145deg,_#edf1f7,_#ccd7e5)] [color:#163c63]"
       :aria-label="$tr(leader.name)"
       role="img"
     >
-      <span>{{ $tr(leader.initials) }}</span>
+      <span class="grid place-items-center w-[110px] h-[110px] [border:1px_solid_#163c6330] rounded-[50%] [font:500_40px_Georgia,_serif]">{{ $tr(leader.initials) }}</span>
     </div>
   </div>
 </template>
-
-<style scoped>
-.leadership-portrait {
-  width: 210px;
-  aspect-ratio: 3 / 3.5;
-  overflow: hidden;
-  border: 3px solid #bb9952;
-  border-radius: 8px;
-  background: #e8edf3;
-  box-shadow: 0 12px 30px #09264520;
-}
-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-}
-.portrait-placeholder {
-  display: grid;
-  place-items: center;
-  height: 100%;
-  background: linear-gradient(145deg, #edf1f7, #ccd7e5);
-  color: #163c63;
-}
-.portrait-placeholder span {
-  display: grid;
-  place-items: center;
-  width: 110px;
-  height: 110px;
-  border: 1px solid #163c6330;
-  border-radius: 50%;
-  font:
-    500 40px Georgia,
-    serif;
-}
-</style>

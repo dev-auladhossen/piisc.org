@@ -165,10 +165,10 @@ const contacts = [
 </script>
 
 <template>
-  <section class="journey-section" aria-labelledby="home-admission-title">
-    <div class="journey-width">
-      <p class="journey-eyebrow">{{ tr("ADMISSIONS", "ভর্তি") }}</p>
-      <h2 id="home-admission-title" class="journey-title">
+  <section class="journey-section [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [@media(max-width:700px)]:[&&]:p-[52px_0px] [@media(width>700px)]:[&&]:p-[74px_0px] [&.journey-section:nth-of-type(1)]:[background-color:rgb(242,_246,_252)] [&.journey-section:nth-of-type(3)]:[background-color:rgb(255,_248,_233)]" aria-labelledby="home-admission-title">
+    <div class="journey-width [&&]:w-[calc(100%_-_clamp(32px,_6.5vw,_128px))] [&&]:max-w-[1500px] [&&]:[margin-inline-end:auto] [&&]:[margin-inline-start:auto]">
+      <p class="journey-eyebrow [&&]:[color:rgb(187,_153,_82)] [&&]:[font-size:12px] [&&]:mb-[12px] [&&]:font-[800] [&&]:tracking-[0.18em]">{{ tr("ADMISSIONS", "ভর্তি") }}</p>
+      <h2 id="home-admission-title" class="journey-title [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:clamp(32px,_3.4vw,_52px)] [&&]:max-w-[750px] [&&]:leading-[1.14] [@media(max-width:700px)]:[&&]:m-[0px_0px_24px_0px] [@media(width>700px)]:[&&]:m-[0px_0px_30px_0px]">
         {{
           tr(
             "Simple steps to begin the next chapter.",
@@ -176,18 +176,18 @@ const contacts = [
           )
         }}
       </h2>
-      <div class="admission-layout">
-        <ol class="step-list">
-          <li v-for="(step, index) in steps" :key="index" class="step-card">
-            <span class="step-number">{{ index + 1 }}</span>
+      <div class="admission-layout [&&]:grid [@media(max-width:900px)]:[&&]:grid-cols-[1fr] [@media(width>900px)]:[&&]:grid-cols-[minmax(0px,_2.1fr)_minmax(260px,_0.95fr)] [&&]:items-stretch [&&]:gap-x-[20px] [&&]:gap-y-[20px]">
+        <ol class="step-list [&&]:grid [&&]:gap-x-[12px] [&&]:gap-y-[12px] [&&]:[list-style-image:initial] [&&]:[list-style-position:initial] [&&]:[list-style-type:none] [&&]:m-[0px] [&&]:p-[0px]">
+          <li v-for="(step, index) in steps" :key="index" class="step-card [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[box-shadow:rgba(41,_78,_158,_0.04)_0px_12px_34px] [&&]:flex [&&]:min-h-[100px] [&&]:items-start [@media(max-width:700px)]:[&&]:gap-x-[14px] [@media(width>700px)]:[&&]:gap-x-[18px] [@media(max-width:700px)]:[&&]:gap-y-[14px] [@media(width>700px)]:[&&]:gap-y-[18px] [@media(max-width:700px)]:[&&]:p-[17px] [@media(width>700px)]:[&&]:p-[20px_24px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_227,_240)]">
+            <span class="step-number [&&]:grid [@media(max-width:700px)]:[&&]:h-[38px] [@media(width>700px)]:[&&]:h-[44px] [@media(max-width:700px)]:[&&]:w-[38px] [@media(width>700px)]:[&&]:w-[44px] [&&]:items-center [&&]:[justify-items:center] [&&]:[border-bottom-left-radius:50%] [&&]:[border-bottom-right-radius:50%] [&&]:[border-top-left-radius:50%] [&&]:[border-top-right-radius:50%] [&&]:font-[800] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(41,_78,_158)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(255,_255,_255)] [&&]:[flex-basis:auto] [&&]:[flex-grow:0] [&&]:[flex-shrink:0]">{{ index + 1 }}</span>
             <div>
-              <h3>{{ tr(...step.title) }}</h3>
-              <p>{{ tr(...step.body) }}</p>
+              <h3 class="[&&]:[color:rgb(36,_74,_154)] [&&]:[font-size:18px] [&&]:leading-[1.35] [&&]:m-[0px_0px_8px_0px]">{{ tr(...step.title) }}</h3>
+              <p class="[&&]:[font-size:15px] [&&]:leading-[1.7] [&&]:[color:rgb(83,_105,_137)]">{{ tr(...step.body) }}</p>
             </div>
           </li>
         </ol>
-        <aside class="admission-desk">
-          <img
+        <aside class="admission-desk [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[box-shadow:rgba(41,_78,_158,_0.04)_0px_12px_34px] [&&]:flex [&&]:flex-col [@media(max-width:900px)]:[&&]:max-w-[none] [&&]:p-[22px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_227,_240)]">
+          <img class="[&&]:mb-[18px] [&&]:h-[154px] [&&]:w-[100%] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:object-cover"
             :src="studyPhoto"
             :alt="
               tr(
@@ -197,9 +197,9 @@ const contacts = [
             "
             loading="lazy"
           />
-          <BookOpen :size="26" class="desk-icon" aria-hidden="true" />
-          <h3>{{ tr("Admission desk", "ভর্তি বিভাগ") }}</h3>
-          <p>
+          <BookOpen :size="26" class="desk-icon [&&]:mb-[15px] [&&]:[color:rgb(212,_169,_38)]" aria-hidden="true" />
+          <h3 class="[&&]:[color:rgb(36,_74,_154)] [&&]:[font-size:18px] [&&]:leading-[1.35] [&&]:m-[0px_0px_8px_0px]">{{ tr("Admission desk", "ভর্তি বিভাগ") }}</h3>
+          <p class="[&&]:[font-size:15px] [&&]:leading-[1.7] [&&]:[color:rgb(83,_105,_137)] [&&]:mb-[16px]">
             {{
               tr(
                 "Ask about current availability and the right pathway for your child.",
@@ -207,13 +207,13 @@ const contacts = [
               )
             }}
           </p>
-          <div class="desk-fact">
+          <div class="desk-fact [&&]:[border-bottom-color:rgb(220,_227,_240)] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:1px] [&&]:[color:rgb(83,_105,_137)] [&&]:[font-size:14px] [&&]:p-[10px_0px]">
             {{ tr("Classes: Grades 1–12", "শ্রেণি: প্রথম–দ্বাদশ") }}
           </div>
-          <div class="desk-fact">
+          <div class="desk-fact [&&]:[border-bottom-color:rgb(220,_227,_240)] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:1px] [&&]:[color:rgb(83,_105,_137)] [&&]:[font-size:14px] [&&]:p-[10px_0px]">
             {{ tr("Medium: English", "মাধ্যম: ইংরেজি") }}
           </div>
-          <RouterLink to="/contact" class="journey-button desk-button">{{
+          <RouterLink to="/contact" class="journey-button desk-button [&&]:inline-flex [&&]:items-center [&&]:justify-center [&&]:gap-x-[10px] [&&]:gap-y-[10px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(41,_78,_158)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(255,_255,_255)] [&&]:[font-size:14px] [&&]:min-h-[44px] [&&]:font-[700] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.2s,_0.2s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:background,_transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [@media(max-width:900px)]:[&&]:mt-[24px] [@media(width>900px)]:[&&]:mt-[auto] [&&]:w-[100%] [&&]:p-[13px_19px] [&.journey-button:hover]:[background-color:rgb(25,_60,_136)] [@media(prefers-reduced-motion:no-preference)]:[&.journey-button:hover]:[transform:translateY(-2px)] [@media(prefers-reduced-motion:reduce)]:[&.journey-button:hover]:[transform:none]">{{
             tr("Ask a question", "প্রশ্ন করুন")
           }}</RouterLink>
         </aside>
@@ -221,14 +221,14 @@ const contacts = [
     </div>
   </section>
 
-  <section class="journey-section" aria-labelledby="home-programmes-title">
-    <div class="journey-width">
-      <div class="programme-heading">
+  <section class="journey-section [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [@media(max-width:700px)]:[&&]:p-[52px_0px] [@media(width>700px)]:[&&]:p-[74px_0px] [&.journey-section:nth-of-type(1)]:[background-color:rgb(242,_246,_252)] [&.journey-section:nth-of-type(3)]:[background-color:rgb(255,_248,_233)]" aria-labelledby="home-programmes-title">
+    <div class="journey-width [&&]:w-[calc(100%_-_clamp(32px,_6.5vw,_128px))] [&&]:max-w-[1500px] [&&]:[margin-inline-end:auto] [&&]:[margin-inline-start:auto]">
+      <div class="programme-heading [@media(max-width:700px)]:[&&]:block [@media(width>700px)]:[&&]:flex [&&]:justify-between [&&]:gap-x-[30px] [&&]:gap-y-[30px] [&&]:[align-items:end]">
         <div>
-          <p class="journey-eyebrow">
+          <p class="journey-eyebrow [&&]:[color:rgb(187,_153,_82)] [&&]:[font-size:12px] [&&]:mb-[12px] [&&]:font-[800] [&&]:tracking-[0.18em]">
             {{ tr("PROGRAMMES AND CURRICULUM", "শিক্ষাক্রম ও পাঠ্যক্রম") }}
           </p>
-          <h2 id="home-programmes-title" class="journey-title">
+          <h2 id="home-programmes-title" class="journey-title [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:clamp(32px,_3.4vw,_52px)] [&&]:max-w-[750px] [&&]:leading-[1.14] [@media(max-width:700px)]:[&&]:m-[0px_0px_24px_0px] [@media(width>700px)]:[&&]:m-[0px_0px_30px_0px]">
             {{
               tr(
                 "A strong foundation with room to grow.",
@@ -237,7 +237,7 @@ const contacts = [
             }}
           </h2>
         </div>
-        <img
+        <img class="[@media(max-width:700px)]:[&&]:h-[180px] [@media(width>700px)]:[&&]:h-[175px] [@media(max-width:700px)]:[&&]:w-[100%] [@media(width>700px)]:[&&]:w-[35%] [@media(max-width:700px)]:[&&]:max-w-[none] [@media(width>700px)]:[&&]:max-w-[470px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:object-cover [@media(max-width:700px)]:[&&]:m-[0px_0px_22px_0px] [@media(width>700px)]:[&&]:mb-[22px]"
           :src="groupPhoto"
           :alt="
             tr(
@@ -248,41 +248,41 @@ const contacts = [
           loading="lazy"
         />
       </div>
-      <div class="programme-grid">
+      <div class="programme-grid [&&]:mb-[26px] [&&]:grid [@media(max-width:700px)]:[&&]:grid-cols-[1fr] [@media(width>700px)]:[&&]:grid-cols-[repeat(3,_minmax(0px,_1fr))] [&&]:gap-x-[18px] [&&]:gap-y-[18px]">
         <article
           v-for="programme in programmes"
           :key="programme.to"
-          class="programme-card"
+          class="programme-card [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[box-shadow:rgba(41,_78,_158,_0.04)_0px_12px_34px] [&&]:flex [&&]:flex-col [&&]:items-start [&&]:p-[26px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_227,_240)]"
         >
-          <span class="journey-icon"
+          <span class="journey-icon [&&]:mb-[17px] [&&]:grid [&&]:h-[46px] [&&]:w-[46px] [&&]:items-center [&&]:[justify-items:center] [&&]:[border-bottom-left-radius:50%] [&&]:[border-bottom-right-radius:50%] [&&]:[border-top-left-radius:50%] [&&]:[border-top-right-radius:50%] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_248,_206)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(41,_78,_158)] [&&]:[flex-basis:auto] [&&]:[flex-grow:0] [&&]:[flex-shrink:0]"
             ><component :is="programme.icon" :size="21" aria-hidden="true"
           /></span>
-          <span class="programme-tag">{{ tr(...programme.tag) }}</span>
-          <h3>{{ tr(...programme.title) }}</h3>
-          <p>{{ tr(...programme.body) }}</p>
-          <ul>
-            <li v-for="point in programme.points" :key="point[0]">
-              <Check :size="15" aria-hidden="true" />{{ tr(...point) }}
+          <span class="programme-tag [&&]:[font-size:12px] [&&]:mb-[15px] [&&]:[border-bottom-left-radius:100px] [&&]:[border-bottom-right-radius:100px] [&&]:[border-top-left-radius:100px] [&&]:[border-top-right-radius:100px] [&&]:font-[700] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_248,_206)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(41,_78,_158)] [&&]:p-[5px_9px]">{{ tr(...programme.tag) }}</span>
+          <h3 class="[&&]:[color:rgb(36,_74,_154)] [&&]:[font-size:18px] [&&]:leading-[1.35] [&&]:m-[0px_0px_8px_0px]">{{ tr(...programme.title) }}</h3>
+          <p class="[&&]:[font-size:15px] [&&]:leading-[1.7] [&&]:[color:rgb(83,_105,_137)] [&&]:mb-[18px]">{{ tr(...programme.body) }}</p>
+          <ul class="[&&]:grid [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[list-style-image:initial] [&&]:[list-style-position:initial] [&&]:[list-style-type:none] [&&]:m-[0px_0px_20px_0px] [&&]:p-[0px]">
+            <li class="[&&]:flex [&&]:items-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:13px] [&&]:font-[650]" v-for="point in programme.points" :key="point[0]">
+              <Check class="[&&]:[color:rgb(208,_165,_40)]" :size="15" aria-hidden="true" />{{ tr(...point) }}
             </li>
           </ul>
-          <RouterLink :to="programme.to" class="card-link"
+          <RouterLink :to="programme.to" class="card-link [&&]:inline-flex [&&]:items-center [&&]:gap-x-[4px] [&&]:gap-y-[4px] [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:14px] [&&]:mt-[auto] [&&]:font-[700] [&.card-link:hover]:[text-decoration:underline] [&.card-link:hover]:[text-decoration-color:initial] [&.card-link:hover]:[text-decoration-line:underline] [&.card-link:hover]:[text-decoration-style:initial] [&.card-link:hover]:[text-decoration-thickness:initial]"
             >{{ tr("Explore stage", "পর্যায়টি দেখুন") }}
             <ChevronRight :size="16" aria-hidden="true"
           /></RouterLink>
         </article>
       </div>
-      <RouterLink to="/academics" class="journey-button"
+      <RouterLink to="/academics" class="journey-button [&&]:inline-flex [&&]:items-center [&&]:justify-center [&&]:gap-x-[10px] [&&]:gap-y-[10px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(41,_78,_158)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(255,_255,_255)] [&&]:[font-size:14px] [&&]:min-h-[44px] [&&]:font-[700] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.2s,_0.2s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:background,_transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:p-[13px_19px] [&.journey-button:hover]:[background-color:rgb(25,_60,_136)] [@media(prefers-reduced-motion:no-preference)]:[&.journey-button:hover]:[transform:translateY(-2px)] [@media(prefers-reduced-motion:reduce)]:[&.journey-button:hover]:[transform:none]"
         >{{ tr("Explore all programmes", "সব শিক্ষাক্রম দেখুন") }}
         <ChevronRight :size="18" aria-hidden="true"
       /></RouterLink>
     </div>
   </section>
 
-  <section class="journey-section" aria-labelledby="home-facilities-title">
-    <div class="journey-width facilities-layout">
+  <section class="journey-section [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [@media(max-width:700px)]:[&&]:p-[52px_0px] [@media(width>700px)]:[&&]:p-[74px_0px] [&.journey-section:nth-of-type(1)]:[background-color:rgb(242,_246,_252)] [&.journey-section:nth-of-type(3)]:[background-color:rgb(255,_248,_233)]" aria-labelledby="home-facilities-title">
+    <div class="journey-width facilities-layout [&&]:w-[calc(100%_-_clamp(32px,_6.5vw,_128px))] [&&]:max-w-[1500px] [&&]:[margin-inline-end:auto] [&&]:[margin-inline-start:auto] [&&]:grid [@media(max-width:900px)]:[&&]:grid-cols-[1fr] [@media(width>900px)]:[&&]:grid-cols-[0.9fr_1.1fr] [&&]:gap-x-[40px] [&&]:gap-y-[40px] [&&]:[align-items:start]">
       <div class="facilities-copy">
-        <p class="journey-eyebrow">{{ tr("FACILITIES", "সুযোগ-সুবিধা") }}</p>
-        <h2 id="home-facilities-title" class="journey-title">
+        <p class="journey-eyebrow [&&]:[color:rgb(187,_153,_82)] [&&]:[font-size:12px] [&&]:mb-[12px] [&&]:font-[800] [&&]:tracking-[0.18em] [.facilities-copy_>_p&:not(.journey-eyebrow)]:[color:rgb(83,_105,_137)] [.facilities-copy_>_p&:not(.journey-eyebrow)]:[font-size:15px] [.facilities-copy_>_p&:not(.journey-eyebrow)]:mb-[18px] [.facilities-copy_>_p&:not(.journey-eyebrow)]:leading-[1.7] [.facilities-copy_>_p&:not(.journey-eyebrow)]:max-w-[530px]">{{ tr("FACILITIES", "সুযোগ-সুবিধা") }}</p>
+        <h2 id="home-facilities-title" class="journey-title [&&&]:[color:rgb(41,_78,_158)] [&&&]:[font-size:clamp(32px,_3.4vw,_52px)] [&&&]:max-w-[600px] [&&&]:leading-[1.14] [@media(max-width:700px)]:[&&&]:m-[0px_0px_24px_0px] [@media(width>700px)]:[&&&]:m-[0px_0px_30px_0px]">
           {{
             tr(
               "Space to learn, create, and belong.",
@@ -290,7 +290,7 @@ const contacts = [
             )
           }}
         </h2>
-        <p>
+        <p class="[.facilities-copy_>_p&:not(.journey-eyebrow)]:[font-size:15px] [.facilities-copy_>_p&:not(.journey-eyebrow)]:leading-[1.7] [.facilities-copy_>_p&:not(.journey-eyebrow)]:[color:rgb(83,_105,_137)] [.facilities-copy_>_p&:not(.journey-eyebrow)]:mb-[18px] [.facilities-copy_>_p&:not(.journey-eyebrow)]:max-w-[530px]">
           {{
             tr(
               "Our school environment supports focused study, creative activity, and a sense of community throughout the learning journey.",
@@ -298,11 +298,11 @@ const contacts = [
             )
           }}
         </p>
-        <RouterLink to="/facilities" class="journey-button"
+        <RouterLink to="/facilities" class="journey-button [&&]:inline-flex [&&]:items-center [&&]:justify-center [&&]:gap-x-[10px] [&&]:gap-y-[10px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(41,_78,_158)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(255,_255,_255)] [&&]:[font-size:14px] [&&]:min-h-[44px] [&&]:font-[700] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.2s,_0.2s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:background,_transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:p-[13px_19px] [&.journey-button:hover]:[background-color:rgb(25,_60,_136)] [@media(prefers-reduced-motion:no-preference)]:[&.journey-button:hover]:[transform:translateY(-2px)] [@media(prefers-reduced-motion:reduce)]:[&.journey-button:hover]:[transform:none]"
           >{{ tr("View facilities", "সুবিধাগুলো দেখুন") }}
           <ChevronRight :size="18" aria-hidden="true"
         /></RouterLink>
-        <img
+        <img class="[&&]:mt-[24px] [&&]:h-[250px] [&&]:w-[100%] [&&]:max-w-[560px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:object-cover"
           :src="facilityPhoto"
           :alt="
             tr(
@@ -313,13 +313,13 @@ const contacts = [
           loading="lazy"
         />
       </div>
-      <div class="facilities-grid">
-        <article v-for="facility in facilities" :key="facility.text[0]">
-          <img class="facility-card-image" :src="facility.image" :alt="tr(...facility.text)" loading="lazy" width="600" height="360" />
-          <div class="facility-card-content">
-            <span class="journey-icon"><component :is="facility.icon" :size="21" aria-hidden="true" /></span>
-            <h3>{{ tr(...facility.text) }}</h3>
-            <p>{{ tr(...facility.body) }}</p>
+      <div class="facilities-grid [&&]:grid [@media(max-width:440px)]:[&&]:grid-cols-[1fr] [@media(width>440px)]:[&&]:grid-cols-[repeat(2,_minmax(0px,_1fr))] [&&]:gap-x-[16px] [&&]:gap-y-[16px] [&&]:[align-self:stretch]">
+        <article class="[&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:9px] [&&]:[border-bottom-right-radius:9px] [&&]:[border-top-left-radius:9px] [&&]:[border-top-right-radius:9px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[box-shadow:rgba(41,_78,_158,_0.04)_0px_12px_34px] [&&]:min-h-[0px] [&&]:flex [&&]:flex-col [&&]:overflow-x-hidden [&&]:overflow-y-hidden [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform,_box-shadow,_border-color] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:p-[0px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_227,_240)] [.facilities-grid_article&:hover]:[box-shadow:rgba(23,_58,_106,_0.094)_0px_18px_35px] [@media(prefers-reduced-motion:no-preference)]:[.facilities-grid_article&:hover]:[transform:translateY(-4px)] [@media(prefers-reduced-motion:reduce)]:[.facilities-grid_article&:hover]:[transform:none] [.facilities-grid_article&:hover]:[border-color:rgb(217,_179,_61)]" v-for="facility in facilities" :key="facility.text[0]">
+          <img class="facility-card-image [@media(max-width:440px)]:[&&]:h-[185px] [@media(width>440px)]:[&&]:h-[150px] [&&]:w-[100%] [&&]:object-cover" :src="facility.image" :alt="tr(...facility.text)" loading="lazy" width="600" height="360" />
+          <div class="facility-card-content [&&]:p-[19px_21px_22px_21px]">
+            <span class="journey-icon [&&&]:mb-[13px] [&&&]:grid [&&&]:h-[42px] [&&&]:w-[42px] [&&&]:items-center [&&&]:[justify-items:center] [&&&]:[border-bottom-left-radius:50%] [&&&]:[border-bottom-right-radius:50%] [&&&]:[border-top-left-radius:50%] [&&&]:[border-top-right-radius:50%] [&&&]:[background-attachment:initial] [&&&]:[background-clip:initial] [&&&]:[background-color:rgb(255,_248,_206)] [&&&]:[background-image:initial] [&&&]:[background-origin:initial] [&&&]:[background-position:initial] [&&&]:[background-repeat:initial] [&&&]:[background-size:initial] [&&&]:[color:rgb(41,_78,_158)] [&&&]:[flex-basis:auto] [&&&]:[flex-grow:0] [&&&]:[flex-shrink:0]"><component :is="facility.icon" :size="21" aria-hidden="true" /></span>
+            <h3 class="[&&]:[color:rgb(41,_78,_158)] [@media(max-width:700px)]:[&&]:[font-size:15px] [@media(width>700px)]:[&&]:[font-size:17px] [&&]:leading-[1.5] [&&]:mb-[7px]">{{ tr(...facility.text) }}</h3>
+            <p class="[&&]:[color:rgb(93,_110,_134)] [&&]:[font-size:13px] [&&]:leading-[1.55]">{{ tr(...facility.body) }}</p>
           </div>
         </article>
       </div>
@@ -327,16 +327,16 @@ const contacts = [
   </section>
 
   <section
-    class="journey-section communication-section"
+    class="journey-section communication-section [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [@media(max-width:700px)]:[&&]:p-[52px_0px] [@media(width>700px)]:[&&]:p-[74px_0px] [&.journey-section:nth-of-type(1)]:[background-color:rgb(242,_246,_252)] [&.journey-section:nth-of-type(3)]:[background-color:rgb(255,_248,_233)]"
     aria-labelledby="home-communication-title"
   >
-    <div class="journey-width">
-      <div class="communication-heading">
+    <div class="journey-width [&&]:w-[calc(100%_-_clamp(32px,_6.5vw,_128px))] [&&]:max-w-[1500px] [&&]:[margin-inline-end:auto] [&&]:[margin-inline-start:auto]">
+      <div class="communication-heading [@media(max-width:700px)]:[&&]:block [@media(width>700px)]:[&&]:flex [&&]:justify-between [&&]:gap-x-[30px] [&&]:gap-y-[30px] [&&]:[align-items:end]">
         <div>
-          <p class="journey-eyebrow">
+          <p class="journey-eyebrow [&&]:[color:rgb(187,_153,_82)] [&&]:[font-size:12px] [&&]:mb-[12px] [&&]:font-[800] [&&]:tracking-[0.18em]">
             {{ tr("PARENT COMMUNICATION", "অভিভাবকদের সঙ্গে যোগাযোগ") }}
           </p>
-          <h2 id="home-communication-title" class="journey-title">
+          <h2 id="home-communication-title" class="journey-title [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:clamp(32px,_3.4vw,_52px)] [&&]:max-w-[750px] [&&]:leading-[1.14] [@media(max-width:700px)]:[&&]:m-[0px_0px_24px_0px] [@media(width>700px)]:[&&]:m-[0px_0px_30px_0px]">
             {{
               tr(
                 "Answers for families planning the next step.",
@@ -345,7 +345,7 @@ const contacts = [
             }}
           </h2>
         </div>
-        <img
+        <img class="[@media(max-width:700px)]:[&&]:h-[180px] [@media(width>700px)]:[&&]:h-[175px] [@media(max-width:700px)]:[&&]:w-[100%] [@media(width>700px)]:[&&]:w-[36%] [@media(max-width:700px)]:[&&]:max-w-[none] [@media(width>700px)]:[&&]:max-w-[470px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:object-cover [@media(max-width:700px)]:[&&]:m-[0px_0px_22px_0px] [@media(width>700px)]:[&&]:mb-[22px]"
           :src="activityPhoto"
           :alt="
             tr(
@@ -356,13 +356,13 @@ const contacts = [
           loading="lazy"
         />
       </div>
-      <div class="communication-grid">
-        <article v-for="contact in contacts" :key="contact.href">
-          <span class="journey-icon contact-icon"
+      <div class="communication-grid [&&]:mb-[26px] [&&]:grid [@media(max-width:700px)]:[&&]:grid-cols-[1fr] [@media(width>700px)]:[&&]:grid-cols-[repeat(3,_minmax(0px,_1fr))] [&&]:gap-x-[18px] [&&]:gap-y-[18px]">
+        <article class="[&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[box-shadow:rgba(41,_78,_158,_0.04)_0px_12px_34px] [&&]:flex [&&]:min-h-[205px] [&&]:flex-col [&&]:items-start [&&]:p-[25px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_227,_240)]" v-for="contact in contacts" :key="contact.href">
+          <span class="journey-icon contact-icon [&&]:mb-[17px] [&&]:grid [&&]:h-[46px] [&&]:w-[46px] [&&]:items-center [&&]:[justify-items:center] [&&]:[border-bottom-left-radius:50%] [&&]:[border-bottom-right-radius:50%] [&&]:[border-top-left-radius:50%] [&&]:[border-top-right-radius:50%] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(232,_241,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(41,_78,_158)] [&&]:[flex-basis:auto] [&&]:[flex-grow:0] [&&]:[flex-shrink:0]"
             ><component :is="contact.icon" :size="21" aria-hidden="true"
           /></span>
-          <h3>{{ tr(...contact.title) }}</h3>
-          <p>{{ tr(...contact.body) }}</p>
+          <h3 class="[&&]:[color:rgb(36,_74,_154)] [&&]:[font-size:17px] [&&]:leading-[1.35] [&&]:m-[0px_0px_8px_0px]">{{ tr(...contact.title) }}</h3>
+          <p class="[&&]:[font-size:15px] [&&]:leading-[1.7] [&&]:[color:rgb(83,_105,_137)] [&&]:mb-[20px]">{{ tr(...contact.body) }}</p>
           <a
             v-if="contact.external"
             :href="contact.href"
@@ -372,10 +372,10 @@ const contacts = [
                 ? 'noopener noreferrer'
                 : undefined
             "
-            class="card-link"
+            class="card-link [&&]:inline-flex [&&]:items-center [&&]:gap-x-[4px] [&&]:gap-y-[4px] [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:14px] [&&]:mt-[auto] [&&]:font-[700] [&.card-link:hover]:[text-decoration:underline] [&.card-link:hover]:[text-decoration-color:initial] [&.card-link:hover]:[text-decoration-line:underline] [&.card-link:hover]:[text-decoration-style:initial] [&.card-link:hover]:[text-decoration-thickness:initial]"
             >{{ tr(...contact.action) }}
             <ChevronRight :size="16" aria-hidden="true" /></a
-          ><RouterLink v-else :to="contact.href" class="card-link"
+          ><RouterLink v-else :to="contact.href" class="card-link [&&]:inline-flex [&&]:items-center [&&]:gap-x-[4px] [&&]:gap-y-[4px] [&&]:[color:rgb(41,_78,_158)] [&&]:[font-size:14px] [&&]:mt-[auto] [&&]:font-[700] [&.card-link:hover]:[text-decoration:underline] [&.card-link:hover]:[text-decoration-color:initial] [&.card-link:hover]:[text-decoration-line:underline] [&.card-link:hover]:[text-decoration-style:initial] [&.card-link:hover]:[text-decoration-thickness:initial]"
             >{{ tr(...contact.action) }}
             <ChevronRight :size="16" aria-hidden="true"
           /></RouterLink>
@@ -384,403 +384,3 @@ const contacts = [
     </div>
   </section>
 </template>
-
-<style scoped>
-.journey-section {
-  padding: 74px 0;
-  background: #fff;
-}
-.journey-section + .journey-section {
-  padding-top: 36px;
-}
-.journey-width {
-  width: calc(100% - clamp(32px, 6.5vw, 128px));
-  max-width: 1500px;
-  margin-inline: auto;
-}
-.journey-eyebrow {
-  color: #bb9952;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  margin-bottom: 12px;
-}
-.journey-title {
-  color: #294e9e;
-  font-size: clamp(32px, 3.4vw, 52px);
-  line-height: 1.14;
-  max-width: 750px;
-  margin: 0 0 30px;
-}
-.admission-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 2.1fr) minmax(260px, 0.95fr);
-  gap: 20px;
-  align-items: stretch;
-}
-.step-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 12px;
-}
-.step-card,
-.admission-desk,
-.programme-card,
-.facilities-grid article,
-.communication-grid article {
-  border: 1px solid #dce3f0;
-  border-radius: 6px;
-  background: #fff;
-  box-shadow: 0 12px 34px #294e9e0a;
-}
-.step-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  padding: 20px 24px;
-  min-height: 100px;
-}
-.step-number {
-  flex: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #294e9e;
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-}
-.step-card h3,
-.admission-desk h3,
-.programme-card h3,
-.communication-grid h3 {
-  color: #244a9a;
-  font-size: 18px;
-  line-height: 1.35;
-  margin: 0 0 8px;
-}
-.step-card p,
-.admission-desk p,
-.programme-card p,
-.communication-grid p,
-.facilities-copy > p:not(.journey-eyebrow) {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #536989;
-}
-.admission-desk {
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-}
-.admission-desk img {
-  width: 100%;
-  height: 154px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 18px;
-}
-.desk-icon {
-  color: #d4a926;
-  margin-bottom: 15px;
-}
-.admission-desk p {
-  margin-bottom: 16px;
-}
-.desk-fact {
-  padding: 10px 0;
-  border-bottom: 1px solid #dce3f0;
-  font-size: 14px;
-  color: #536989;
-}
-.journey-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: #294e9e;
-  color: #fff;
-  border-radius: 6px;
-  padding: 13px 19px;
-  font-size: 14px;
-  font-weight: 700;
-  min-height: 44px;
-  transition:
-    background 0.2s,
-    transform 0.2s;
-}
-.journey-button:hover {
-  background: #193c88;
-  transform: translateY(-2px);
-}
-.desk-button {
-  width: 100%;
-  margin-top: auto;
-}
-.programme-heading,
-.communication-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 30px;
-}
-.programme-heading img,
-.communication-heading img {
-  width: 35%;
-  max-width: 470px;
-  height: 175px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 22px;
-}
-.programme-grid,
-.communication-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-  margin-bottom: 26px;
-}
-.programme-card {
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.journey-icon {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: #fff8ce;
-  color: #294e9e;
-  flex: none;
-  margin-bottom: 17px;
-}
-.programme-tag {
-  font-size: 12px;
-  font-weight: 700;
-  background: #fff8ce;
-  color: #294e9e;
-  border-radius: 100px;
-  padding: 5px 9px;
-  margin-bottom: 15px;
-}
-.programme-card p {
-  margin-bottom: 18px;
-}
-.programme-card ul {
-  list-style: none;
-  margin: 0 0 20px;
-  padding: 0;
-  display: grid;
-  gap: 8px;
-}
-.programme-card li {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 13px;
-  color: #294e9e;
-  font-weight: 650;
-}
-.programme-card li svg {
-  color: #d0a528;
-}
-.card-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: #294e9e;
-  font-size: 14px;
-  font-weight: 700;
-  margin-top: auto;
-}
-.card-link:hover {
-  text-decoration: underline;
-}
-.facilities-layout {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 40px;
-  align-items: start;
-}
-.facilities-copy .journey-title {
-  max-width: 600px;
-}
-.facilities-copy > p:not(.journey-eyebrow) {
-  max-width: 530px;
-  margin-bottom: 18px;
-}
-.facilities-copy img {
-  width: 100%;
-  max-width: 560px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-top: 24px;
-}
-.facilities-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  align-self: stretch;
-}
-.facilities-grid article {
-  padding: 24px;
-  min-height: 205px;
-}
-.facilities-grid h3 {
-  color: #1e2940;
-  font-size: 17px;
-  line-height: 1.5;
-}
-.communication-heading img {
-  width: 36%;
-}
-.communication-grid article {
-  padding: 25px;
-  min-height: 205px;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-}
-.contact-icon {
-  background: #e8f1ff;
-}
-.communication-grid h3 {
-  font-size: 17px;
-}
-.communication-grid p {
-  margin-bottom: 20px;
-}
-@media (max-width: 900px) {
-  .admission-layout,
-  .facilities-layout {
-    grid-template-columns: 1fr;
-  }
-  .admission-desk {
-    max-width: none;
-  }
-  .desk-button {
-    margin-top: 24px;
-  }
-  .facilities-grid article {
-    min-height: 150px;
-  }
-}
-@media (max-width: 700px) {
-  .journey-section {
-    padding: 52px 0;
-  }
-  .journey-section + .journey-section {
-    padding-top: 32px;
-  }
-  .journey-title {
-    margin-bottom: 24px;
-  }
-  .programme-heading,
-  .communication-heading {
-    display: block;
-  }
-  .programme-heading img,
-  .communication-heading img {
-    width: 100%;
-    max-width: none;
-    height: 180px;
-    margin: 0 0 22px;
-  }
-  .programme-grid,
-  .communication-grid {
-    grid-template-columns: 1fr;
-  }
-  .step-card {
-    padding: 17px;
-    gap: 14px;
-  }
-  .step-number {
-    width: 38px;
-    height: 38px;
-  }
-  .facilities-grid article {
-    min-height: 130px;
-    padding: 17px;
-  }
-  .facilities-grid h3 {
-    font-size: 15px;
-  }
-}
-@media (max-width: 440px) {
-  .facilities-grid {
-    grid-template-columns: 1fr;
-  }
-  .facilities-grid article {
-    min-height: 96px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .journey-button {
-    transition: none;
-  }
-  .journey-button:hover {
-    transform: none;
-  }
-}
-</style>
-<style scoped>
-.facilities-grid article {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  min-height: 0;
-  overflow: hidden;
-  border-radius: 9px;
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-.facilities-grid article:hover {
-  transform: translateY(-4px);
-  border-color: #d9b33d;
-  box-shadow: 0 18px 35px #173a6a18;
-}
-.facility-card-image { width: 100%; height: 150px; object-fit: cover; }
-.facility-card-content { padding: 19px 21px 22px; }
-.facility-card-content .journey-icon { width: 42px; height: 42px; margin-bottom: 13px; }
-.facilities-grid h3 { margin-bottom: 7px; color: #294e9e; }
-.facilities-grid p { color: #5d6e86; font-size: 13px; line-height: 1.55; }
-@media (max-width: 700px) {
-  .facilities-grid article { padding: 0; }
-}
-@media (max-width: 440px) {
-  .facilities-grid article { min-height: 0; }
-  .facility-card-image { height: 185px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .facilities-grid article { transition: none; }
-  .facilities-grid article:hover { transform: none; }
-}
-</style>
-<style scoped>
-.journey-section:nth-of-type(1) {
-  background: #f2f6fc;
-}
-.journey-section:nth-of-type(2) {
-  background: #fff;
-}
-.journey-section:nth-of-type(3) {
-  background: #fff8e9;
-}
-.journey-section:nth-of-type(4) {
-  background: #fff;
-}
-.journey-section + .journey-section {
-  padding-top: 74px;
-}
-@media (max-width: 700px) {
-  .journey-section + .journey-section {
-    padding-top: 52px;
-  }
-}
-</style>

@@ -20,151 +20,27 @@ const links = computed(() => [
 
 <template>
   <nav
-    class="home-explore"
+    class="home-explore [&&]:grid [@media(max-width:640px)]:[&&]:grid-cols-[1fr] [@media(width>640px)]:[&&]:grid-cols-[repeat(3,_minmax(0px,_1fr))]"
     :aria-label="$tr(language === 'bn' ? 'PIISC ঘুরে দেখুন' : 'Explore PIISC')"
   >
     <RouterLink
       v-for="item in links"
       :key="item.to"
       :to="item.to"
-      class="home-explore-link"
+      class="home-explore-link [&&]:relative [&&]:isolate [&&]:flex [&&]:items-center [@media(max-width:640px)]:[&&]:gap-x-[24px] [@media(width>640px)_and_(max-width:1000px)]:[&&]:gap-x-[16px] [@media(width>1000px)]:[&&]:gap-x-[clamp(18px,_2.5vw,_40px)] [@media(max-width:640px)]:[&&]:gap-y-[24px] [@media(width>640px)_and_(max-width:1000px)]:[&&]:gap-y-[16px] [@media(width>1000px)]:[&&]:gap-y-[clamp(18px,_2.5vw,_40px)] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(41,_78,_158)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(255,_255,_255)] [@media(max-width:640px)]:[&&]:min-h-[116px] [@media(width>640px)_and_(max-width:1000px)]:[&&]:min-h-[145px] [@media(max-width:640px)]:[&&]:p-[25px_28px] [@media(width>640px)_and_(max-width:1000px)]:[&&]:p-[28px_22px] [@media(width>1000px)]:[&&]:p-[24px_clamp(24px,_3.5vw,_64px)] [&.home-explore-link:nth-child(2)]:[background-color:rgb(33,_68,_133)] [&.home-explore-link:nth-child(3)]:[background-color:rgb(23,_57,_105)] [&.home-explore-link::before]:absolute [&.home-explore-link::before]:bottom-[0px] [&.home-explore-link::before]:left-[0px] [&.home-explore-link::before]:right-[0px] [&.home-explore-link::before]:top-[0px] [&.home-explore-link::before]:z-[-1] [&.home-explore-link::before]:opacity-[0] [&.home-explore-link::before]:[background-attachment:initial] [&.home-explore-link::before]:[background-clip:initial] [&.home-explore-link::before]:[background-color:rgba(255,_255,_255,_0.03)] [&.home-explore-link::before]:[background-image:initial] [&.home-explore-link::before]:[background-origin:initial] [&.home-explore-link::before]:[background-position:initial] [&.home-explore-link::before]:[background-repeat:initial] [&.home-explore-link::before]:[background-size:initial] [&.home-explore-link::before]:[content:''] [&.home-explore-link::before]:[transition-behavior:normal] [&.home-explore-link::before]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&.home-explore-link::before]:[transition-duration:0.3s] [@media(prefers-reduced-motion:reduce)]:[&.home-explore-link::before]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&.home-explore-link::before]:[transition-property:opacity] [@media(prefers-reduced-motion:reduce)]:[&.home-explore-link::before]:[transition-property:none] [&.home-explore-link::before]:[transition-timing-function:ease] [&.home-explore-link::after]:absolute [&.home-explore-link::after]:bottom-[0px] [&.home-explore-link::after]:left-[0px] [&.home-explore-link::after]:h-[4px] [&.home-explore-link::after]:w-[100%] [&.home-explore-link::after]:[background-attachment:initial] [&.home-explore-link::after]:[background-clip:initial] [&.home-explore-link::after]:[background-color:rgb(227,_200,_141)] [&.home-explore-link::after]:[background-image:initial] [&.home-explore-link::after]:[background-origin:initial] [&.home-explore-link::after]:[background-position:initial] [&.home-explore-link::after]:[background-repeat:initial] [&.home-explore-link::after]:[background-size:initial] [&.home-explore-link::after]:[content:''] [&.home-explore-link::after]:[transform:scaleX(0)] [&.home-explore-link::after]:[transform-origin:left_center] [&.home-explore-link::after]:[transition-behavior:normal] [&.home-explore-link::after]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&.home-explore-link::after]:[transition-duration:0.35s] [@media(prefers-reduced-motion:reduce)]:[&.home-explore-link::after]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&.home-explore-link::after]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&.home-explore-link::after]:[transition-property:none] [&.home-explore-link::after]:[transition-timing-function:ease] [&.home-explore-link:is(:hover,_:focus-visible)::before]:opacity-[1] [&.home-explore-link:is(:hover,_:focus-visible)::after]:[transform:scaleX(1)] [&.home-explore-link:focus-visible]:[outline-color:rgb(227,_200,_141)] [&.home-explore-link:focus-visible]:[outline-style:solid] [&.home-explore-link:focus-visible]:[outline-width:2px] [&.home-explore-link:focus-visible]:[outline-offset:-8px]"
     >
       <component
         :is="item.icon"
-        class="explore-icon"
+        class="explore-icon [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.3s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(max-width:1000px)]:[&&]:w-[40px] [.home-explore-link:is(:hover,_:focus-visible)_&.explore-icon]:[transform:translateY(-4px)] [@media(prefers-reduced-motion:reduce)]:[.home-explore-link:is(:hover,_:focus-visible)_&:is(.explore-icon,_.explore-arrow)]:[transform:none]"
         :size="54"
         :stroke-width="1.3"
         aria-hidden="true"
       />
-      <span class="explore-copy"
-        ><strong>{{ $tr(item.title) }}</strong
-        ><span>{{ $tr(t.common.learn) }}</span></span
+      <span class="explore-copy [&&]:grid [&&]:gap-x-[6px] [&&]:gap-y-[6px]"
+        ><strong class="[@media(max-width:640px)]:[&&]:[font-size:22px] [@media(width>640px)]:[&&]:[font-size:clamp(20px,_1.5vw,_24px)] [&&]:leading-[1.3]">{{ $tr(item.title) }}</strong
+        ><span class="[&&]:[color:rgb(224,_233,_231)] [&&]:[font-size:16px]">{{ $tr(t.common.learn) }}</span></span
       >
-      <ArrowUpRight class="explore-arrow" :size="25" aria-hidden="true" />
+      <ArrowUpRight class="explore-arrow [&&]:ml-[auto] [&&]:[flex-shrink:0] [&&]:opacity-[0.65] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.3s,_0.3s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform,_opacity] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [@media(max-width:1000px)]:[&&]:w-[18px] [.home-explore-link:is(:hover,_:focus-visible)_&.explore-arrow]:opacity-[1] [.home-explore-link:is(:hover,_:focus-visible)_&.explore-arrow]:[transform:translate(4px,_-4px)] [@media(prefers-reduced-motion:reduce)]:[.home-explore-link:is(:hover,_:focus-visible)_&:is(.explore-icon,_.explore-arrow)]:[transform:none]" :size="25" aria-hidden="true" />
     </RouterLink>
   </nav>
 </template>
-
-<style scoped>
-.home-explore {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.home-explore-link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: clamp(18px, 2.5vw, 40px);
-  padding: 24px clamp(24px, 3.5vw, 64px);
-  background: #294e9e;
-  color: #fff;
-  isolation: isolate;
-}
-.home-explore-link:nth-child(2) {
-  background: #214485;
-}
-.home-explore-link:nth-child(3) {
-  background: #173969;
-}
-.home-explore-link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #ffffff08;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-}
-.home-explore-link::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: #e3c88d;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s ease;
-}
-.explore-icon {
-  flex-shrink: 0;
-  color: #e3c88d;
-  transition: transform 0.3s ease;
-}
-.explore-copy {
-  display: grid;
-  gap: 6px;
-}
-.explore-copy strong {
-  font-size: clamp(20px, 1.5vw, 24px);
-  line-height: 1.3;
-}
-.explore-copy > span {
-  font-size: 16px;
-  color: #e0e9e7;
-}
-.explore-arrow {
-  flex-shrink: 0;
-  margin-left: auto;
-  opacity: 0.65;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-}
-.home-explore-link:is(:hover, :focus-visible)::before {
-  opacity: 1;
-}
-.home-explore-link:is(:hover, :focus-visible)::after {
-  transform: scaleX(1);
-}
-.home-explore-link:is(:hover, :focus-visible) .explore-icon {
-  transform: translateY(-4px);
-}
-.home-explore-link:is(:hover, :focus-visible) .explore-arrow {
-  transform: translate(4px, -4px);
-  opacity: 1;
-}
-.home-explore-link:focus-visible {
-  outline: 2px solid #e3c88d;
-  outline-offset: -8px;
-}
-@media (max-width: 1000px) {
-  .home-explore-link {
-    padding: 28px 22px;
-    gap: 16px;
-    min-height: 145px;
-  }
-  .explore-icon {
-    width: 40px;
-  }
-  .explore-arrow {
-    width: 18px;
-  }
-}
-@media (max-width: 640px) {
-  .home-explore {
-    grid-template-columns: 1fr;
-  }
-  .home-explore-link {
-    min-height: 116px;
-    padding: 25px 28px;
-    gap: 24px;
-  }
-  .explore-copy strong {
-    font-size: 22px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-explore-link::before,
-  .home-explore-link::after,
-  .explore-icon,
-  .explore-arrow {
-    transition: none;
-  }
-  .home-explore-link:is(:hover, :focus-visible)
-    :is(.explore-icon, .explore-arrow) {
-    transform: none;
-  }
-}
-</style>

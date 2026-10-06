@@ -25,89 +25,47 @@ const photos = [
 </script>
 
 <template>
-  <section class="athletics-banner">
-    <img :src="sports" :alt="$tr(&quot;Students playing cricket at PIISC&quot;)" fetchpriority="high" />
-    <div class="container athletics-banner-copy">
-      <nav :aria-label="$tr(&quot;Breadcrumb&quot;)"><RouterLink to="/">{{ $tr("Home") }}</RouterLink><ChevronRight :size="15" aria-hidden="true" /><span aria-current="page">{{ $tr("Athletics") }}</span></nav>
-      <span class="eyebrow">{{ $tr("BEYOND THE CLASSROOM") }}</span>
-      <h1>{{ $tr("Athletics &") }}<br /><em>{{ $tr("Extra-curricular Activities") }}</em></h1>
-      <p>{{ $tr("Space to play, create and connect. Experiences that help young people grow in confidence and character.") }}</p>
+  <section class="athletics-banner [&&]:relative [&&]:isolate [&&]:flex [@media(max-width:760px)]:[&&]:min-h-[390px] [@media(width>760px)]:[&&]:min-h-[410px] [&&]:items-center [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(9,_38,_69)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(255,_255,_255)] [&.athletics-banner::after]:absolute [&.athletics-banner::after]:bottom-[0px] [&.athletics-banner::after]:left-[0px] [&.athletics-banner::after]:right-[0px] [&.athletics-banner::after]:top-[0px] [&.athletics-banner::after]:z-[-1] [&.athletics-banner::after]:[background-attachment:initial] [&.athletics-banner::after]:[background-clip:initial] [&.athletics-banner::after]:[background-color:initial] [&.athletics-banner::after]:[background-image:linear-gradient(90deg,_rgba(6,_30,_54,_0.93),_rgba(6,_30,_54,_0.69)_65%,_rgba(6,_30,_54,_0.376))] [&.athletics-banner::after]:[background-origin:initial] [&.athletics-banner::after]:[background-position:initial] [&.athletics-banner::after]:[background-repeat:initial] [&.athletics-banner::after]:[background-size:initial] [&.athletics-banner::after]:[content:'']">
+    <img class="[&&]:absolute [&&]:bottom-[0px] [&&]:left-[0px] [&&]:right-[0px] [&&]:top-[0px] [&&]:h-[100%] [&&]:w-[100%] [&&]:object-cover [&&]:z-[-2] [&&]:[object-position:center_45%]" :src="sports" :alt="$tr(&quot;Students playing cricket at PIISC&quot;)" fetchpriority="high" />
+    <div class="container athletics-banner-copy [&&]:[padding-block-end:56px] [&&]:[padding-block-start:32px]">
+      <nav class="[&&]:mb-[38px] [&&]:flex [&&]:items-center [&&]:gap-x-[8px] [&&]:gap-y-[8px] [&&]:[color:rgb(214,_227,_228)] [&&]:[font-size:13px]" :aria-label="$tr(&quot;Breadcrumb&quot;)"><RouterLink class="[a&:focus-visible]:[outline-color:rgb(187,_153,_82)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:3px] [a&:focus-visible]:[outline-offset:5px]" to="/">{{ $tr("Home") }}</RouterLink><ChevronRight :size="15" aria-hidden="true" /><span aria-current="page">{{ $tr("Athletics") }}</span></nav>
+      <span class="eyebrow [&&&]:[color:rgb(227,_200,_141)]">{{ $tr("BEYOND THE CLASSROOM") }}</span>
+      <h1 class="[&&]:[font-size:clamp(36px,_4.5vw,_62px)] [&&]:max-w-[850px] [&&]:leading-[1.15] [&&]:m-[16px_0px_20px_0px]">{{ $tr("Athletics &") }}<br /><em class="[&&]:[color:rgb(227,_200,_141)]">{{ $tr("Extra-curricular Activities") }}</em></h1>
+      <p class="[&&]:max-w-[610px] [&&]:[color:rgb(224,_233,_231)] [&&]:[font-size:17px]">{{ $tr("Space to play, create and connect. Experiences that help young people grow in confidence and character.") }}</p>
     </div>
   </section>
 
   <section class="section athletics-main">
-    <div class="container athletics-layout">
+    <div class="container athletics-layout [&&]:grid [@media(max-width:760px)]:[&&]:grid-cols-[1fr] [@media(width>760px)_and_(max-width:1000px)]:[&&]:grid-cols-[minmax(0px,_1fr)_300px] [@media(width>1000px)]:[&&]:grid-cols-[minmax(0px,_1fr)_340px] [@media(max-width:760px)]:[&&]:gap-x-[40px] [@media(width>760px)_and_(max-width:1000px)]:[&&]:gap-x-[30px] [@media(width>1000px)]:[&&]:gap-x-[60px] [@media(max-width:760px)]:[&&]:gap-y-[40px] [@media(width>760px)_and_(max-width:1000px)]:[&&]:gap-y-[30px] [@media(width>1000px)]:[&&]:gap-y-[60px] [&&]:[align-items:start]">
       <div>
-        <div class="athletics-lead-image"><img :src="creative" :alt="$tr(&quot;PIISC students displaying their creative work&quot;)" loading="lazy" /></div>
+        <div class="athletics-lead-image [&&]:mb-[35px] [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px]"><img class="[&&]:w-[100%] [&&]:object-cover [&&]:[aspect-ratio:16_/_9]" :src="creative" :alt="$tr(&quot;PIISC students displaying their creative work&quot;)" loading="lazy" /></div>
         <span class="eyebrow">{{ $tr("A WELL-ROUNDED EDUCATION") }}</span>
-        <h2>{{ $tr("Learning goes beyond the lesson.") }}</h2>
-        <p class="athletics-intro">{{ $tr("At PIISC, our vision for education includes the friendships, discoveries and shared experiences that make school life meaningful. Physical activity, creative expression and working together all have a place in that journey.") }}</p>
-        <div class="activity-list">
-          <article v-for="item in activities" :key="item.title">
-            <span class="activity-icon"><component :is="item.icon" :size="25" aria-hidden="true" /></span>
-            <div><h3>{{ $tr(item.title) }}</h3><p>{{ $tr(item.text) }}</p></div>
+        <h2 class="[&&]:[font-size:clamp(30px,_3vw,_43px)] [&&]:leading-[1.2] [&&]:[color:rgb(9,_38,_69)] [&&]:m-[13px_0px_21px_0px]">{{ $tr("Learning goes beyond the lesson.") }}</h2>
+        <p class="athletics-intro [&&]:leading-[1.85] [&&]:[color:rgb(93,_108,_114)]">{{ $tr("At PIISC, our vision for education includes the friendships, discoveries and shared experiences that make school life meaningful. Physical activity, creative expression and working together all have a place in that journey.") }}</p>
+        <div class="activity-list [&&]:mt-[28px]">
+          <article class="[&&]:flex [@media(max-width:480px)]:[&&]:gap-x-[14px] [@media(width>480px)]:[&&]:gap-x-[21px] [@media(max-width:480px)]:[&&]:gap-y-[14px] [@media(width>480px)]:[&&]:gap-y-[21px] [&&]:[border-top-color:rgb(220,_229,_222)] [&&]:[border-top-style:solid] [&&]:[border-top-width:1px] [&&]:p-[26px_0px]" v-for="item in activities" :key="item.title">
+            <span class="activity-icon [&&]:grid [@media(max-width:480px)]:[&&]:h-[40px] [@media(width>480px)]:[&&]:h-[50px] [@media(max-width:480px)]:[&&]:w-[40px] [@media(width>480px)]:[&&]:w-[50px] [&&]:[flex-shrink:0] [&&]:items-center [&&]:[justify-items:center] [&&]:[border-bottom-left-radius:50%] [&&]:[border-bottom-right-radius:50%] [&&]:[border-top-left-radius:50%] [&&]:[border-top-right-radius:50%] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(237,_243,_239)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(14,_91,_74)]"><component :is="item.icon" :size="25" aria-hidden="true" /></span>
+            <div><h3 class="[&&]:mb-[9px] [&&]:[color:rgb(9,_38,_69)] [&&]:[font-size:23px]">{{ $tr(item.title) }}</h3><p class="[&&]:leading-[1.8] [&&]:[color:rgb(93,_108,_114)] [&&]:[font-size:15px]">{{ $tr(item.text) }}</p></div>
           </article>
         </div>
-        <p class="activities-note">{{ $tr("Contact our team for current activities, age groups and participation schedules.") }}</p>
+        <p class="activities-note [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(247,_245,_239)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[border-left-color:rgb(187,_153,_82)] [&&]:[border-left-style:solid] [&&]:[border-left-width:3px] [&&]:[color:rgb(89,_102,_94)] [&&]:[font-size:14px] [&&]:p-[15px_20px]">{{ $tr("Contact our team for current activities, age groups and participation schedules.") }}</p>
       </div>
-      <div class="athletics-sidebar"><AdmissionContactPanel /></div>
+      <div class="athletics-sidebar [@media(max-width:760px)]:[&&]:static [@media(width>760px)]:[&&]:sticky [&&]:top-[160px]"><AdmissionContactPanel /></div>
     </div>
   </section>
 
-  <section class="section activities-gallery">
+  <section class="section activities-gallery [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(243,_246,_242)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial]">
     <div class="container">
-      <div class="activities-gallery-heading">
-        <div><span class="eyebrow">{{ $tr("MOMENTS AT PIISC") }}</span><h2>{{ $tr("School life, in pictures.") }}</h2></div>
-        <RouterLink to="/gallery" class="gallery-link">{{ $tr("Explore the gallery ") }}<ArrowUpRight :size="19" aria-hidden="true" /></RouterLink>
+      <div class="activities-gallery-heading [&&]:mb-[30px] [&&]:flex [&&]:justify-between [&&]:gap-x-[25px] [&&]:gap-y-[25px] [@media(max-width:760px)]:[&&]:items-start [@media(width>760px)]:[&&]:[align-items:end] [@media(max-width:760px)]:[&&]:flex-col">
+        <div><span class="eyebrow">{{ $tr("MOMENTS AT PIISC") }}</span><h2 class="[&&]:[font-size:clamp(30px,_3vw,_43px)] [&&]:leading-[1.2] [&&]:[color:rgb(9,_38,_69)] [&&]:m-[13px_0px_0px_0px]">{{ $tr("School life, in pictures.") }}</h2></div>
+        <RouterLink to="/gallery" class="gallery-link [&&]:inline-flex [&&]:items-center [&&]:gap-x-[12px] [&&]:gap-y-[12px] [&&]:[color:rgb(14,_91,_74)] [&&]:[font-size:14px] [&&]:font-[700] [&&]:[border-bottom-color:rgb(187,_153,_82)] [&&]:[border-bottom-style:solid] [&&]:[border-bottom-width:1px] [&&]:[padding-block-end:10px] [&&]:[padding-block-start:10px] [a&:focus-visible]:[outline-color:rgb(187,_153,_82)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:3px] [a&:focus-visible]:[outline-offset:5px]">{{ $tr("Explore the gallery ") }}<ArrowUpRight class="[&&]:[flex-shrink:0] [&&]:[color:rgb(14,_91,_74)] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.3s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(prefers-reduced-motion:no-preference)]:[.gallery-link:is(:hover,_:focus-visible)_svg&]:[transform:translate(3px,_-3px)] [@media(prefers-reduced-motion:reduce)]:[.gallery-link:is(:hover,_:focus-visible)_svg&]:[transform:none]" :size="19" aria-hidden="true" /></RouterLink>
       </div>
-      <div class="activity-photo-grid">
-        <RouterLink v-for="photo in photos" :key="photo.title" to="/gallery" class="activity-photo">
-          <img :src="photo.src" :alt="$tr(photo.alt)" loading="lazy" />
-          <span>{{ $tr(photo.title) }}<ArrowUpRight :size="20" aria-hidden="true" /></span>
+      <div class="activity-photo-grid [&&]:grid [@media(max-width:480px)]:[&&]:grid-cols-[1fr] [@media(width>480px)_and_(max-width:1000px)]:[&&]:grid-cols-[repeat(2,_minmax(0px,_1fr))] [@media(width>1000px)]:[&&]:grid-cols-[repeat(3,_minmax(0px,_1fr))] [&&]:gap-x-[22px] [&&]:gap-y-[22px]">
+        <RouterLink v-for="photo in photos" :key="photo.title" to="/gallery" class="activity-photo [&&]:relative [&&]:block [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[border-bottom-left-radius:5px] [&&]:[border-bottom-right-radius:5px] [&&]:[border-top-left-radius:5px] [&&]:[border-top-right-radius:5px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(9,_38,_69)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&.activity-photo::after]:absolute [&.activity-photo::after]:bottom-[0px] [&.activity-photo::after]:left-[0px] [&.activity-photo::after]:right-[0px] [&.activity-photo::after]:top-[30%] [&.activity-photo::after]:[background-attachment:initial] [&.activity-photo::after]:[background-clip:initial] [&.activity-photo::after]:[background-color:initial] [&.activity-photo::after]:[background-image:linear-gradient(transparent,_rgba(6,_30,_54,_0.93))] [&.activity-photo::after]:[background-origin:initial] [&.activity-photo::after]:[background-position:initial] [&.activity-photo::after]:[background-repeat:initial] [&.activity-photo::after]:[background-size:initial] [&.activity-photo::after]:[content:''] [a&:focus-visible]:[outline-color:rgb(187,_153,_82)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:3px] [a&:focus-visible]:[outline-offset:5px]">
+          <img class="[&&]:w-[100%] [&&]:object-cover [&&]:[aspect-ratio:4_/_3] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.6s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(prefers-reduced-motion:no-preference)]:[.activity-photo:is(:hover,_:focus-visible)_img&]:[transform:scale(1.045)] [@media(prefers-reduced-motion:reduce)]:[.activity-photo:is(:hover,_:focus-visible)_img&]:[transform:none]" :src="photo.src" :alt="$tr(photo.alt)" loading="lazy" />
+          <span class="[&&]:absolute [&&]:bottom-[22px] [&&]:left-[22px] [&&]:right-[22px] [&&]:flex [&&]:items-center [&&]:justify-between [&&]:gap-x-[12px] [&&]:gap-y-[12px] [&&]:[color:rgb(255,_255,_255)] [&&]:[font-size:15px] [&&]:z-[1] [&&]:font-[700]">{{ $tr(photo.title) }}<ArrowUpRight class="[&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.3s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(prefers-reduced-motion:no-preference)]:[.activity-photo:is(:hover,_:focus-visible)_svg&]:[transform:translate(3px,_-3px)] [@media(prefers-reduced-motion:reduce)]:[.activity-photo:is(:hover,_:focus-visible)_svg&]:[transform:none]" :size="20" aria-hidden="true" /></span>
         </RouterLink>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.athletics-banner { position: relative; isolation: isolate; display: flex; align-items: center; min-height: 410px; background: #092645; color: #fff; overflow: hidden; }
-.athletics-banner > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; z-index: -2; }
-.athletics-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #061e36ed, #061e36b0 65%, #061e3660); z-index: -1; }
-.athletics-banner-copy { padding-block: 32px 56px; }
-.athletics-banner nav { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 38px; color: #d6e3e4; }
-.athletics-banner .eyebrow { color: #e3c88d; }
-.athletics-banner h1 { font-size: clamp(36px, 4.5vw, 62px); line-height: 1.15; max-width: 850px; margin: 16px 0 20px; }
-.athletics-banner h1 em { color: #e3c88d; }
-.athletics-banner p { max-width: 610px; color: #e0e9e7; font-size: 17px; }
-.athletics-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 60px; align-items: start; }
-.athletics-sidebar { position: sticky; top: 160px; }
-.athletics-lead-image { border-radius: 6px; overflow: hidden; margin-bottom: 35px; }
-.athletics-lead-image img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-h2 { font-size: clamp(30px, 3vw, 43px); line-height: 1.2; color: #092645; margin: 13px 0 21px; }
-.athletics-intro { color: #5d6c72; line-height: 1.85; }
-.activity-list { margin-top: 28px; }
-.activity-list article { display: flex; gap: 21px; border-top: 1px solid #dce5de; padding: 26px 0; }
-.activity-icon { display: grid; place-items: center; width: 50px; height: 50px; flex-shrink: 0; background: #edf3ef; color: #0e5b4a; border-radius: 50%; }
-.activity-list h3 { font-size: 23px; color: #092645; margin-bottom: 9px; }
-.activity-list p { color: #5d6c72; line-height: 1.8; font-size: 15px; }
-.activities-note { border-left: 3px solid #bb9952; padding: 15px 20px; background: #f7f5ef; font-size: 14px; color: #59665e; }
-.activities-gallery { background: #f3f6f2; }
-.activities-gallery-heading { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 30px; }
-.activities-gallery-heading h2 { margin-bottom: 0; }
-.gallery-link { display: inline-flex; gap: 12px; align-items: center; color: #0e5b4a; font-size: 14px; font-weight: 700; padding-block: 10px; border-bottom: 1px solid #bb9952; }
-.activity-photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-.activity-photo { position: relative; display: block; overflow: hidden; border-radius: 5px; background: #092645; }
-.activity-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .6s ease; }
-.activity-photo::after { content: ''; position: absolute; inset: 30% 0 0; background: linear-gradient(transparent, #061e36ed); }
-.activity-photo > span { position: absolute; bottom: 22px; left: 22px; right: 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: #fff; font-size: 15px; font-weight: 700; z-index: 1; }
-.activity-photo svg, .gallery-link svg { transition: transform .3s ease; color: #e3c88d; flex-shrink: 0; }
-.gallery-link svg { color: #0e5b4a; }
-.activity-photo:is(:hover, :focus-visible) img { transform: scale(1.045); }
-.activity-photo:is(:hover, :focus-visible) svg, .gallery-link:is(:hover, :focus-visible) svg { transform: translate(3px, -3px); }
-a:focus-visible { outline: 3px solid #bb9952; outline-offset: 5px; }
-@media (max-width: 1000px) { .athletics-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 30px; } .activity-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 760px) { .athletics-layout { grid-template-columns: 1fr; gap: 40px; } .athletics-sidebar { position: static; } .activities-gallery-heading { flex-direction: column; align-items: flex-start; } .athletics-banner { min-height: 390px; } }
-@media (max-width: 480px) { .activity-photo-grid { grid-template-columns: 1fr; } .activity-list article { gap: 14px; } .activity-icon { width: 40px; height: 40px; } }
-@media (prefers-reduced-motion: reduce) { .activity-photo img, .activity-photo svg, .gallery-link svg { transition: none; } .activity-photo:is(:hover, :focus-visible) img, .activity-photo:is(:hover, :focus-visible) svg, .gallery-link:is(:hover, :focus-visible) svg { transform: none; } }
-</style>
