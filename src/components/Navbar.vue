@@ -24,6 +24,18 @@ import { headerContacts, navigation } from "../data/navigation.js";
 import LanguageSwitcher from "./LanguageSwitcher.vue";
 import { useI18n } from "../composables/useI18n.js";
 import { navigationBn } from "../data/navigationBn.js";
+import { useAuthStore } from "../stores/auth.js";
+import { openLogin } from "../composables/useLoginModal.js";
+import { dashboardPathFor } from "../data/roles.js";
+const auth = useAuthStore();
+function showLogin(event, role) {
+  // A dropdown choice disappears on close; return focus to its visible opener.
+  const opener = window.matchMedia("(max-width:1199px)").matches
+    ? ".reference-menu-toggle" : '[aria-controls="dropdown-login"]';
+  const trigger = header.value?.querySelector(opener) || event.currentTarget;
+  closeMenus();
+  openLogin({ trigger, role });
+}
 const { language, t } = useI18n();
 const localizedNavigation = computed(() => {
   const translate = (item) => ({
@@ -34,7 +46,16 @@ const localizedNavigation = computed(() => {
         : item.label,
     ...(item.children ? { children: item.children.map(translate) } : {}),
   });
-  return navigation.map(translate);
+  const items = navigation.map(translate);
+  if (!auth.isAuthenticated) items.push({
+    id: "login", label: "Login", children: [
+      { id: "login-student", label: "Student Login", loginRole: "student" },
+      { id: "login-teacher", label: "Teacher Login", loginRole: "teacher" },
+      { id: "login-parent", label: "Parent Login", loginRole: "parent" },
+      { id: "login-admin", label: "Admin Login", loginRole: "admin" },
+    ],
+  });
+  return items;
 });
 const route = useRoute();
 const header = ref(null);
@@ -84,7 +105,7 @@ function onEscape(event) {
 async function focusDropdown(item) {
   expanded.value = item.id;
   await nextTick();
-  document.getElementById(`dropdown-${item.id}`)?.querySelector("a")?.focus();
+  document.getElementById(`dropdown-${item.id}`)?.querySelector("a, .login-role-option")?.focus();
 }
 async function closeDropdown(item) {
   expanded.value = null;
@@ -147,7 +168,15 @@ onBeforeUnmount(() => {
           ><strong class="[&&]:mr-[4px] [&&]:font-[700]">{{ $tr("EIIN:") }}</strong>
           {{ $tr(headerContacts.eiin || "Coming soon") }}</span
         >
-        <span class="[@media(max-width:540px)]:[.reference-contact-inner_>_span&:nth-child(-n_+_2)]:[grid-column-end:-1] [@media(max-width:540px)]:[.reference-contact-inner_>_span&:nth-child(-n_+_2)]:[grid-column-start:1] [@media(max-width:540px)]:[.reference-contact-inner_>_span&:nth-child(-n_+_2)]:text-center [@media(max-width:540px)]:[.reference-contact-inner_>_span&:nth-child(-n_+_2)]:[overflow-wrap:anywhere]"> <LanguageSwitcher /></span>
+        <!-- Account controls share the top bar, leaving room for the main navigation. -->
+        <div class="header-account flex min-w-0 max-w-full flex-wrap items-center justify-end gap-[8px] max-[540px]:col-span-full max-[540px]:justify-center">
+          <LanguageSwitcher />
+          <template v-if="auth.isAuthenticated">
+            <span class="max-w-[140px] truncate text-[13px] font-semibold text-white max-[540px]:max-w-[100px]" :title="auth.user?.name">{{ auth.user?.name }}</span>
+            <RouterLink v-if="dashboardPathFor(auth.role)" :to="dashboardPathFor(auth.role)" class="account-button" @click="closeMenus">{{ $tr('Dashboard') }}</RouterLink>
+            <button type="button" class="account-button" @click="auth.logout()">{{ $tr('Logout') }}</button>
+          </template>
+        </div>
       </div>
     </div>
   </div>
@@ -243,6 +272,7 @@ onBeforeUnmount(() => {
                         </li>
                       </ul>
                     </details>
+                    <button v-else-if="child.loginRole" type="button" class="login-role-option" @click="showLogin($event, child.loginRole)">{{ $tr(child.label) }}</button>
                     <RouterLink class="[@media(max-width:1199px)]:[&&]:[font-size:15px] [@media(width>1199px)]:[&&]:[font-size:clamp(13px,_1.08vw,_20px)] [&&]:font-[600] [&&]:leading-[1.5] [&&]:block [@media(max-width:1199px)]:[&&]:min-h-[44px] [@media(width>1199px)]:[&&]:min-h-[0px] [&&]:[text-wrap-mode:wrap] [&&]:[white-space-collapse:collapse] [@media(max-width:1199px)]:[&&]:[border-bottom-left-radius:7px] [@media(width>1199px)]:[&&]:[border-bottom-left-radius:3px] [@media(max-width:1199px)]:[&&]:[border-bottom-right-radius:7px] [@media(width>1199px)]:[&&]:[border-bottom-right-radius:3px] [@media(max-width:1199px)]:[&&]:[border-top-left-radius:7px] [@media(width>1199px)]:[&&]:[border-top-left-radius:3px] [@media(max-width:1199px)]:[&&]:[border-top-right-radius:7px] [@media(width>1199px)]:[&&]:[border-top-right-radius:3px] [@media(max-width:1199px)]:[&&]:[color:rgb(48,_70,_99)] [@media(width>1199px)]:[&&]:[color:rgb(21,_21,_21)] [&&]:[overflow-wrap:anywhere] [&&]:[transition-behavior:normal,_normal] [&&]:[transition-delay:0s,_0s] [&&]:[transition-duration:0.18s,_0.18s] [&&]:[transition-property:color,_background] [&&]:[transition-timing-function:ease,_ease] [&&]:m-[0px] [@media(max-width:1199px)]:[&&]:p-[10px_14px] [@media(width>1199px)]:[&&]:p-[9px_12px] [.reference-dropdown-panel_a&:hover]:[color:rgb(0,_123,_255)] [.reference-dropdown-panel_a&:hover]:[background-attachment:initial] [.reference-dropdown-panel_a&:hover]:[background-clip:initial] [.reference-dropdown-panel_a&:hover]:[background-color:rgb(250,_251,_252)] [.reference-dropdown-panel_a&:hover]:[background-image:initial] [.reference-dropdown-panel_a&:hover]:[background-origin:initial] [.reference-dropdown-panel_a&:hover]:[background-position:initial] [.reference-dropdown-panel_a&:hover]:[background-repeat:initial] [.reference-dropdown-panel_a&:hover]:[background-size:initial] [.reference-dropdown-panel_a&:focus-visible]:[color:rgb(0,_123,_255)] [.reference-dropdown-panel_a&:focus-visible]:[background-attachment:initial] [.reference-dropdown-panel_a&:focus-visible]:[background-clip:initial] [.reference-dropdown-panel_a&:focus-visible]:[background-color:rgb(250,_251,_252)] [.reference-dropdown-panel_a&:focus-visible]:[background-image:initial] [.reference-dropdown-panel_a&:focus-visible]:[background-origin:initial] [.reference-dropdown-panel_a&:focus-visible]:[background-position:initial] [.reference-dropdown-panel_a&:focus-visible]:[background-repeat:initial] [.reference-dropdown-panel_a&:focus-visible]:[background-size:initial] [.reference-dropdown-panel_a&.router-link-exact-active]:[color:rgb(0,_123,_255)] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-attachment:initial] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-clip:initial] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-color:rgb(250,_251,_252)] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-image:initial] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-origin:initial] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-position:initial] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-repeat:initial] [.reference-dropdown-panel_a&.router-link-exact-active]:[background-size:initial]" v-else :to="child.to" @click="closeMenus">{{
                       $tr(child.label)
                     }}</RouterLink>
@@ -281,3 +311,22 @@ onBeforeUnmount(() => {
     </div>
   </header>
 </template>
+
+<style scoped>
+.login-role-option {
+  @apply block min-h-[44px] w-full rounded-[7px] px-[14px] py-[10px] text-left text-[15px] font-semibold text-[#304663];
+  @apply transition-[background,color] duration-200 hover:bg-[#edf3ff] hover:text-[#294e9e] motion-reduce:transition-none;
+  @apply focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[#d9b33d] focus-visible:outline-offset-[2px];
+}
+.reference-top-layout {
+  @apply flex-wrap;
+}
+.reference-contact-inner {
+  @apply min-w-0;
+}
+.account-button {
+  @apply inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-[8px] border border-[#c5d8fb] bg-white px-[12px] py-[8px] text-[13px] font-bold text-[#294e9e] shadow-sm;
+  @apply transition-[background,color,transform,box-shadow] duration-200 hover:bg-[#edf3ff] hover:text-[#173f8e] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] motion-safe:hover:-translate-y-[2px] motion-reduce:transition-none;
+  @apply focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[#f1c33b] focus-visible:outline-offset-[3px];
+}
+</style>

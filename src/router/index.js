@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { watch } from 'vue'
 import { useI18n } from '../composables/useI18n.js'
 import { informationPages } from '../data/navigation.js'
+import { useAuthStore } from '../stores/auth.js'
+import { ROLES, dashboardPathFor, roleLabels } from '../data/roles.js'
 const pages = [
  {path:'/',name:'home',component:()=>import('../views/HomeView.vue')},
  {path:'/about',name:'about',component:()=>import('../views/AboutView.vue')},
@@ -30,11 +32,29 @@ const pages = [
  {path:'/notices',name:'notices',component:()=>import('../views/NoticesView.vue')},
  {path:'/notices/:id',name:'notice-detail',component:()=>import('../views/NoticeDetailView.vue')},
  ...informationPages.filter(page => !['learning-areas','early-years','junior-school','chief-advisor-message','vision-mission','admission-requirement','application-process'].includes(page.name)).map(page => ({ path: page.path, name: page.name, component: () => import('../views/InformationView.vue'), props: { title: page.title, description: page.description } })),
+ ...ROLES.map(role => ({path:`/dashboard/${role}`,name:`dashboard-${role}`,component:()=>import('../views/DashboardPlaceholderView.vue'),props:{role},meta:{requiresAuth:true,roles:[role],layout:'dashboard'}})),
+ {path:'/dashboard',name:'dashboard',component:()=>import('../views/DashboardPlaceholderView.vue'),meta:{requiresAuth:true,layout:'dashboard'}},
  {path:'/:pathMatch(.*)*',redirect:'/'}
 ]
 const router=createRouter({history:createWebHistory(),routes:pages,scrollBehavior(){return {top:0}}})
+// Share a single restoration request across overlapping navigations.
+let restorePromise
+router.beforeEach(async to => {
+  const auth=useAuthStore()
+  if (auth.token && !auth.restored) {
+    restorePromise ??= auth.loadUser().catch(()=>{}).finally(()=>{restorePromise=null})
+  }
+  if (!to.meta.requiresAuth) return true
+  if (restorePromise) await restorePromise
+  if (!auth.isAuthenticated) return {name:'home',query:{login:'1',redirect:to.fullPath}}
+  if (to.name==='dashboard') return dashboardPathFor(auth.role) || {name:'home'}
+  if (to.meta.roles && !to.meta.roles.includes(auth.role)) return dashboardPathFor(auth.role) || {name:'home'}
+  return true
+})
 const { language, tr } = useI18n()
 const pageTitles = {
+  dashboard: 'Dashboard',
+  ...Object.fromEntries(ROLES.map(role => [`dashboard-${role}`, `${roleLabels[role]} Dashboard`])),
   home: 'Home', about: 'About Us', details: 'Discover PIISC', academics: 'Academics', curriculum: 'Curriculum', 'admission-requirement': 'Admission Requirements',
   athletics: 'Athletics', admissions: 'Admission', 'online-admission': 'Online Admission',
   recruitment: 'Recruitment', campus: 'Campus', news: 'News & Events', 'news-detail': 'News & Events',
