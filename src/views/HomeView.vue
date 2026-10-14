@@ -6,6 +6,7 @@ import HomePillars from "../components/HomePillars.vue";
 import HomeJourney from "../components/HomeJourney.vue";
 import HomeLocation from "../components/HomeLocation.vue";
 import HomeNewsEvents from "../components/HomeNewsEvents.vue";
+import HomeNotices from "../components/HomeNotices.vue";
 import WhatsAppContact from "../components/WhatsAppContact.vue";
 import AdmissionPopup from "../components/AdmissionPopup.vue";
 </script>
@@ -14,6 +15,7 @@ import AdmissionPopup from "../components/AdmissionPopup.vue";
   <HomePillars />
   <HomeJourney />
   <HomeNewsEvents />
+  <HomeNotices />
   <HomeExploreLinks />
   <HomeLocation />
   <WhatsAppContact />

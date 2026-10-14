@@ -1,21 +1,91 @@
 <script setup>
-import { ArrowUpRight, Clock3, Mail, MapPin, Phone } from 'lucide-vue-next'
-import { address } from '../data/content.js'
-import { headerContacts } from '../data/navigation.js'
+import { ArrowUpRight, Clock3, Mail, MapPin, Phone } from "lucide-vue-next";
+import { address } from "../data/content.js";
+import { headerContacts } from "../data/navigation.js";
 </script>
 
 <template>
-  <aside class="admission-panel [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(9,_38,_69)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[border-top-color:rgb(187,_153,_82)] [&&]:[border-top-style:solid] [&&]:[border-top-width:4px] [&&]:[color:rgb(214,_227,_228)] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:0px] [&&]:[border-top-right-radius:0px] [&&]:p-[34px_28px]" :aria-label="$tr(&quot;Admissions contact information&quot;)">
-    <span class="panel-kicker [&&]:tracking-[0.16em] [&&]:[color:rgb(227,_200,_141)] [&&]:[font-size:10px] [&&]:font-[700]">{{ $tr("WE'RE HERE TO HELP") }}</span>
-    <h2 class="[&&]:[color:white] [&&]:[font-size:27px] [&&]:leading-[1.25] [&&]:m-[14px_0px_16px_0px]">{{ $tr("Admission Contact Info") }}</h2>
-    <p class="[&&]:[font-size:14px] [&&]:leading-[1.8]">{{ $tr("Get to know PIISC and find the next step for your family.") }}</p>
-    <address class="[&&]:grid [&&]:gap-x-[23px] [&&]:gap-y-[23px] [&&]:[font-style:normal] [&&]:[font-size:14px] [&&]:m-[30px_0px]">
-      <div class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px]"><MapPin class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)]" :size="20" aria-hidden="true" /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{ $tr(address) }}</span></div>
-      <a class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [address_a&:hover]:[color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" :href="`tel:${headerContacts.phone.replace(/\s/g, '')}`"><Phone class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease]" :size="20" aria-hidden="true" /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{ $tr(headerContacts.phone.trim()) }}</span></a>
-      <a class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [address_a&:hover]:[color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]" :href="`mailto:${headerContacts.email}`"><Mail class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease]" :size="20" aria-hidden="true" /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{ $tr(headerContacts.email) }}</span></a>
-      <div class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px]"><Clock3 class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)]" :size="20" aria-hidden="true" /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{ $tr("Please call to arrange a visit and confirm office hours.") }}</span></div>
+  <aside
+    class="admission-panel [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(9,_38,_69)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[border-top-color:rgb(187,_153,_82)] [&&]:[border-top-style:solid] [&&]:[border-top-width:4px] [&&]:[color:rgb(214,_227,_228)] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:0px] [&&]:[border-top-right-radius:0px] [&&]:p-[34px_28px]"
+    :aria-label="$tr('Admissions contact information')"
+  >
+    <span
+      class="panel-kicker [&&]:tracking-[0.16em] [&&]:[color:rgb(227,_200,_141)] [&&]:[font-size:10px] [&&]:font-[700]"
+      >{{ $tr("WE'RE HERE TO HELP") }}</span
+    >
+    <h2
+      class="[&&]:[color:white] [&&]:[font-size:27px] [&&]:leading-[1.25] [&&]:m-[14px_0px_16px_0px]"
+    >
+      {{ $tr("Admission Contact Info") }}
+    </h2>
+    <p class="[&&]:[font-size:14px] [&&]:leading-[1.8]">
+      {{ $tr("Get to know PIISC and find the next step for your family.") }}
+    </p>
+    <address
+      class="[&&]:grid [&&]:gap-x-[23px] [&&]:gap-y-[23px] [&&]:[font-style:normal] [&&]:[font-size:14px] [&&]:m-[30px_0px]"
+    >
+      <div
+        class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px]"
+      >
+        <MapPin
+          class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)]"
+          :size="20"
+          aria-hidden="true"
+        /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{
+          $tr(address)
+        }}</span>
+      </div>
+      <a
+        class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [address_a&:hover]:[color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]"
+        :href="`tel:${headerContacts.phone.replace(/\s/g, '')}`"
+        ><Phone
+          class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease]"
+          :size="20"
+          aria-hidden="true"
+        /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{
+          $tr(headerContacts.phone.trim())
+        }}</span></a
+      >
+      <a
+        class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [address_a&:hover]:[color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]"
+        :href="`mailto:${headerContacts.email}`"
+        ><Mail
+          class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)] [&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease]"
+          :size="20"
+          aria-hidden="true"
+        /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{
+          $tr(headerContacts.email)
+        }}</span></a
+      >
+      <div
+        class="[&&]:flex [&&]:items-start [&&]:gap-x-[13px] [&&]:gap-y-[13px]"
+      >
+        <Clock3
+          class="[&&]:mt-[3px] [&&]:[flex-shrink:0] [&&]:[color:rgb(227,_200,_141)]"
+          :size="20"
+          aria-hidden="true"
+        /><span class="[&&]:min-w-[0px] [&&]:[overflow-wrap:anywhere]">{{
+          $tr("Please call to arrange a visit and confirm office hours.")
+        }}</span>
+      </div>
     </address>
-    <RouterLink to="/admissions" class="panel-button [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:flex [&&]:items-center [&&]:justify-between [&&]:gap-x-[12px] [&&]:gap-y-[12px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(227,_200,_141)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(9,_38,_69)] [&&]:[font-size:14px] [&&]:cursor-pointer [&&]:font-[700] [&&]:p-[14px_17px] [&.panel-button:hover]:[background-color:rgb(242,_220,_174)] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]">{{ $tr("Explore admissions ") }}<ArrowUpRight class="[&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(prefers-reduced-motion:no-preference)]:[.panel-button:hover_svg&]:[transform:translate(3px,_-3px)] [@media(prefers-reduced-motion:reduce)]:[.panel-button:hover_svg&]:[transform:none]" :size="18" aria-hidden="true" /></RouterLink>
-    <RouterLink to="/contact" class="panel-contact [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:mt-[19px] [&&]:flex [&&]:items-center [&&]:justify-center [&&]:gap-x-[12px] [&&]:gap-y-[12px] [&&]:[color:rgb(227,_200,_141)] [&&]:[font-size:13px] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]">{{ $tr("Send an enquiry ") }}<ArrowUpRight class="[&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(prefers-reduced-motion:no-preference)]:[.panel-contact:hover_svg&]:[transform:translate(3px,_-3px)] [@media(prefers-reduced-motion:reduce)]:[.panel-contact:hover_svg&]:[transform:none]" :size="16" aria-hidden="true" /></RouterLink>
+    <RouterLink
+      to="/admissions"
+      class="panel-button [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:flex [&&]:items-center [&&]:justify-between [&&]:gap-x-[12px] [&&]:gap-y-[12px] [&&]:[border-bottom-left-radius:6px] [&&]:[border-bottom-right-radius:6px] [&&]:[border-top-left-radius:6px] [&&]:[border-top-right-radius:6px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(227,_200,_141)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:rgb(9,_38,_69)] [&&]:[font-size:14px] [&&]:cursor-pointer [&&]:font-[700] [&&]:p-[14px_17px] [&.panel-button:hover]:[background-color:rgb(242,_220,_174)] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]"
+      >{{ $tr("Explore admissions ")
+      }}<ArrowUpRight
+        class="[&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(prefers-reduced-motion:no-preference)]:[.panel-button:hover_svg&]:[transform:translate(3px,_-3px)] [@media(prefers-reduced-motion:reduce)]:[.panel-button:hover_svg&]:[transform:none]"
+        :size="18"
+        aria-hidden="true"
+    /></RouterLink>
+    <RouterLink
+      to="/contact"
+      class="panel-contact [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:color,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:mt-[19px] [&&]:flex [&&]:items-center [&&]:justify-center [&&]:gap-x-[12px] [&&]:gap-y-[12px] [&&]:[color:rgb(227,_200,_141)] [&&]:[font-size:13px] [a&:focus-visible]:[outline-color:rgb(227,_200,_141)] [a&:focus-visible]:[outline-style:solid] [a&:focus-visible]:[outline-width:2px] [a&:focus-visible]:[outline-offset:5px]"
+      >{{ $tr("Send an enquiry ")
+      }}<ArrowUpRight
+        class="[&&]:[transition-behavior:normal] [&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [&&]:[transition-timing-function:ease] [@media(prefers-reduced-motion:no-preference)]:[.panel-contact:hover_svg&]:[transform:translate(3px,_-3px)] [@media(prefers-reduced-motion:reduce)]:[.panel-contact:hover_svg&]:[transform:none]"
+        :size="16"
+        aria-hidden="true"
+    /></RouterLink>
   </aside>
 </template>

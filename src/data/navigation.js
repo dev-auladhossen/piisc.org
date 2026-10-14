@@ -46,7 +46,8 @@ export const navigation = [
     ],
   },
   { id: "gallery", label: "Gallery", to: "/gallery" },
-  { id: "notices", label: "Notice", to: "/notices" },
+  // Navbar.vue uses this entry for both desktop and mobile navigation.
+  { id: "notices", label: "Notices", to: "/notices" },
   { id: "contact", label: "Contact", to: "/contact" },
 ];
 export const informationPages = [
