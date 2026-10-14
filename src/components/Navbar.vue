@@ -7,7 +7,7 @@ import {
   ref,
   watch,
 } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import {
   ArrowLeft,
   ChevronDown,
@@ -27,7 +27,14 @@ import { navigationBn } from "../data/navigationBn.js";
 import { useAuthStore } from "../stores/auth.js";
 import { openLogin } from "../composables/useLoginModal.js";
 import { dashboardPathFor } from "../data/roles.js";
+import UserMenu from "./UserMenu.vue";
 const auth = useAuthStore();
+const router = useRouter();
+function logoutMobile() {
+  closeMenus();
+  auth.logout();
+  router.push("/").catch(() => {});
+}
 function showLogin(event, role) {
   // A dropdown choice disappears on close; return focus to its visible opener.
   const opener = window.matchMedia("(max-width:1199px)").matches
@@ -172,9 +179,7 @@ onBeforeUnmount(() => {
         <div class="header-account flex min-w-0 max-w-full flex-wrap items-center justify-end gap-[8px] max-[540px]:col-span-full max-[540px]:justify-center">
           <LanguageSwitcher />
           <template v-if="auth.isAuthenticated">
-            <span class="max-w-[140px] truncate text-[13px] font-semibold text-white max-[540px]:max-w-[100px]" :title="auth.user?.name">{{ auth.user?.name }}</span>
-            <RouterLink v-if="dashboardPathFor(auth.role)" :to="dashboardPathFor(auth.role)" class="account-button" @click="closeMenus">{{ $tr('Dashboard') }}</RouterLink>
-            <button type="button" class="account-button" @click="auth.logout()">{{ $tr('Logout') }}</button>
+            <UserMenu class="hidden min-[1200px]:block" />
           </template>
         </div>
       </div>
@@ -280,6 +285,11 @@ onBeforeUnmount(() => {
                 </ul>
               </Transition>
             </li>
+            <template v-if="auth.isAuthenticated">
+              <li v-if="dashboardPathFor(auth.role)" class="min-[1200px]:hidden" :inert="mobileOpen && expanded !== null"><RouterLink :to="dashboardPathFor(auth.role)" class="mobile-account-link" @click="closeMenus">{{ $tr('Dashboard') }}</RouterLink></li>
+              <li class="min-[1200px]:hidden" :inert="mobileOpen && expanded !== null"><RouterLink to="/dashboard/profile" class="mobile-account-link" @click="closeMenus">{{ $tr('My profile') }}</RouterLink></li>
+              <li class="min-[1200px]:hidden" :inert="mobileOpen && expanded !== null"><button type="button" class="mobile-account-link" @click="logoutMobile">{{ $tr('Logout') }}</button></li>
+            </template>
           </ul>
         </nav>
         <button
@@ -313,6 +323,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.mobile-account-link {
+  @apply block min-h-[44px] w-full rounded-[7px] px-[14px] py-[10px] text-left text-[15px] font-semibold text-[#304663] hover:bg-[#edf3ff] hover:text-[#294e9e];
+}
 .login-role-option {
   @apply block min-h-[44px] w-full rounded-[7px] px-[14px] py-[10px] text-left text-[15px] font-semibold text-[#304663];
   @apply transition-[background,color] duration-200 hover:bg-[#edf3ff] hover:text-[#294e9e] motion-reduce:transition-none;

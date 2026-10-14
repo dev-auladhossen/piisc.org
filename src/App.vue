@@ -5,6 +5,7 @@ import { useAuthStore } from './stores/auth.js'
 import SiteLayout from './layouts/SiteLayout.vue'
 import DashboardLayout from './layouts/DashboardLayout.vue'
 import LoginModal from './components/LoginModal.vue'
+import ForcePasswordChangeModal from './components/ForcePasswordChangeModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -18,4 +19,4 @@ watch(() => auth.isAuthenticated, (authenticated, wasAuthenticated) => {
   router.replace(destination).catch(() => {})
 })
 </script>
-<template><DashboardLayout v-if="route.meta.layout === 'dashboard'" /><SiteLayout v-else /><LoginModal /></template>
+<template><DashboardLayout v-if="route.meta.layout === 'dashboard'" /><SiteLayout v-else /><LoginModal /><ForcePasswordChangeModal /></template>

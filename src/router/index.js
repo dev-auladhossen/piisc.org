@@ -32,8 +32,9 @@ const pages = [
  {path:'/notices',name:'notices',component:()=>import('../views/NoticesView.vue')},
  {path:'/notices/:id',name:'notice-detail',component:()=>import('../views/NoticeDetailView.vue')},
  ...informationPages.filter(page => !['learning-areas','early-years','junior-school','chief-advisor-message','vision-mission','admission-requirement','application-process'].includes(page.name)).map(page => ({ path: page.path, name: page.name, component: () => import('../views/InformationView.vue'), props: { title: page.title, description: page.description } })),
- ...ROLES.map(role => ({path:`/dashboard/${role}`,name:`dashboard-${role}`,component:()=>import('../views/DashboardPlaceholderView.vue'),props:{role},meta:{requiresAuth:true,roles:[role],layout:'dashboard'}})),
- {path:'/dashboard',name:'dashboard',component:()=>import('../views/DashboardPlaceholderView.vue'),meta:{requiresAuth:true,layout:'dashboard'}},
+ ...ROLES.map(role => ({path:`/dashboard/${role}`,name:`dashboard-${role}`,component:()=>import('../views/DashboardOverviewView.vue'),props:{role},meta:{requiresAuth:true,roles:[role],layout:'dashboard'}})),
+ {path:'/dashboard',name:'dashboard',component:()=>import('../views/DashboardOverviewView.vue'),meta:{requiresAuth:true,layout:'dashboard'}},
+ {path:'/dashboard/profile',name:'dashboard-profile',component:()=>import('../views/DashboardProfileView.vue'),meta:{requiresAuth:true,layout:'dashboard'}},
  {path:'/:pathMatch(.*)*',redirect:'/'}
 ]
 const router=createRouter({history:createWebHistory(),routes:pages,scrollBehavior(){return {top:0}}})
@@ -54,6 +55,7 @@ router.beforeEach(async to => {
 const { language, tr } = useI18n()
 const pageTitles = {
   dashboard: 'Dashboard',
+  'dashboard-profile': 'My Profile',
   ...Object.fromEntries(ROLES.map(role => [`dashboard-${role}`, `${roleLabels[role]} Dashboard`])),
   home: 'Home', about: 'About Us', details: 'Discover PIISC', academics: 'Academics', curriculum: 'Curriculum', 'admission-requirement': 'Admission Requirements',
   athletics: 'Athletics', admissions: 'Admission', 'online-admission': 'Online Admission',

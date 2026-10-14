@@ -96,6 +96,25 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function changePassword(currentPassword, newPassword) {
+    try {
+      const { data } = await api.patch('/auth/change-password', { currentPassword, newPassword })
+      // The backend supplies the updated user; the existing token stays in place.
+      user.value = data.user
+    } catch (failure) {
+      const status = failure.response?.status
+      const kind = !failure.response ? 'network'
+        : status === 400 ? 'rejected'
+        : status === 401 ? 'unauthorized'
+        : status === 429 ? 'rate_limited' : 'server'
+      // Never pass backend messages or passwords to the UI.
+      const error = new Error('Unable to change password. Please try again.')
+      error.kind = kind
+      error.status = status
+      throw error
+    }
+  }
+
   function logout() {
     clearSession()
     sessionExpired.value = false
@@ -104,6 +123,6 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     token, user, loading, sessionExpired, restored,
     isAuthenticated, role, mustChangePassword,
-    login, loadUser, logout,
+    login, loadUser, logout, changePassword,
   }
 })
