@@ -8,10 +8,7 @@ export async function listManageNotices(params = {}, signal) {
     ),
   );
   const { data } = await api.get("/notices/manage", {
-    // A cached ETag revalidation can produce 304, which Axios treats as an
-    // error and does not expose with the cached response body. Keep this
-    // admin list request fresh so the page receives a normal 200 response.
-    params: { ...filtered, _noticeRequest: Date.now() },
+    params: filtered,
     signal,
   });
   return data;

@@ -630,8 +630,7 @@ onBeforeUnmount(() => {
       </nav>
     </div>
     <NoticeFormDialog
-      v-if="activeDialog === 'form-create' || activeDialog === 'form-edit'"
-      :open="true"
+      :open="activeDialog === 'form-create' || activeDialog === 'form-edit'"
       :mode="activeDialog === 'form-create' ? 'create' : 'edit'"
       :notice="selected"
       @saved="onFormSaved"
@@ -639,8 +638,7 @@ onBeforeUnmount(() => {
       @notfound="onNotFound"
     />
     <ConfirmDialog
-      v-if="activeDialog === 'delete'"
-      :open="true"
+      :open="activeDialog === 'delete'"
       :title="'Delete notice'"
       :message="confirmMessage"
       :confirm-label="'Delete'"
