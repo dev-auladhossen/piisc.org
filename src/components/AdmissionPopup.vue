@@ -4,8 +4,10 @@ import { X } from "lucide-vue-next";
 import poster from "../assets/images/poster.png";
 import { images } from "../data/content.js";
 import { useI18n } from "../composables/useI18n.js";
+import { useRoute } from "vue-router";
 
 const { language } = useI18n();
+const route = useRoute();
 
 const dialog = ref(null);
 let previousOverflow;
@@ -24,6 +26,7 @@ function close() {
 }
 
 onMounted(() => {
+  if (Object.hasOwn(route.query, "login")) return;
   previousFocus = document.activeElement;
   previousOverflow = document.body.style.overflow;
   dialog.value.showModal();

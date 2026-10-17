@@ -4,7 +4,7 @@ import { ROLES, dashboardPathFor } from './roles.js'
 const features = {
   admin: [
     { key: 'users', label: 'Users', icon: Users, to: '/dashboard/users', soon: false },
-    { key: 'notices', label: 'Notices', icon: Megaphone },
+    { key: 'notices', label: 'Notices', icon: Megaphone, to: '/dashboard/notices', soon: false },
     { key: 'admissions', label: 'Admissions', icon: GraduationCap },
     { key: 'news', label: 'News & Events', icon: Newspaper },
     { key: 'gallery', label: 'Gallery', icon: Images },
