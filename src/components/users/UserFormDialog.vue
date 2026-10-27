@@ -17,10 +17,10 @@ const error = ref('')
 const invalid = reactive({ name: '', identifier: '' })
 const form = reactive({ name: '', role: 'teacher', email: '', studentId: '' })
 const roleOptions = [
-  { value: 'teacher', label: 'Teacher', icon: BookOpen, selected: 'border-blue-300 bg-blue-50 text-blue-900 ring-blue-600/15', iconColor: 'text-blue-700' },
-  { value: 'student', label: 'Student', icon: Backpack, selected: 'border-emerald-300 bg-emerald-50 text-emerald-900 ring-emerald-600/15', iconColor: 'text-emerald-700' },
-  { value: 'parent', label: 'Parent', icon: Users, selected: 'border-violet-300 bg-violet-50 text-violet-900 ring-violet-600/15', iconColor: 'text-violet-700' },
-  { value: 'admin', label: 'Admin', icon: Shield, selected: 'border-indigo-300 bg-indigo-50 text-indigo-900 ring-indigo-600/15', iconColor: 'text-indigo-700' },
+  { value: 'teacher', label: 'Teacher', icon: BookOpen, selected: 'border-[#8ea9d8] bg-[#edf3ff] text-[#173f8e] ring-[#294e9e]/15', iconColor: 'text-[#294e9e]' },
+  { value: 'student', label: 'Student', icon: Backpack, selected: 'border-[#8ea9d8] bg-[#edf3ff] text-[#173f8e] ring-[#294e9e]/15', iconColor: 'text-[#294e9e]' },
+  { value: 'parent', label: 'Parent', icon: Users, selected: 'border-[#8ea9d8] bg-[#edf3ff] text-[#173f8e] ring-[#294e9e]/15', iconColor: 'text-[#294e9e]' },
+  { value: 'admin', label: 'Admin', icon: Shield, selected: 'border-[#8ea9d8] bg-[#edf3ff] text-[#173f8e] ring-[#294e9e]/15', iconColor: 'text-[#294e9e]' },
 ]
 const roleClasses = {
   admin: 'bg-indigo-50 text-indigo-800 ring-indigo-600/20',
@@ -142,27 +142,27 @@ onBeforeUnmount(() => {
     ref="dialog"
     aria-labelledby="user-form-title"
     aria-describedby="user-form-subtitle"
-    class="user-form-dialog fixed inset-0 m-auto max-h-[90dvh] w-[calc(100%-24px)] max-w-lg overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 text-slate-800 shadow-[0_24px_80px_rgba(15,23,42,0.24)] sm:w-[calc(100%-40px)]"
+    class="user-form-dialog fixed inset-0 m-auto max-h-[90dvh] w-[calc(100%-24px)] max-w-lg overflow-hidden rounded-2xl border border-[#e8edf5] bg-white p-0 text-[#173f8e] shadow-[0_20px_70px_rgba(23,58,106,0.22)] sm:w-[calc(100%-40px)]"
     @cancel="onCancel"
     @close="closed"
   >
     <div class="flex max-h-[90dvh] flex-col">
-      <header class="flex shrink-0 items-center gap-3 border-b border-slate-200 px-4 py-4 sm:px-6">
-        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#294e9e]/10 text-[#294e9e]" aria-hidden="true">
+      <header class="flex shrink-0 items-center gap-3 border-b border-[#e8edf5] bg-[#fbfcfe] px-4 py-4 sm:px-6">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#edf3ff] text-[#294e9e]" aria-hidden="true">
           <component :is="props.mode === 'create' ? UserPlus : UserPen" :size="21" />
         </span>
         <div class="min-w-0 flex-1">
-          <h2 id="user-form-title" class="text-xl font-bold leading-7 text-slate-900">
+          <h2 id="user-form-title" class="text-xl font-bold leading-7 text-[#173f8e]">
             {{ tr(props.mode === 'create' ? 'Create user' : 'Edit user') }}
           </h2>
-          <p id="user-form-subtitle" class="mt-0.5 text-sm text-slate-500">
+          <p id="user-form-subtitle" class="mt-0.5 text-sm text-[#60718e]">
             {{ tr(props.mode === 'create' ? 'Create a school account.' : 'Edit the user’s details.') }}
           </p>
         </div>
         <button
           type="button"
           :disabled="submitting"
-          class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#294e9e] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-[#60718e] transition-colors hover:bg-[#edf3ff] hover:text-[#294e9e] disabled:cursor-not-allowed disabled:opacity-50"
           :aria-label="tr('Close form')"
           @click="cancel"
         >
@@ -173,11 +173,11 @@ onBeforeUnmount(() => {
       <form id="user-form" class="min-h-0 flex-1 overflow-y-auto overscroll-contain" novalidate :aria-busy="submitting" @submit.prevent="submit">
         <div class="space-y-5 px-4 py-5 sm:px-6 sm:py-6">
           <div>
-            <label for="user-name" class="mb-1.5 block text-sm font-semibold text-slate-700">
+            <label for="user-name" class="mb-1.5 block text-sm font-semibold text-[#344b70]">
               {{ tr('Full name') }} <span class="text-red-600" aria-hidden="true">*</span>
             </label>
             <div class="relative">
-              <User class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" :size="18" aria-hidden="true" />
+              <User class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#60718e]" :size="18" aria-hidden="true" />
               <input
                 id="user-name"
                 ref="nameInput"
@@ -190,8 +190,8 @@ onBeforeUnmount(() => {
                 :aria-invalid="!!invalid.name"
                 :aria-describedby="invalid.name ? 'user-name-error' : undefined"
                 :class="[
-                  'min-h-11 w-full rounded-lg border bg-white py-2.5 pl-10 pr-3 text-base text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:ring-2 disabled:bg-slate-50',
-                  invalid.name ? 'border-red-400 focus:border-red-600 focus:ring-red-500/15' : 'border-slate-300 focus:border-[#294e9e] focus:ring-[#294e9e]/15',
+                  'user-field min-h-12 w-full rounded-[14px] border bg-white py-2.5 pl-10 pr-3 text-base text-[#173f8e] outline-none transition placeholder:text-[#60718e] disabled:bg-slate-50',
+                  invalid.name ? 'border-red-400 focus:border-red-600 focus:ring-red-500/15' : 'border-[#c7d4e8]',
                 ]"
               />
             </div>
@@ -201,14 +201,14 @@ onBeforeUnmount(() => {
           </div>
 
           <fieldset v-if="props.mode === 'create'" class="min-w-0">
-            <legend class="mb-2 text-sm font-semibold text-slate-700">
+            <legend class="mb-2 text-sm font-semibold text-[#344b70]">
               {{ tr('Choose a role') }} <span class="text-red-600" aria-hidden="true">*</span>
             </legend>
             <div class="grid grid-cols-2 gap-2 sm:gap-3">
               <label
                 v-for="option in roleOptions"
                 :key="option.value"
-                class="group relative flex min-h-14 cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-within:ring-2 focus-within:ring-[#294e9e]/30"
+                class="group relative flex min-h-14 cursor-pointer items-center gap-2 rounded-[14px] border border-[#c7d4e8] bg-white px-3 py-2.5 text-sm font-medium text-[#344b70] transition hover:border-[#8ea9d8] hover:bg-[#fbfcfe] focus-within:ring-2 focus-within:ring-[#294e9e]/15"
                 :class="form.role === option.value ? option.selected + ' ring-1' : ''"
               >
                 <input
@@ -229,24 +229,24 @@ onBeforeUnmount(() => {
             </div>
           </fieldset>
 
-          <div v-else class="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+          <div v-else class="flex items-start gap-3 rounded-[14px] border border-[#dce6f5] bg-[#fbfcfe] px-4 py-3">
             <span class="mt-0.5 inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset" :class="roleClasses[props.user?.role] || roleClasses.teacher">
               {{ tr(({ admin: 'Admin', teacher: 'Teacher', student: 'Student', parent: 'Parent' })[props.user?.role] || 'Teacher') }}
             </span>
-            <div class="flex min-w-0 items-start gap-2 text-sm leading-5 text-slate-600">
-              <LockKeyhole class="mt-0.5 shrink-0 text-slate-400" :size="16" aria-hidden="true" />
+            <div class="flex min-w-0 items-start gap-2 text-sm leading-5 text-[#60718e]">
+              <LockKeyhole class="mt-0.5 shrink-0 text-[#60718e]" :size="16" aria-hidden="true" />
               <span>{{ tr('The role cannot be changed after the account is created.') }}</span>
             </div>
           </div>
 
           <div>
-            <label for="user-identifier" class="mb-1.5 block text-sm font-semibold text-slate-700">
+            <label for="user-identifier" class="mb-1.5 block text-sm font-semibold text-[#344b70]">
               {{ tr(isStudent() ? 'Student ID' : 'Email') }} <span class="text-red-600" aria-hidden="true">*</span>
             </label>
             <div class="relative">
               <component
                 :is="isStudent() ? IdCard : Mail"
-                class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#60718e]"
                 :size="18"
                 aria-hidden="true"
               />
@@ -266,12 +266,12 @@ onBeforeUnmount(() => {
                 :aria-invalid="!!invalid.identifier"
                 :aria-describedby="[isStudent() ? 'student-id-help' : '', invalid.identifier ? 'user-identifier-error' : ''].filter(Boolean).join(' ') || undefined"
                 :class="[
-                  'min-h-11 w-full rounded-lg border bg-white py-2.5 pl-10 pr-3 text-base text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:ring-2 disabled:bg-slate-50',
-                  invalid.identifier ? 'border-red-400 focus:border-red-600 focus:ring-red-500/15' : 'border-slate-300 focus:border-[#294e9e] focus:ring-[#294e9e]/15',
+                  'user-field min-h-12 w-full rounded-[14px] border bg-white py-2.5 pl-10 pr-3 text-base text-[#173f8e] outline-none transition placeholder:text-[#60718e] disabled:bg-slate-50',
+                  invalid.identifier ? 'border-red-400 focus:border-red-600 focus:ring-red-500/15' : 'border-[#c7d4e8]',
                 ]"
               />
             </div>
-            <p v-if="isStudent()" id="student-id-help" class="mt-1.5 text-sm text-slate-500">
+            <p v-if="isStudent()" id="student-id-help" class="mt-1.5 text-sm text-[#60718e]">
               {{ tr('Format: PIISC-2027-001') }}
             </p>
             <p v-if="invalid.identifier" id="user-identifier-error" role="alert" class="mt-1.5 flex items-start gap-1.5 text-sm text-red-700">
@@ -290,11 +290,11 @@ onBeforeUnmount(() => {
         </div>
       </form>
 
-      <footer class="flex shrink-0 flex-col-reverse gap-2 border-t border-slate-200 bg-slate-50 px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
+      <footer class="flex shrink-0 flex-col-reverse gap-2 border-t border-[#e8edf5] bg-[#fbfcfe] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
         <button
           type="button"
           :disabled="submitting"
-          class="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#294e9e] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          class="inline-flex min-h-11 w-full items-center justify-center rounded-[10px] border border-[#c7d4e8] bg-white px-5 text-sm font-semibold text-[#173f8e] transition-colors hover:bg-[#edf3ff] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
           @click="cancel"
         >{{ tr('Cancel') }}</button>
         <button
@@ -302,7 +302,7 @@ onBeforeUnmount(() => {
           form="user-form"
           :disabled="submitting"
           :aria-busy="submitting"
-          class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#294e9e] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#173f8e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#294e9e] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-[#294e9e] px-5 text-sm font-semibold text-white shadow-[0_3px_10px_rgba(41,78,158,0.15)] transition-colors hover:bg-[#173f8e] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
           <Loader2 v-if="submitting" :size="16" class="animate-spin" aria-hidden="true" />
           {{ tr(submitting ? 'Saving…' : props.mode === 'create' ? 'Create user' : 'Save changes') }}
@@ -314,7 +314,10 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .user-form-dialog:not([open]) { display: none; }
-.user-form-dialog::backdrop { @apply bg-slate-950/40 backdrop-blur-[3px]; }
+.user-form-dialog::backdrop { @apply bg-[rgba(21,27,38,0.60)] backdrop-blur-[4px]; }
+.user-field { @apply transition-[border-color,box-shadow] duration-150; }
+.user-field:focus-visible { @apply border-[#8ea9d8] outline-none ring-2 ring-[#294e9e]/10; }
+.user-form-dialog button:focus-visible { @apply outline outline-[3px] outline-[#d9b33d] outline-offset-[3px]; }
 @media (prefers-reduced-motion: no-preference) {
   .user-form-dialog[open] { animation: user-form-enter 150ms ease-out both; }
 }

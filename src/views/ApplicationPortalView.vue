@@ -12,7 +12,17 @@ import {
   Phone,
 } from "lucide-vue-next";
 import { headerContacts } from "../data/navigation.js";
+import {
+  bloodGroups,
+  classes,
+  concessions,
+  DIVISION_CLASSES,
+  divisions,
+  genders,
+  relationships,
+} from "../data/admissionOptions.js";
 import { useI18n } from "../composables/useI18n.js";
+import { validate as validateAdmissionForm } from "../utils/admissionForm.js";
 
 const props = defineProps({ kind: { type: String, required: true } });
 const { language } = useI18n();
@@ -24,12 +34,71 @@ const form = reactive({
   email: "",
   phone: "",
   message: "",
+  studentName: "",
+  applyingForClass: "",
+  division: "",
+  gender: "",
+  bloodGroup: "",
+  dateOfBirth: "",
+  concessionRequested: "none",
+  fatherName: "",
+  motherName: "",
+  guardianName: "",
+  relationship: "",
+  alternatePhone: "",
+  previousSchool: "",
+  previousResult: "",
+  medicalConditions: "",
+  address: "",
+  consent: false,
+  website: "",
+});
+const errors = reactive({});
+const usesDivision = computed(() => DIVISION_CLASSES.includes(form.applyingForClass));
+const admissionFields = computed(() => {
+  const bn = language.value === "bn";
+  const list = (options) => options.map((option) => ({
+    value: option.value,
+    label: bn ? option.bn : option.en,
+  }));
+  return [
+    { key: "studentName", label: bn ? "শিক্ষার্থীর পূর্ণ নাম" : "Candidate Full Name", type: "text", required: true, autocomplete: "name", maxlength: 100 },
+    { key: "applyingForClass", label: bn ? "যে শ্রেণিতে আবেদন" : "Applying for Class", type: "select", required: true, options: list(classes) },
+    ...(usesDivision.value ? [{ key: "division", label: bn ? "শিক্ষা বিভাগ" : "Academic Division", type: "select", required: true, options: list(divisions) }] : []),
+    { key: "gender", label: bn ? "লিঙ্গ" : "Gender", type: "select", required: true, options: list(genders) },
+    { key: "bloodGroup", label: bn ? "রক্তের গ্রুপ" : "Blood Group", type: "select", options: list(bloodGroups) },
+    { key: "dateOfBirth", label: bn ? "জন্ম তারিখ" : "Date of Birth", type: "date", required: true, autocomplete: "bday" },
+    { key: "concessionRequested", label: bn ? "বৃত্তি / ছাড়ের বিভাগ" : "Scholarship / Concession Category", type: "select", options: list(concessions) },
+    { key: "fatherName", label: bn ? "বাবার পূর্ণ নাম" : "Father's Full Name", type: "text", autocomplete: "name", maxlength: 100 },
+    { key: "motherName", label: bn ? "মায়ের পূর্ণ নাম" : "Mother's Full Name", type: "text", autocomplete: "name", maxlength: 100 },
+    { key: "guardianName", label: bn ? "প্রাথমিক অভিভাবকের পূর্ণ নাম" : "Primary Guardian Full Name", type: "text", required: true, autocomplete: "name", maxlength: 100 },
+    { key: "relationship", label: bn ? "অভিভাবকের সঙ্গে সম্পর্ক" : "Guardian Relation", type: "select", required: true, options: list(relationships) },
+    { key: "phone", label: bn ? "অভিভাবকের মোবাইল / ফোন নম্বর" : "Guardian Mobile / Phone Number", type: "tel", required: true, autocomplete: "tel", maxlength: 30 },
+    { key: "alternatePhone", label: bn ? "জরুরি / বিকল্প ফোন নম্বর" : "Emergency / Alternate Phone Number", type: "tel", autocomplete: "tel", maxlength: 30 },
+    { key: "email", label: bn ? "অভিভাবকের ইমেইল ঠিকানা" : "Guardian Email Address", type: "email", required: true, autocomplete: "email", maxlength: 150 },
+    { key: "previousSchool", label: bn ? "পূর্ববর্তী স্কুল / প্রতিষ্ঠান" : "Previous School / Institution", type: "text", autocomplete: "organization", maxlength: 150 },
+    { key: "previousResult", label: bn ? "পূর্ববর্তী জিপিএ / শ্রেণির ফলাফল" : "Previous GPA / Class Result", type: "text", maxlength: 50 },
+    { key: "medicalConditions", label: bn ? "চিকিৎসা / স্বাস্থ্যগত অবস্থা" : "Medical / Health Conditions", type: "textarea", maxlength: 500, full: true },
+    { key: "address", label: bn ? "বর্তমান / আবাসিক ঠিকানা" : "Present / Residential Address", type: "textarea", required: true, autocomplete: "street-address", maxlength: 300, full: true },
+    { key: "message", label: bn ? "প্রশাসকের জন্য অতিরিক্ত নোট / মন্তব্য" : "Additional Notes / Remarks for Admin", type: "textarea", maxlength: 1000, full: true },
+  ];
 });
 const prepared = ref(false);
+watch(
+  () => form.applyingForClass,
+  () => {
+    if (!usesDivision.value) {
+      form.division = "";
+      delete errors.division;
+    }
+  },
+);
 watch(
   () => props.kind,
   () => {
     Object.keys(form).forEach((key) => (form[key] = ""));
+    form.concessionRequested = "none";
+    Object.keys(errors).forEach((key) => delete errors[key]);
     prepared.value = false;
   },
 );
@@ -61,9 +130,13 @@ const copy = computed(() => {
       : bn
         ? "কাজের আগ্রহ জানান"
         : "Introduce yourself",
-    note: bn
-      ? "এই ফর্ম আপনার ইমেইল অ্যাপে একটি খসড়া খুলবে। তথ্য যাচাই করে সেখান থেকে পাঠান। এখানে কোনো আবেদন জমা হয় না।"
-      : "This form opens a draft in your email app. Review and send it from there; completing this form does not submit an application.",
+    note: isAdmission.value
+      ? bn
+        ? "এই ফর্ম জমা দিলে আপনার আবেদনটি স্কুল অফিসে পাঠানো হবে। এটি ভর্তির নিশ্চয়তা নয়। পরবর্তী ধাপ সম্পর্কে স্কুল আপনার সঙ্গে যোগাযোগ করবে।"
+        : "Submitting this form sends your application to the school office. It is not a confirmation of admission. The school will contact you about the next steps."
+      : bn
+        ? "এই ফর্মটি আপনার ইমেইল অ্যাপে একটি খসড়া খুলবে। সেখানে পর্যালোচনা করে পাঠান; ফর্ম পূরণ করলেই আবেদন জমা হয় না।"
+        : "This form opens a draft in your email app. Review and send it from there; completing this form does not submit an application.",
     name: isAdmission.value
       ? bn
         ? "শিক্ষার্থীর নাম"
@@ -142,6 +215,38 @@ function prepareEmail() {
   ].join("\n");
   window.location.href = `mailto:${headerContacts.email}?subject=${encodeURIComponent(`${c.title} — ${form.name.trim()}`)}&body=${encodeURIComponent(body)}`;
   prepared.value = true;
+}
+
+function validateField(field) {
+  const result = validateAdmissionForm(form, { divisionVisible: usesDivision.value });
+  if (result[field]) errors[field] = result[field];
+  else delete errors[field];
+}
+
+function validateAllFields() {
+  const result = validateAdmissionForm(form, { divisionVisible: usesDivision.value });
+  Object.keys(errors).forEach((key) => delete errors[key]);
+  Object.assign(errors, result);
+  return result;
+}
+
+function focusFirstInvalid(result) {
+  const firstField = admissionFields.value.find((field) => result[field.key])?.key;
+  const target = firstField || (result.consent ? "consent" : null);
+  if (target) document.getElementById(`application-${target}`)?.focus();
+}
+
+function handleSubmit() {
+  if (!isAdmission.value) {
+    prepareEmail();
+    return;
+  }
+  const result = validateAllFields();
+  if (Object.keys(result).length) {
+    focusFirstInvalid(result);
+    return;
+  }
+  prepareEmail();
 }
 </script>
 
@@ -268,7 +373,8 @@ function prepareEmail() {
     >
       <form
         class="portal-form [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:10px] [&&]:[border-bottom-right-radius:10px] [&&]:[border-top-left-radius:10px] [&&]:[border-top-right-radius:10px] [&&]:[box-shadow:rgba(23,_58,_106,_0.05)_0px_14px_35px] [@media(max-width:540px)]:[&&]:p-[25px_20px] [@media(width>540px)]:[&&]:p-[36px] [&&]:[border-width:1px] [&&]:[border-style:solid] [&&]:[border-color:rgb(220,_229,_243)]"
-        @submit.prevent="prepareEmail"
+        :novalidate="isAdmission"
+        @submit.prevent="handleSubmit"
       >
         <h2
           class="[&&]:[font-size:29px] [&&]:mb-[15px] [&&]:leading-[1.3] [&&]:[color:rgb(41,_78,_158)]"
@@ -281,6 +387,97 @@ function prepareEmail() {
           {{ $tr(copy.note) }}
         </p>
         <div
+          v-if="isAdmission"
+          class="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+          aria-hidden="true"
+        >
+          <label for="application-website">Website</label>
+          <input
+            id="application-website"
+            v-model="form.website"
+            type="text"
+            name="website"
+            autocomplete="off"
+            tabindex="-1"
+            aria-hidden="true"
+          />
+        </div>
+        <div
+          v-if="isAdmission"
+          class="portal-fields [&&]:grid [@media(max-width:540px)]:[&&]:grid-cols-[1fr] [@media(width>540px)]:[&&]:grid-cols-[repeat(2,_minmax(0px,_1fr))] [&&]:gap-x-[20px] [&&]:gap-y-[20px]"
+        >
+          <label
+            v-for="field in admissionFields"
+            :key="field.key"
+            :for="`application-${field.key}`"
+            :class="[
+              '[&&]:[font-size:13px] [&&]:font-[700] [&&]:[color:rgb(23,_58,_106)]',
+              field.full ? 'full-field [&&]:[grid-column-end:-1] [&&]:[grid-column-start:1]' : '',
+            ]"
+          >
+            {{ $tr(field.label) }}
+            <select
+              v-if="field.type === 'select'"
+              :id="`application-${field.key}`"
+              v-model="form[field.key]"
+              :required="field.required || false"
+              :aria-invalid="errors[field.key] ? 'true' : undefined"
+              :aria-describedby="errors[field.key] ? `application-${field.key}-error` : undefined"
+              @blur="validateField(field.key)"
+              class="mt-[8px] block w-full rounded-[6px] border border-[#dce5f3] bg-white p-[12px] text-[14px] text-[#173a6a] focus:border-[#d9b33d] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#d9b33d]"
+              :class="{ 'border-red-600': errors[field.key] }"
+            >
+              <option v-if="field.key !== 'concessionRequested'" value="" disabled>
+                {{ language === 'bn' ? 'নির্বাচন করুন...' : 'Select...' }}
+              </option>
+              <option v-for="option in field.options" :key="option.value" :value="option.value">
+                {{ $tr(option.label) }}
+              </option>
+            </select>
+            <textarea
+              v-else-if="field.type === 'textarea'"
+              :id="`application-${field.key}`"
+              v-model="form[field.key]"
+              :required="field.required || false"
+              :maxlength="field.maxlength"
+              :autocomplete="field.autocomplete"
+              :aria-invalid="errors[field.key] ? 'true' : undefined"
+              :aria-describedby="errors[field.key] ? `application-${field.key}-error` : undefined"
+              @blur="validateField(field.key)"
+              rows="4"
+              class="mt-[8px] block w-full resize-y rounded-[6px] border border-[#dce5f3] bg-white p-[12px] text-[14px] text-[#173a6a] focus:border-[#d9b33d] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#d9b33d]"
+              :class="{ 'border-red-600': errors[field.key] }"
+            ></textarea>
+            <input
+              v-else
+              :id="`application-${field.key}`"
+              v-model="form[field.key]"
+              :type="field.type"
+              :required="field.required || false"
+              :maxlength="field.maxlength"
+              :autocomplete="field.autocomplete"
+              :aria-invalid="errors[field.key] ? 'true' : undefined"
+              :aria-describedby="errors[field.key] ? `application-${field.key}-error` : undefined"
+              @blur="validateField(field.key)"
+              class="mt-[8px] block w-full rounded-[6px] border border-[#dce5f3] bg-white p-[12px] text-[14px] text-[#173a6a] focus:border-[#d9b33d] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#d9b33d]"
+              :class="{ 'border-red-600': errors[field.key] }"
+            />
+            <span
+              v-if="errors[field.key]"
+              :id="`application-${field.key}-error`"
+              class="mt-1 block text-xs font-semibold text-red-700"
+              aria-live="polite"
+            >{{ $tr(errors[field.key]) }}</span>
+            <span
+              v-if="field.key === 'medicalConditions' || field.key === 'message'"
+              class="mt-1 block text-right text-xs font-normal text-[#718096]"
+              aria-live="polite"
+              aria-atomic="true"
+            >{{ $tr(form[field.key].length) }} / {{ $tr(field.maxlength) }}</span>
+          </label>
+        </div>
+        <div
+          v-else
           class="portal-fields [&&]:grid [@media(max-width:540px)]:[&&]:grid-cols-[1fr] [@media(width>540px)]:[&&]:grid-cols-[repeat(2,_minmax(0px,_1fr))] [&&]:gap-x-[20px] [&&]:gap-y-[20px]"
         >
           <label
@@ -356,6 +553,38 @@ function prepareEmail() {
             ></textarea>
           </label>
         </div>
+        <div
+          v-if="isAdmission"
+          class="mt-[22px] flex items-start gap-3 text-sm font-normal leading-relaxed text-[#43566e]"
+        >
+          <input
+            id="application-consent"
+            v-model="form.consent"
+            type="checkbox"
+            required
+            :aria-invalid="errors.consent ? 'true' : undefined"
+            :aria-describedby="errors.consent ? 'application-consent-error' : undefined"
+            @blur="validateField('consent')"
+            class="mt-1 h-4 w-4 shrink-0 accent-[#294e9e]"
+          />
+          <div>
+            <label for="application-consent">
+              {{ language === "bn" ? "আমি নিশ্চিত করছি যে তথ্য সঠিক এবং এই আবেদন প্রক্রিয়াকরণের জন্য স্কুলকে তা সংরক্ষণে সম্মতি দিচ্ছি।" : "I confirm that the information is correct and I agree to the school keeping it to process this application." }}
+            </label>
+            <a
+              href="/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ml-1 font-bold text-[#294e9e] underline"
+            >{{ language === "bn" ? "গোপনীয়তা নীতি" : "Privacy Policy" }}</a>
+          </div>
+        </div>
+        <span
+          v-if="isAdmission && errors.consent"
+          id="application-consent-error"
+          class="mt-1 block text-xs font-semibold text-red-700"
+          aria-live="polite"
+        >{{ $tr(errors.consent) }}</span>
         <button
           class="portal-submit [&&]:mt-[25px] [&&]:inline-flex [&&]:items-center [&&]:justify-center [&&]:gap-x-[14px] [&&]:gap-y-[14px] [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:[border-bottom-left-radius:7px] [&&]:[border-bottom-right-radius:7px] [&&]:[border-top-left-radius:7px] [&&]:[border-top-right-radius:7px] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(41,_78,_158)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:white] [&&]:[font-size:13px] [&&]:cursor-pointer [&&]:font-[700] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.25s,_0.25s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:background,_transform] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [@media(max-width:540px)]:[&&]:w-[100%] [&&]:p-[13px_23px] [&&]:[border-width:0px] [&&]:[border-style:none] [&&]:[border-color:currentcolor] [&.portal-submit:hover]:[background-color:rgb(23,_58,_128)] [@media(prefers-reduced-motion:no-preference)]:[&.portal-submit:hover]:[transform:translateY(-2px)] [@media(prefers-reduced-motion:reduce)]:[&.portal-submit:hover]:[transform:none] [button&:focus-visible]:[outline-color:rgb(217,_179,_61)] [button&:focus-visible]:[outline-style:solid] [button&:focus-visible]:[outline-width:2px] [button&:focus-visible]:[outline-offset:4px]"
           type="submit"

@@ -9,6 +9,11 @@ import {
   Trash2,
   Eye,
   Send,
+  CheckCircle2,
+  CircleAlert,
+  TriangleAlert,
+  Info,
+  X,
 } from "lucide-vue-next";
 import ConfirmDialog from "../components/users/ConfirmDialog.vue";
 import NoticeFormDialog from "../components/notices/NoticeFormDialog.vue";
@@ -31,15 +36,14 @@ const totalPages = ref(1);
 const notices = ref([]);
 const loading = ref(false);
 const errorKind = ref("");
-const actionError = ref("");
-const announcement = ref("");
+const toast = ref(null);
 const activeDialog = ref("");
 const selected = ref(null);
 const dialogError = ref("");
 const actionLoading = ref(false);
 let requestCounter = 0;
 let controller = null;
-let announcementTimer;
+let toastTimer;
 let focusReturn = null;
 
 const pages = computed(() => Math.max(1, totalPages.value || 1));
@@ -118,12 +122,23 @@ watch(
   { flush: "sync" },
 );
 watch([category, visibility, page], fetchNotices, { immediate: true });
-function announce(text) {
-  announcement.value = text;
-  clearTimeout(announcementTimer);
-  announcementTimer = setTimeout(() => {
-    announcement.value = "";
-  }, 4000);
+function notify(message, type = "success") {
+  clearTimeout(toastTimer);
+  toast.value = { message, type, id: Date.now() };
+  toastTimer = setTimeout(() => dismissToast(), 4200);
+}
+function dismissToast() {
+  clearTimeout(toastTimer);
+  toast.value = null;
+}
+function toastColors(type) {
+  return type === "success"
+    ? { surface: "#ecfdf3", border: "#a7f3d0", iconBg: "#d1fae5", foreground: "#166534" }
+    : type === "delete" || type === "error"
+      ? { surface: "#fff1f2", border: "#fecdd3", iconBg: "#ffe4e6", foreground: "#9f1239" }
+      : type === "warning"
+        ? { surface: "#fffbeb", border: "#fde68a", iconBg: "#fef3c7", foreground: "#92400e" }
+        : { surface: "#eff6ff", border: "#bfdbfe", iconBg: "#dbeafe", foreground: "#1e40af" };
 }
 function openDialog(kind, notice = null, trigger = null) {
   focusReturn = trigger || document.activeElement;
@@ -162,18 +177,18 @@ function onFormSaved(payload) {
   if (creating) {
     page.value = 1;
     fetchNotices();
-    announce("Notice created.");
+    notify("Notice created successfully.");
   } else if (saved?._id) {
     notices.value = notices.value.map((item) =>
       item._id === saved._id
         ? { ...item, ...saved, createdBy: saved.createdBy ?? item.createdBy }
         : item,
     );
-    announce("Notice updated.");
+    notify("Notice updated successfully.");
   }
 }
 function onNotFound() {
-  actionError.value = "This notice no longer exists.";
+  notify("This notice no longer exists.", "warning");
   fetchNotices();
 }
 function validDate(value) {
@@ -214,7 +229,6 @@ function titleShort(title) {
   return typeof title === "string" ? title : "";
 }
 async function togglePublish(item) {
-  actionError.value = "";
   try {
     const response = await updateNotice(item._id, {
       isPublished: item.isPublished === false,
@@ -225,12 +239,15 @@ async function togglePublish(item) {
         ? { ...row, ...saved, createdBy: saved?.createdBy ?? row.createdBy }
         : row,
     );
-    announce(
-      item.isPublished === false ? "Notice published." : "Notice unpublished.",
+    notify(
+      item.isPublished === false
+        ? "Notice published successfully."
+        : "Notice unpublished successfully.",
+      item.isPublished === false ? "success" : "info",
     );
   } catch (failure) {
     const kind = noticeErrorKind(failure);
-    actionError.value = errorMessage(kind);
+    notify(errorMessage(kind), "error");
     if (kind === "notfound") fetchNotices();
   }
 }
@@ -243,14 +260,15 @@ async function confirmDelete() {
     const wasOnlyRow = notices.value.length === 1;
     const oldPage = page.value;
     closeDialog();
-    announce("Notice deleted.");
+    notify("Notice deleted successfully.", "delete");
     if (wasOnlyRow && oldPage > 1) page.value = oldPage - 1;
     else fetchNotices();
   } catch (failure) {
     const kind = noticeErrorKind(failure);
     dialogError.value = errorMessage(kind);
+    notify(errorMessage(kind), "error");
     if (kind === "notfound") {
-      actionError.value = "This notice no longer exists.";
+      notify("This notice no longer exists.", "warning");
       fetchNotices();
     }
   } finally {
@@ -279,7 +297,7 @@ function ariaAction(action, item) {
 onBeforeUnmount(() => {
   requestCounter++;
   controller?.abort();
-  clearTimeout(announcementTimer);
+  clearTimeout(toastTimer);
   focusReturn = null;
 });
 </script>
@@ -343,21 +361,6 @@ onBeforeUnmount(() => {
     <p class="sr-only" aria-live="polite" aria-atomic="true">
       {{ resultSummary }}
     </p>
-    <p
-      v-if="announcement"
-      role="status"
-      aria-live="polite"
-      class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
-    >
-      {{ tr(announcement) }}
-    </p>
-    <p
-      v-if="actionError"
-      role="alert"
-      class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
-    >
-      {{ tr(actionError) }}
-    </p>
     <div
       v-if="errorKind"
       role="alert"
@@ -380,231 +383,222 @@ onBeforeUnmount(() => {
       >
         {{ tr("Loading notices…") }}
       </p>
+
       <p
         v-else-if="!loading && !notices.length"
         class="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-600"
       >
         {{ tr("No notices found.") }}
       </p>
-      <template>
-        <div v-if="notices.length">
-          <p>got it</p>
-        </div>
-        <div
-          v-if="notices.length"
-          class="hidden overflow-hidden rounded-xl border border-slate-200 bg-white md:block"
-          :aria-busy="loading"
-        >
-          <div class="overflow-x-auto">
-            <table class="w-full table-fixed text-left text-sm">
-              <caption class="sr-only">
-                {{
-                  tr("Admin notices")
-                }}
-              </caption>
-              <thead
-                class="bg-slate-50 text-xs uppercase tracking-wide text-slate-600"
-              >
-                <tr>
-                  <th scope="col" class="w-[23%] px-4 py-3">
-                    {{ tr("Title") }}
-                  </th>
-                  <th scope="col" class="px-3 py-3">{{ tr("Category") }}</th>
-                  <th scope="col" class="px-3 py-3">{{ tr("Status") }}</th>
-                  <th scope="col" class="px-3 py-3">
-                    {{ tr("Publish date") }}
-                  </th>
-                  <th scope="col" class="px-3 py-3">{{ tr("Expiry") }}</th>
-                  <th scope="col" class="px-3 py-3">{{ tr("Created by") }}</th>
-                  <th scope="col" class="px-4 py-3">{{ tr("Actions") }}</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100">
-                <tr v-for="item in notices" :key="item._id" class="align-top">
-                  <td class="px-4 py-4">
-                    <p
-                      class="truncate font-semibold text-slate-900"
-                      :title="titleShort(item.title)"
-                    >
-                      {{ item.title }}
-                    </p>
-                    <span
-                      v-if="item.isImportant"
-                      class="mt-1 inline-flex rounded-full bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-900"
-                      >{{ tr("Important") }}</span
-                    >
-                  </td>
-                  <td class="px-3 py-4">
-                    {{ categoryLabel(item.category, language) }}
-                  </td>
-                  <td class="px-3 py-4">
-                    <span
-                      class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset"
-                      :class="statusClass(statusOf(item))"
-                      >{{ tr(statusOf(item)) }}</span
-                    >
-                  </td>
-                  <td class="px-3 py-4 text-slate-600">
-                    {{ formatDate(item.publishDate) }}
-                  </td>
-                  <td class="px-3 py-4 text-slate-600">
-                    {{ formatDate(item.expiryDate) }}
-                  </td>
-                  <td class="px-3 py-4 text-slate-600">
-                    {{ item.createdBy?.name || "—" }}
-                  </td>
-                  <td class="px-4 py-3">
-                    <div class="flex flex-wrap gap-1.5">
-                      <button
-                        type="button"
-                        class="rounded-md p-2 text-slate-700 hover:bg-slate-100"
-                        :aria-label="ariaAction('Edit', item)"
-                        @click="startEdit(item, $event)"
-                      >
-                        <Pencil :size="16" aria-hidden="true" /></button
-                      ><button
-                        type="button"
-                        class="rounded-md p-2 text-slate-700 hover:bg-slate-100"
-                        :aria-label="
-                          ariaAction(
-                            item.isPublished === false
-                              ? 'Publish'
-                              : 'Unpublish',
-                            item,
-                          )
-                        "
-                        @click="togglePublish(item)"
-                      >
-                        <Send :size="16" aria-hidden="true" /></button
-                      ><RouterLink
-                        v-if="statusOf(item) === 'Live'"
-                        :to="`/notices/${item._id}`"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="rounded-md p-2 text-slate-700 hover:bg-slate-100"
-                        :aria-label="ariaAction('View', item)"
-                        ><Eye :size="16" aria-hidden="true" /></RouterLink
-                      ><button
-                        type="button"
-                        class="rounded-md p-2 text-red-700 hover:bg-red-50"
-                        :aria-label="ariaAction('Delete', item)"
-                        @click="startDelete(item, $event)"
-                      >
-                        <Trash2 :size="16" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div
-          v-if="notices.length"
-          class="space-y-3 md:hidden"
-          :aria-busy="loading"
-        >
-          <article
-            v-for="item in notices"
-            :key="item._id"
-            class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-          >
-            <div class="flex items-start justify-between gap-3">
-              <h2
-                class="min-w-0 truncate font-semibold text-slate-900"
-                :title="titleShort(item.title)"
-              >
-                {{ item.title }}
-              </h2>
-              <span
-                class="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset"
-                :class="statusClass(statusOf(item))"
-                >{{ tr(statusOf(item)) }}</span
-              >
-            </div>
-            <span
-              v-if="item.isImportant"
-              class="mt-2 inline-flex rounded-full bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-900"
-              >{{ tr("Important") }}</span
+      <div
+        v-if="notices.length"
+        class="hidden overflow-hidden rounded-xl border border-slate-200 bg-white md:block"
+        :aria-busy="loading"
+      >
+        <div class="overflow-x-auto">
+          <table class="w-full table-fixed text-left text-sm">
+            <caption class="sr-only">
+              {{
+                tr("Admin notices")
+              }}
+            </caption>
+            <thead
+              class="bg-slate-50 text-xs uppercase tracking-wide text-slate-600"
             >
-            <dl class="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
-              <div>
-                <dt class="font-semibold text-slate-500">
-                  {{ tr("Category") }}
-                </dt>
-                <dd class="mt-0.5 text-slate-800">
-                  {{ categoryLabel(item.category, language) }}
-                </dd>
-              </div>
-              <div>
-                <dt class="font-semibold text-slate-500">
+              <tr>
+                <th scope="col" class="w-[23%] px-4 py-3">
+                  {{ tr("Title") }}
+                </th>
+                <th scope="col" class="px-3 py-3">{{ tr("Category") }}</th>
+                <th scope="col" class="px-3 py-3">{{ tr("Status") }}</th>
+                <th scope="col" class="px-3 py-3">
                   {{ tr("Publish date") }}
-                </dt>
-                <dd class="mt-0.5 text-slate-800">
+                </th>
+                <th scope="col" class="px-3 py-3">{{ tr("Expiry") }}</th>
+                <th scope="col" class="px-3 py-3">{{ tr("Created by") }}</th>
+                <th scope="col" class="px-4 py-3">{{ tr("Actions") }}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr v-for="item in notices" :key="item._id" class="align-top">
+                <td class="px-4 py-4">
+                  <p
+                    class="truncate font-semibold text-slate-900"
+                    :title="titleShort(item.title)"
+                  >
+                    {{ item.title }}
+                  </p>
+                  <span
+                    v-if="item.isImportant"
+                    class="mt-1 inline-flex rounded-full bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-900"
+                    >{{ tr("Important") }}</span
+                  >
+                </td>
+                <td class="px-3 py-4">
+                  {{ categoryLabel(item.category, language) }}
+                </td>
+                <td class="px-3 py-4">
+                  <span
+                    class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset"
+                    :class="statusClass(statusOf(item))"
+                    >{{ tr(statusOf(item)) }}</span
+                  >
+                </td>
+                <td class="px-3 py-4 text-slate-600">
                   {{ formatDate(item.publishDate) }}
-                </dd>
-              </div>
-              <div>
-                <dt class="font-semibold text-slate-500">{{ tr("Expiry") }}</dt>
-                <dd class="mt-0.5 text-slate-800">
+                </td>
+                <td class="px-3 py-4 text-slate-600">
                   {{ formatDate(item.expiryDate) }}
-                </dd>
-              </div>
-              <div>
-                <dt class="font-semibold text-slate-500">
-                  {{ tr("Created by") }}
-                </dt>
-                <dd class="mt-0.5 text-slate-800">
+                </td>
+                <td class="px-3 py-4 text-slate-600">
                   {{ item.createdBy?.name || "—" }}
-                </dd>
-              </div>
-            </dl>
-            <div
-              class="mt-3 flex flex-wrap gap-2 border-t border-slate-100 pt-3"
-            >
-              <button
-                type="button"
-                class="inline-flex min-h-9 items-center gap-1 rounded-md bg-slate-100 px-2.5 text-xs font-semibold"
-                :aria-label="ariaAction('Edit', item)"
-                @click="startEdit(item, $event)"
-              >
-                <Pencil :size="14" aria-hidden="true" />{{ tr("Edit") }}</button
-              ><button
-                type="button"
-                class="inline-flex min-h-9 items-center gap-1 rounded-md bg-slate-100 px-2.5 text-xs font-semibold"
-                :aria-label="
-                  ariaAction(
-                    item.isPublished === false ? 'Publish' : 'Unpublish',
-                    item,
-                  )
-                "
-                @click="togglePublish(item)"
-              >
-                <Send :size="14" aria-hidden="true" />{{
-                  tr(item.isPublished === false ? "Publish" : "Unpublish")
-                }}</button
-              ><RouterLink
-                v-if="statusOf(item) === 'Live'"
-                :to="`/notices/${item._id}`"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex min-h-9 items-center gap-1 rounded-md bg-slate-100 px-2.5 text-xs font-semibold"
-                :aria-label="ariaAction('View', item)"
-                ><Eye :size="14" aria-hidden="true" />{{
-                  tr("View")
-                }}</RouterLink
-              ><button
-                type="button"
-                class="inline-flex min-h-9 items-center gap-1 rounded-md bg-red-50 px-2.5 text-xs font-semibold text-red-800"
-                :aria-label="ariaAction('Delete', item)"
-                @click="startDelete(item, $event)"
-              >
-                <Trash2 :size="14" aria-hidden="true" />{{ tr("Delete") }}
-              </button>
-            </div>
-          </article>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex flex-wrap gap-1.5">
+                    <button
+                      type="button"
+                      class="rounded-md p-2 text-slate-700 hover:bg-slate-100"
+                      :aria-label="ariaAction('Edit', item)"
+                      @click="startEdit(item, $event)"
+                    >
+                      <Pencil :size="16" aria-hidden="true" /></button
+                    ><button
+                      type="button"
+                      class="rounded-md p-2 text-slate-700 hover:bg-slate-100"
+                      :aria-label="
+                        ariaAction(
+                          item.isPublished === false ? 'Publish' : 'Unpublish',
+                          item,
+                        )
+                      "
+                      @click="togglePublish(item)"
+                    >
+                      <Send :size="16" aria-hidden="true" /></button
+                    ><RouterLink
+                      v-if="statusOf(item) === 'Live'"
+                      :to="`/notices/${item._id}`"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="rounded-md p-2 text-slate-700 hover:bg-slate-100"
+                      :aria-label="ariaAction('View', item)"
+                      ><Eye :size="16" aria-hidden="true" /></RouterLink
+                    ><button
+                      type="button"
+                      class="rounded-md p-2 text-red-700 hover:bg-red-50"
+                      :aria-label="ariaAction('Delete', item)"
+                      @click="startDelete(item, $event)"
+                    >
+                      <Trash2 :size="16" aria-hidden="true" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </template>
+      </div>
+      <div
+        v-if="notices.length"
+        class="space-y-3 md:hidden"
+        :aria-busy="loading"
+      >
+        <article
+          v-for="item in notices"
+          :key="item._id"
+          class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+        >
+          <div class="flex items-start justify-between gap-3">
+            <h2
+              class="min-w-0 truncate font-semibold text-slate-900"
+              :title="titleShort(item.title)"
+            >
+              {{ item.title }}
+            </h2>
+            <span
+              class="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset"
+              :class="statusClass(statusOf(item))"
+              >{{ tr(statusOf(item)) }}</span
+            >
+          </div>
+          <span
+            v-if="item.isImportant"
+            class="mt-2 inline-flex rounded-full bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-900"
+            >{{ tr("Important") }}</span
+          >
+          <dl class="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+            <div>
+              <dt class="font-semibold text-slate-500">
+                {{ tr("Category") }}
+              </dt>
+              <dd class="mt-0.5 text-slate-800">
+                {{ categoryLabel(item.category, language) }}
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-slate-500">
+                {{ tr("Publish date") }}
+              </dt>
+              <dd class="mt-0.5 text-slate-800">
+                {{ formatDate(item.publishDate) }}
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-slate-500">{{ tr("Expiry") }}</dt>
+              <dd class="mt-0.5 text-slate-800">
+                {{ formatDate(item.expiryDate) }}
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-slate-500">
+                {{ tr("Created by") }}
+              </dt>
+              <dd class="mt-0.5 text-slate-800">
+                {{ item.createdBy?.name || "—" }}
+              </dd>
+            </div>
+          </dl>
+          <div class="mt-3 flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+            <button
+              type="button"
+              class="inline-flex min-h-9 items-center gap-1 rounded-md bg-slate-100 px-2.5 text-xs font-semibold"
+              :aria-label="ariaAction('Edit', item)"
+              @click="startEdit(item, $event)"
+            >
+              <Pencil :size="14" aria-hidden="true" />{{ tr("Edit") }}</button
+            ><button
+              type="button"
+              class="inline-flex min-h-9 items-center gap-1 rounded-md bg-slate-100 px-2.5 text-xs font-semibold"
+              :aria-label="
+                ariaAction(
+                  item.isPublished === false ? 'Publish' : 'Unpublish',
+                  item,
+                )
+              "
+              @click="togglePublish(item)"
+            >
+              <Send :size="14" aria-hidden="true" />{{
+                tr(item.isPublished === false ? "Publish" : "Unpublish")
+              }}</button
+            ><RouterLink
+              v-if="statusOf(item) === 'Live'"
+              :to="`/notices/${item._id}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex min-h-9 items-center gap-1 rounded-md bg-slate-100 px-2.5 text-xs font-semibold"
+              :aria-label="ariaAction('View', item)"
+              ><Eye :size="14" aria-hidden="true" />{{ tr("View") }}</RouterLink
+            ><button
+              type="button"
+              class="inline-flex min-h-9 items-center gap-1 rounded-md bg-red-50 px-2.5 text-xs font-semibold text-red-800"
+              :aria-label="ariaAction('Delete', item)"
+              @click="startDelete(item, $event)"
+            >
+              <Trash2 :size="14" aria-hidden="true" />{{ tr("Delete") }}
+            </button>
+          </div>
+        </article>
+      </div>
+
       <nav
         v-if="!errorKind && totalPages > 1"
         class="mt-5 flex flex-wrap items-center justify-center gap-3"
@@ -634,6 +628,7 @@ onBeforeUnmount(() => {
       :mode="activeDialog === 'form-create' ? 'create' : 'edit'"
       :notice="selected"
       @saved="onFormSaved"
+      @failed="notify($event, 'error')"
       @cancel="closeDialog"
       @notfound="onNotFound"
     />
@@ -648,5 +643,62 @@ onBeforeUnmount(() => {
       @confirm="confirmDelete"
       @cancel="closeDialog"
     />
+    <Teleport to="body">
+      <Transition name="notice-toast">
+        <div
+          v-if="toast"
+          :key="toast.id"
+          class="notice-toast fixed inset-x-4 bottom-4 z-[120] flex w-auto max-w-[390px] items-center gap-3 rounded-2xl border p-4 shadow-[0_16px_44px_rgba(23,58,106,0.2)] sm:inset-x-auto sm:bottom-7 sm:right-7 sm:w-[calc(100%-56px)]"
+          :style="{ backgroundColor: toastColors(toast.type).surface, borderColor: toastColors(toast.type).border }"
+          :role="toast.type === 'error' || toast.type === 'warning' ? 'alert' : 'status'"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+            :style="{ backgroundColor: toastColors(toast.type).iconBg, color: toastColors(toast.type).foreground }"
+            aria-hidden="true"
+          >
+            <Trash2 v-if="toast.type === 'delete'" :size="18" />
+            <CircleAlert v-else-if="toast.type === 'error'" :size="19" />
+            <TriangleAlert v-else-if="toast.type === 'warning'" :size="19" />
+            <Info v-else-if="toast.type === 'info'" :size="19" />
+            <CheckCircle2 v-else :size="19" />
+          </span>
+          <p
+            class="min-w-0 flex-1 text-sm font-medium leading-5"
+            :style="{ color: toastColors(toast.type).foreground }"
+          >
+            {{ tr(toast.message) }}
+          </p>
+          <button
+            type="button"
+            class="-mr-1 -mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#60718e] transition-colors hover:bg-[#edf3ff] hover:text-[#294e9e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#294e9e]"
+            :aria-label="tr('Dismiss notification')"
+            @click="dismissToast"
+          >
+            <X :size="17" aria-hidden="true" />
+          </button>
+        </div>
+      </Transition>
+    </Teleport>
   </section>
 </template>
+
+<style scoped>
+.notice-toast-enter-active,
+.notice-toast-leave-active {
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.notice-toast-enter-from,
+.notice-toast-leave-to {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0) scale(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+  .notice-toast-enter-active,
+  .notice-toast-leave-active {
+    transition: none;
+  }
+}
+</style>

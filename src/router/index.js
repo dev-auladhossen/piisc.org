@@ -37,6 +37,7 @@ const pages = [
  {path:'/dashboard/profile',name:'dashboard-profile',component:()=>import('../views/DashboardProfileView.vue'),meta:{requiresAuth:true,layout:'dashboard'}},
  {path:'/dashboard/users',name:'dashboard-users',component:()=>import('../views/DashboardUsersView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
  {path:'/dashboard/notices',name:'dashboard-notices',component:()=>import('../views/DashboardNoticesView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
+ {path:'/dashboard/gallery',name:'dashboard-gallery',component:()=>import('../views/DashboardGalleryView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
  {path:'/:pathMatch(.*)*',redirect:'/'}
 ]
 const router=createRouter({history:createWebHistory(),routes:pages,scrollBehavior(){return {top:0}}})
@@ -60,6 +61,7 @@ const pageTitles = {
   'dashboard-profile': 'My Profile',
   'dashboard-users': 'Users',
   'dashboard-notices': 'Manage Notices',
+  'dashboard-gallery': 'Manage Gallery',
   ...Object.fromEntries(ROLES.map(role => [`dashboard-${role}`, `${roleLabels[role]} Dashboard`])),
   home: 'Home', about: 'About Us', details: 'Discover PIISC', academics: 'Academics', curriculum: 'Curriculum', 'admission-requirement': 'Admission Requirements',
   athletics: 'Athletics', admissions: 'Admission', 'online-admission': 'Online Admission',

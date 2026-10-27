@@ -1,22 +1,74 @@
 <script setup>
-import { computed, nextTick, onBeforeUnmount, ref } from 'vue'
-import { Images, Grid2X2, CalendarDays, Trophy, GraduationCap, Building2, ChevronRight, ChevronLeft, X } from 'lucide-vue-next'
-import { galleryPhotos } from '../data/gallery.js'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { Images, Grid2X2, CalendarDays, Trophy, GraduationCap, Building2, ChevronRight, ChevronLeft, X, Loader2, RefreshCw } from 'lucide-vue-next'
+import { galleryPhotos as legacyPhotos } from '../data/gallery.js'
+import { listGallery } from '../services/galleryAdminApi.js'
 import galleryCover from '../assets/images/group-work.jpg'
 const categories = [{name:'All Photos',icon:Grid2X2},{name:'Events',icon:CalendarDays},{name:'Sports',icon:Trophy},{name:'Academics',icon:GraduationCap},{name:'Campus',icon:Building2}]
 const category = ref('All Photos')
-const filtered = computed(()=>galleryPhotos.filter(photo=>category.value==='All Photos'||photo.category===category.value))
+const managedPhotos = ref([])
+const loading = ref(true)
+const loaded = ref(false)
+const loadError = ref('')
+let controller
+let requestCounter = 0
+const legacyOnly = computed(() => {
+  const managedKeys = new Set(managedPhotos.value.map(photoKey))
+  return legacyPhotos.filter(photo => !managedKeys.has(photoKey(photo)))
+})
+const allPhotos = computed(() => [...legacyOnly.value, ...managedPhotos.value])
+const filtered = computed(()=>allPhotos.value.filter(photo=>category.value==='All Photos'||photo.category===category.value))
 const selected = ref(null)
 const selectedIndex = computed(()=>filtered.value.findIndex(photo=>photo.id===selected.value?.id))
 const dialog = ref(null)
 const closing = ref(false)
 let previousFocus, previousOverflow, closeTimer
 let locked = false
+function photoKey(photo) {
+ return `${photo.category || ''}|${photo.caption.trim().replace(/\s+/g,' ').toLocaleLowerCase()}`
+}
+async function fetchAllGallery(signal) {
+ const limit = 100
+ const first = await listGallery({page:1,limit},signal)
+ if (!Array.isArray(first?.items) || !first?.pagination || !Number.isInteger(Number(first.pagination.totalPages))) throw new Error('Invalid gallery response')
+ const totalPages = Math.max(1, Number(first.pagination.totalPages))
+ if (totalPages > 1001) throw new Error('Gallery exceeds the supported public result range')
+ const pages = [first]
+ for (let start = 2; start <= totalPages; start += 5) {
+  const end = Math.min(totalPages, start + 4)
+  const batch = await Promise.all(Array.from({length:end-start+1}, (_,index) => listGallery({page:start+index,limit},signal)))
+  pages.push(...batch)
+ }
+ return pages.flatMap(result => {
+  if (!Array.isArray(result?.items)) throw new Error('Invalid gallery response')
+  return result.items
+ }).filter(item => item?._id && item.imageUrl && typeof item.caption === 'string')
+  .map(item => ({id:item._id,category:item.category || null,image:item.imageUrl,caption:item.caption,altText:item.altText || '',source:'api'}))
+}
+async function loadGallery() {
+ const request = ++requestCounter
+ controller?.abort()
+ controller = new AbortController()
+ loading.value = true
+ loadError.value = ''
+ try {
+  const photos = await fetchAllGallery(controller.signal)
+  if (request !== requestCounter) return
+  managedPhotos.value = photos
+  loaded.value = true
+ } catch (error) {
+  if (request !== requestCounter || error?.code === 'ERR_CANCELED') return
+  loadError.value = 'Gallery updates could not be loaded. Existing site photos remain visible; please retry.'
+ } finally {
+  if (request === requestCounter) loading.value = false
+ }
+}
 async function openPhoto(photo,event){previousFocus=event.currentTarget;selected.value=photo;await nextTick();previousOverflow=document.body.style.overflow;dialog.value.showModal();document.body.style.overflow='hidden';locked=true}
 function restore(){if(!locked)return;document.body.style.overflow=previousOverflow;locked=false;previousFocus?.focus({preventScroll:true})}
 function close(){if(closing.value)return;closing.value=true;const delay=window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:200;closeTimer=setTimeout(()=>{dialog.value?.close();closing.value=false;selected.value=null;restore()},delay)}
 function move(direction){if(closing.value)return;selected.value=filtered.value[(selectedIndex.value+direction+filtered.value.length)%filtered.value.length]}
-onBeforeUnmount(()=>{clearTimeout(closeTimer);dialog.value?.close();restore()})
+onMounted(loadGallery)
+onBeforeUnmount(()=>{requestCounter++;controller?.abort();clearTimeout(closeTimer);dialog.value?.close();restore()})
 </script>
 <template>
  <section class="gallery-banner [&&]:relative [&&]:isolate [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(10,_41,_72)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[color:white] [&.gallery-banner::after]:absolute [&.gallery-banner::after]:bottom-[0px] [&.gallery-banner::after]:left-[0px] [&.gallery-banner::after]:right-[0px] [&.gallery-banner::after]:top-[0px] [&.gallery-banner::after]:z-[-1] [&.gallery-banner::after]:[background-attachment:initial] [&.gallery-banner::after]:[background-clip:initial] [&.gallery-banner::after]:[background-color:initial] [&.gallery-banner::after]:[background-image:linear-gradient(100deg,_rgba(41,_78,_158,_0.96),_rgba(41,_78,_158,_0.86)_65%,_rgba(10,_41,_72,_0.737))] [&.gallery-banner::after]:[background-origin:initial] [&.gallery-banner::after]:[background-position:initial] [&.gallery-banner::after]:[background-repeat:initial] [&.gallery-banner::after]:[background-size:initial] [&.gallery-banner::after]:[content:'']">

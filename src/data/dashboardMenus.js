@@ -7,7 +7,7 @@ const features = {
     { key: 'notices', label: 'Notices', icon: Megaphone, to: '/dashboard/notices', soon: false },
     { key: 'admissions', label: 'Admissions', icon: GraduationCap },
     { key: 'news', label: 'News & Events', icon: Newspaper },
-    { key: 'gallery', label: 'Gallery', icon: Images },
+    { key: 'gallery', label: 'Gallery', icon: Images, to: '/dashboard/gallery', soon: false },
   ],
   teacher: [
     { key: 'classes', label: 'My Classes', icon: BookOpen },
