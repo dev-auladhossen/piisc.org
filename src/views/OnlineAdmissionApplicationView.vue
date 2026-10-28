@@ -12,7 +12,11 @@ const { language } = useI18n();
 const isBangla = computed(() => language.value === "bn");
 const tr = (en, bn) => isBangla.value ? bn : en;
 const availableClasses = classes.filter((item) => item.value === "class-5");
+// Temporary frontend-only demo fallback for deployments without configured session options.
+const DEMO_FALLBACK_SESSION = "2027";
+const sessionOptions = computed(() => admissionSessions.length ? admissionSessions : [DEMO_FALLBACK_SESSION]);
 const testSession = computed(() => admissionSessions.find(isAdmissionTestSession) || "");
+const demoSession = computed(() => testSession.value || (!admissionSessions.length ? DEMO_FALLBACK_SESSION : ""));
 const usesDivision = computed(() => DIVISION_CLASSES.includes(form.applyingClass));
 const form = reactive({
   studentFullName: "", dateOfBirth: "", applyingClass: "", division: "", academicSession: "",
@@ -46,7 +50,7 @@ function validate() {
   }
   if (!availableClasses.some((item) => item.value === form.applyingClass)) errors.applyingClass = "Select an available class.";
   if (usesDivision.value && !form.division) errors.division = "Select an academic division.";
-  if (!admissionSessions.includes(form.academicSession)) errors.academicSession = "Select an available academic session.";
+  if (!sessionOptions.value.includes(form.academicSession)) errors.academicSession = "Select an available academic session.";
   if (form.guardianFullName.trim().length < 2) errors.guardianFullName = "Enter a parent or guardian name.";
   if (!form.guardianRelationship) errors.guardianRelationship = "Select the relationship.";
   if (!isValidBangladeshPhone(form.guardianPhone)) errors.guardianPhone = "Enter a valid Bangladesh mobile number.";
@@ -121,7 +125,7 @@ async function submit() {
         <p class="mb-2 text-xs font-extrabold uppercase tracking-[.16em] text-[#ad8126]">{{ tr("Peace International Islamic School & College", "পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজ") }}</p>
         <h1 class="text-3xl font-bold text-[#173f8e] sm:text-4xl">{{ tr("Admission application", "ভর্তির আবেদন") }}</h1>
         <p class="mt-3 max-w-2xl leading-7 text-[#60718e]">{{ tr("Share your details with the admissions office. Submitting this form does not confirm admission; the school will contact you about next steps.", "ভর্তি বিভাগকে আপনার তথ্য জানান। এই ফর্ম জমা দিলে ভর্তি নিশ্চিত হয় না; পরবর্তী ধাপের জন্য স্কুল আপনার সঙ্গে যোগাযোগ করবে।") }}</p>
-        <p class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm font-semibold text-amber-900" role="note">{{ testSession ? tr(`TESTING: ${testSession} is a temporary session value for local API testing, not an officially announced school session.`, `পরীক্ষামূলক: ${testSession} শুধু স্থানীয় API পরীক্ষার অস্থায়ী শিক্ষাবর্ষ, স্কুলের আনুষ্ঠানিক ঘোষণা নয়।`) : tr("Applications are sent to the configured admissions API. Available sessions must also be configured by the backend.", "আবেদন কনফিগার করা ভর্তি API-তে পাঠানো হবে। উপলভ্য শিক্ষাবর্ষ ব্যাকএন্ডেও কনফিগার থাকতে হবে।") }}</p>
+        <p class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm font-semibold text-amber-900" role="note">{{ demoSession ? tr("DEMO ONLY: " + demoSession + " is a temporary frontend session option, not an officially announced school session. The backend still validates it and may reject the application.", "DEMO ONLY: " + demoSession + " is a temporary frontend session option, not an officially announced school session. The backend still validates it and may reject the application.") : tr("Applications are sent to the configured admissions API. Available sessions must also be configured by the backend.", "Applications are sent to the configured admissions API. Available sessions must also be configured by the backend.") }}</p>
       </header>
 
       <form ref="formElement" class="space-y-6 rounded-2xl border border-[#dce5ef] bg-white p-5 shadow-[0_9px_30px_rgba(20,40,60,.045)] sm:p-8" novalidate @submit.prevent="submit">
@@ -153,9 +157,9 @@ async function submit() {
             </div>
             <div>
               <label for="academic-session" class="mb-1.5 block text-sm font-semibold text-[#344b70]">{{ tr("Academic session", "শিক্ষাবর্ষ") }} <span class="text-red-600">*</span></label>
-              <select id="academic-session" v-model="form.academicSession" required :disabled="!admissionSessions.length" class="form-control disabled:cursor-not-allowed disabled:bg-slate-100" :aria-invalid="errors.academicSession ? 'true' : undefined" :aria-describedby="errors.academicSession ? 'academic-session-error' : 'academic-session-help'"><option value="">{{ admissionSessions.length ? tr("Select a session", "শিক্ষাবর্ষ নির্বাচন করুন") : tr("Not yet announced", "এখনো ঘোষণা হয়নি") }}</option><option v-for="session in admissionSessions" :key="session" :value="session">{{ session === "2027" ? tr("2027 (Testing)", "২০২৭ (পরীক্ষামূলক)") : session }}</option></select>
+              <select id="academic-session" v-model="form.academicSession" required class="form-control disabled:cursor-not-allowed disabled:bg-slate-100" :aria-invalid="errors.academicSession ? 'true' : undefined" :aria-describedby="errors.academicSession ? 'academic-session-error' : 'academic-session-help'"><option value="">{{ tr("Select a session", "শিক্ষাবর্ষ নির্বাচন করুন") }}</option><option v-for="session in sessionOptions" :key="session" :value="session">{{ session === demoSession ? (admissionSessions.length ? tr("2027 (Testing)", "২০২৭ (পরীক্ষামূলক)") : tr("2027 (Demo only)", "২০২৭ (শুধু ডেমো)")) : session }}</option></select>
               <p v-if="errors.academicSession" id="academic-session-error" role="alert" class="mt-1 text-sm text-red-700">{{ tr(errors.academicSession, errors.academicSession) }}</p>
-              <p v-else id="academic-session-help" class="mt-1 text-sm text-[#60718e]">{{ admissionSessions.length ? (testSession ? tr("The testing session is available only in local development; the backend still validates its configured sessions.", "পরীক্ষামূলক শিক্ষাবর্ষটি শুধু স্থানীয় ডেভেলপমেন্টে উপলভ্য; ব্যাকএন্ড এর কনফিগার করা শিক্ষাবর্ষ যাচাই করবে।") : tr("Choose a session configured by the admissions backend.", "ভর্তি ব্যাকএন্ডে কনফিগার করা শিক্ষাবর্ষ নির্বাচন করুন.")) : tr("No academic session is configured. Submissions are unavailable until the backend configures one.", "কোনো শিক্ষাবর্ষ কনফিগার করা নেই। ব্যাকএন্ডে সেটি কনফিগার না হওয়া পর্যন্ত আবেদন জমা বন্ধ থাকবে।") }}</p>
+              <p v-else id="academic-session-help" class="mt-1 text-sm text-[#60718e]">{{ demoSession ? (admissionSessions.length ? tr("Temporary local testing option only; the backend still validates its configured sessions.", "Temporary local testing option only; the backend still validates its configured sessions.") : tr("Frontend-only demo fallback because no sessions are configured. The backend may reject this value.", "Frontend-only demo fallback because no sessions are configured. The backend may reject this value.")) : tr("Choose a session configured by the admissions backend.", "Choose a session configured by the admissions backend.") }}</p>
             </div>
           </div>
         </section>
@@ -196,7 +200,7 @@ async function submit() {
           </label>
           <p v-if="errors.consentConfirmed" id="consent-error" role="alert" class="mt-1 text-sm text-red-700">{{ tr(errors.consentConfirmed, errors.consentConfirmed) }}</p>
         </div>
-        <button type="submit" :disabled="submitting || !admissionSessions.length" class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#294e9e] px-5 font-bold text-white transition hover:bg-[#173f8e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d9b33d] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto" :aria-busy="submitting">
+        <button type="submit" :disabled="submitting" class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#294e9e] px-5 font-bold text-white transition hover:bg-[#173f8e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d9b33d] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto" :aria-busy="submitting">
           <Loader2 v-if="submitting" :size="18" class="animate-spin" aria-hidden="true" />
           <Send v-else :size="17" aria-hidden="true" />
           {{ submitting ? tr("Submitting…", "জমা হচ্ছে…") : tr("Submit application", "আবেদন জমা দিন") }}
