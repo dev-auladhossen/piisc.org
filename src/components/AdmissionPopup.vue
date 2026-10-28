@@ -1,7 +1,7 @@
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { X } from "lucide-vue-next";
-import poster from "../assets/images/poster.png";
+import api from "../api.js";
 import { images } from "../data/content.js";
 import { useI18n } from "../composables/useI18n.js";
 import { useRoute } from "vue-router";
@@ -10,9 +10,11 @@ const { language } = useI18n();
 const route = useRoute();
 
 const dialog = ref(null);
+const posterUrl = ref("");
 let previousOverflow;
 let previousFocus;
 let locked = false;
+let dismissed = false;
 
 function restorePage() {
   if (!locked) return;
@@ -21,17 +23,37 @@ function restorePage() {
   previousFocus?.isConnected && previousFocus.focus({ preventScroll: true });
 }
 function close() {
+  dismissed = true;
   dialog.value?.close();
   restorePage();
 }
 
-onMounted(() => {
+function isValidImageUrl(value) {
+  if (typeof value !== "string" || !value.trim()) return false;
+  try {
+    const url = new URL(value, window.location.origin);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+onMounted(async () => {
   if (Object.hasOwn(route.query, "login")) return;
-  previousFocus = document.activeElement;
-  previousOverflow = document.body.style.overflow;
-  dialog.value.showModal();
-  document.body.style.overflow = "hidden";
-  locked = true;
+  try {
+    const { data } = await api.get("/poster");
+    if (data?.enabled !== true || !isValidImageUrl(data?.imageUrl)) return;
+    posterUrl.value = data.imageUrl;
+    await nextTick();
+    if (dismissed || !dialog.value || dialog.value.open) return;
+    previousFocus = document.activeElement;
+    previousOverflow = document.body.style.overflow;
+    dialog.value.showModal();
+    document.body.style.overflow = "hidden";
+    locked = true;
+  } catch {
+    // The public site remains usable if poster configuration is unavailable.
+  }
 });
 onBeforeUnmount(() => {
   dialog.value?.close();
@@ -51,7 +73,7 @@ onBeforeUnmount(() => {
       @click="(event) => event.target === dialog && close()"
     >
       <div class="poster-body [&&]:relative [&&]:overflow-x-hidden [&&]:overflow-y-hidden [&&]:[border-bottom-left-radius:12px] [&&]:[border-bottom-right-radius:12px] [&&]:[border-top-left-radius:12px] [&&]:[border-top-right-radius:12px] [&&]:leading-[0] [&&]:[aspect-ratio:1678_/_937] [&&]:[box-shadow:rgba(0,_0,_0,_0.533)_0px_24px_90px]">
-        <img class="[&&]:block [&&]:h-[100%] [&&]:w-[100%] [&&]:object-contain" :src="poster" :alt="language === 'bn' ? 'পিআইআইএসসি ভর্তির পোস্টার' : 'PIISC admission poster'" />
+        <img class="[&&]:block [&&]:h-[100%] [&&]:w-[100%] [&&]:object-contain" :src="posterUrl" :alt="language === 'bn' ? 'পিআইআইএসসি ভর্তির পোস্টার' : 'PIISC admission poster'" />
         <button
           type="button"
           class="popup-close [&&]:absolute [&&]:top-[clamp(10px,_1.5vw,_18px)] [&&]:right-[clamp(10px,_1.5vw,_18px)] [&&]:grid [&&]:h-[clamp(38px,_4.5vw,_54px)] [&&]:w-[clamp(38px,_4.5vw,_54px)] [&&]:items-center [&&]:[justify-items:center] [&&]:[border-image-outset:0] [&&]:[border-image-repeat:stretch] [&&]:[border-image-slice:100%] [&&]:[border-image-source:none] [&&]:[border-image-width:1] [&&]:cursor-pointer [&&]:[border-bottom-left-radius:50%] [&&]:[border-bottom-right-radius:50%] [&&]:[border-top-left-radius:50%] [&&]:[border-top-right-radius:50%] [&&]:[background-attachment:initial] [&&]:[background-clip:initial] [&&]:[background-color:rgb(255,_255,_255)] [&&]:[background-image:initial] [&&]:[background-origin:initial] [&&]:[background-position:initial] [&&]:[background-repeat:initial] [&&]:[background-size:initial] [&&]:[box-shadow:rgba(0,_0,_0,_0.267)_0px_5px_20px] [&&]:[color:rgb(32,_32,_32)] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-behavior:normal,_normal] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-behavior:normal] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-delay:0s,_0s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-delay:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-duration:0.2s,_0.2s] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-duration:0s] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-property:transform,_background] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-property:none] [@media(prefers-reduced-motion:no-preference)]:[&&]:[transition-timing-function:ease,_ease] [@media(prefers-reduced-motion:reduce)]:[&&]:[transition-timing-function:ease] [&&]:[border-width:0px] [&&]:[border-style:none] [&&]:[border-color:currentcolor] [&.popup-close:hover]:[background-color:rgb(244,_207,_82)] [&.popup-close:hover]:[transform:scale(1.05)] [&.popup-close:focus-visible]:[outline-color:rgb(244,_207,_82)] [&.popup-close:focus-visible]:[outline-style:solid] [&.popup-close:focus-visible]:[outline-width:3px] [&.popup-close:focus-visible]:[outline-offset:3px]"

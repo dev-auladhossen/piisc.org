@@ -7,6 +7,7 @@ import { menuFor } from '../data/dashboardMenus.js'
 import { roleLabels } from '../data/roles.js'
 import LanguageSwitcher from '../components/LanguageSwitcher.vue'
 import UserMenu from '../components/UserMenu.vue'
+import { getAdmissionNotificationSummary } from '../services/admissionsApi.js'
 
 const auth = useAuthStore()
 const route = useRoute()
@@ -14,9 +15,34 @@ const navigation = computed(() => menuFor(auth.role))
 const drawer = ref(null)
 const menuButton = ref(null)
 const drawerOpen = ref(false)
+const unreadAdmissions = ref(0)
 let previousOverflow
 let locked = false
 let desktop
+let notificationTimer
+let notificationController
+
+async function refreshAdmissionCount() {
+  if (auth.role !== 'admin') return
+  notificationController?.abort()
+  notificationController = new AbortController()
+  try {
+    const summary = await getAdmissionNotificationSummary(notificationController.signal)
+    unreadAdmissions.value = Number.isInteger(summary?.unreadCount) && summary.unreadCount >= 0 ? summary.unreadCount : 0
+  } catch (error) {
+    if (error?.code !== 'ERR_CANCELED') unreadAdmissions.value = 0
+  }
+}
+
+function startAdmissionCountPolling() {
+  clearInterval(notificationTimer)
+  notificationController?.abort()
+  unreadAdmissions.value = 0
+  if (auth.role !== 'admin') return
+  refreshAdmissionCount()
+  notificationTimer = setInterval(refreshAdmissionCount, 60000)
+}
+function onAdmissionsDataChanged() { refreshAdmissionCount() }
 
 function restorePage() {
   drawerOpen.value = false
@@ -46,14 +72,22 @@ function onBackdrop(event) {
     event.clientY < bounds.top || event.clientY > bounds.bottom) closeDrawer()
 }
 function onBreakpoint() { if (desktop.matches) closeDrawer() }
-watch(() => route.fullPath, closeDrawer)
+watch(() => route.fullPath, () => {
+  closeDrawer()
+  if (route.name === 'dashboard-admissions') refreshAdmissionCount()
+})
+watch(() => auth.role, startAdmissionCountPolling, { immediate: true })
 onMounted(() => {
   desktop = window.matchMedia('(min-width: 1024px)')
   desktop.addEventListener('change', onBreakpoint)
+  window.addEventListener('admissions-data-changed', onAdmissionsDataChanged)
 })
 onBeforeUnmount(() => {
   desktop?.removeEventListener('change', onBreakpoint)
+  window.removeEventListener('admissions-data-changed', onAdmissionsDataChanged)
   closeDrawer()
+  clearInterval(notificationTimer)
+  notificationController?.abort()
 })
 </script>
 
@@ -77,7 +111,7 @@ onBeforeUnmount(() => {
         <nav :aria-label="$tr('Dashboard menu')" class="space-y-[6px]">
           <template v-for="item in navigation" :key="item.key">
             <span v-if="item.soon" class="sidebar-soon" aria-disabled="true"><component :is="item.icon" :size="18" class="shrink-0" aria-hidden="true" /><span class="min-w-0 flex-1">{{ $tr(item.label) }}</span><span class="soon-badge">{{ $tr('Soon') }}</span></span>
-            <RouterLink v-else :to="item.to" class="sidebar-link" active-class="" exact-active-class="is-active" aria-current-value="page"><component :is="item.icon" :size="18" class="shrink-0" aria-hidden="true" />{{ $tr(item.label) }}</RouterLink>
+            <RouterLink v-else :to="item.to" class="sidebar-link" active-class="" exact-active-class="is-active" aria-current-value="page"><component :is="item.icon" :size="18" class="shrink-0" aria-hidden="true" /><span class="min-w-0 flex-1">{{ $tr(item.label) }}</span><span v-if="item.key === 'admissions' && unreadAdmissions" class="rounded-full bg-red-600 px-2 py-0.5 text-[11px] font-bold text-white" :aria-label="$tr(`${unreadAdmissions} unread applications`)">{{ unreadAdmissions > 99 ? '99+' : unreadAdmissions }}</span></RouterLink>
           </template>
         </nav>
         <RouterLink to="/" class="sidebar-link mt-auto border-t border-[#e8edf5] pt-[16px]"><ArrowUpRight :size="18" aria-hidden="true" />{{ $tr('View website') }}</RouterLink>
@@ -95,7 +129,7 @@ onBeforeUnmount(() => {
         <nav :aria-label="$tr('Dashboard menu')" class="space-y-[6px]">
           <template v-for="item in navigation" :key="item.key">
             <span v-if="item.soon" class="sidebar-soon" aria-disabled="true"><component :is="item.icon" :size="18" class="shrink-0" aria-hidden="true" /><span class="min-w-0 flex-1">{{ $tr(item.label) }}</span><span class="soon-badge">{{ $tr('Soon') }}</span></span>
-            <RouterLink v-else :to="item.to" class="sidebar-link" active-class="" exact-active-class="is-active" aria-current-value="page" @click="closeDrawer"><component :is="item.icon" :size="18" class="shrink-0" aria-hidden="true" />{{ $tr(item.label) }}</RouterLink>
+            <RouterLink v-else :to="item.to" class="sidebar-link" active-class="" exact-active-class="is-active" aria-current-value="page" @click="closeDrawer"><component :is="item.icon" :size="18" class="shrink-0" aria-hidden="true" /><span class="min-w-0 flex-1">{{ $tr(item.label) }}</span><span v-if="item.key === 'admissions' && unreadAdmissions" class="rounded-full bg-red-600 px-2 py-0.5 text-[11px] font-bold text-white" :aria-label="$tr(`${unreadAdmissions} unread applications`)">{{ unreadAdmissions > 99 ? '99+' : unreadAdmissions }}</span></RouterLink>
           </template>
         </nav>
         <RouterLink to="/" class="sidebar-link mt-auto border-t border-[#e8edf5] pt-[16px]" @click="closeDrawer"><ArrowUpRight :size="18" aria-hidden="true" />{{ $tr('View website') }}</RouterLink>

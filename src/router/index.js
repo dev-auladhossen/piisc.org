@@ -20,7 +20,7 @@ const pages = [
  {path:'/application-process',alias:'/admission-procedures',name:'application-process',component:()=>import('../views/AdmissionProceduresView.vue')},
  {path:'/extra-curricular-activities',alias:['/activities','/athletics'],name:'athletics',component:()=>import('../views/ActivitiesView.vue')},
  {path:'/admissions',name:'admissions',component:()=>import('../views/AdmissionsView.vue')},
- {path:'/online-admission',name:'online-admission',component:()=>import('../views/ApplicationPortalView.vue'),props:{kind:'admission'}},
+ {path:'/online-admission',name:'online-admission',component:()=>import('../views/OnlineAdmissionApplicationView.vue')},
  {path:'/recruitment',name:'recruitment',component:()=>import('../views/ApplicationPortalView.vue'),props:{kind:'recruitment'}},
  {path:'/campus',alias:'/facilities',name:'campus',component:()=>import('../views/FacilitiesView.vue')},
  {path:'/news',name:'news',component:()=>import('../views/NewsView.vue')},
@@ -38,6 +38,8 @@ const pages = [
  {path:'/dashboard/users',name:'dashboard-users',component:()=>import('../views/DashboardUsersView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
  {path:'/dashboard/notices',name:'dashboard-notices',component:()=>import('../views/DashboardNoticesView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
  {path:'/dashboard/gallery',name:'dashboard-gallery',component:()=>import('../views/DashboardGalleryView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
+ {path:'/dashboard/poster',name:'dashboard-poster',component:()=>import('../views/DashboardPosterView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
+ {path:'/dashboard/admissions',name:'dashboard-admissions',component:()=>import('../views/DashboardAdmissionsView.vue'),meta:{requiresAuth:true,roles:['admin'],layout:'dashboard'}},
  {path:'/:pathMatch(.*)*',redirect:'/'}
 ]
 const router=createRouter({history:createWebHistory(),routes:pages,scrollBehavior(){return {top:0}}})
@@ -62,6 +64,8 @@ const pageTitles = {
   'dashboard-users': 'Users',
   'dashboard-notices': 'Manage Notices',
   'dashboard-gallery': 'Manage Gallery',
+  'dashboard-poster': 'Poster Management',
+  'dashboard-admissions': 'Admissions',
   ...Object.fromEntries(ROLES.map(role => [`dashboard-${role}`, `${roleLabels[role]} Dashboard`])),
   home: 'Home', about: 'About Us', details: 'Discover PIISC', academics: 'Academics', curriculum: 'Curriculum', 'admission-requirement': 'Admission Requirements',
   athletics: 'Athletics', admissions: 'Admission', 'online-admission': 'Online Admission',

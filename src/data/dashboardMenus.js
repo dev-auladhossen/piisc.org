@@ -1,13 +1,14 @@
-import { LayoutDashboard, UserRound, Users, Megaphone, GraduationCap, Newspaper, Images, BookOpen, CalendarDays, ClipboardList, CreditCard } from 'lucide-vue-next'
+import { LayoutDashboard, UserRound, Users, Megaphone, GraduationCap, Newspaper, Images, Image, BookOpen, CalendarDays, ClipboardList, CreditCard } from 'lucide-vue-next'
 import { ROLES, dashboardPathFor } from './roles.js'
 
 const features = {
   admin: [
     { key: 'users', label: 'Users', icon: Users, to: '/dashboard/users', soon: false },
     { key: 'notices', label: 'Notices', icon: Megaphone, to: '/dashboard/notices', soon: false },
-    { key: 'admissions', label: 'Admissions', icon: GraduationCap },
+    { key: 'admissions', label: 'Admissions', icon: GraduationCap, to: '/dashboard/admissions', soon: false },
     { key: 'news', label: 'News & Events', icon: Newspaper },
     { key: 'gallery', label: 'Gallery', icon: Images, to: '/dashboard/gallery', soon: false },
+    { key: 'poster', label: 'Poster Management', icon: Image, to: '/dashboard/poster', soon: false },
   ],
   teacher: [
     { key: 'classes', label: 'My Classes', icon: BookOpen },

@@ -45,3 +45,16 @@ export const relationships = [
 
 // Assumption: classes 9–12 use academic divisions; no existing rule was found.
 export const DIVISION_CLASSES = ["class-9", "class-10", "class-11", "class-12"];
+
+// Copy the backend's configured sessions into VITE_ADMISSION_SESSIONS for deployment.
+// A local test value is accepted only during Vite development and is not an official session.
+const configuredSessions = String(import.meta.env.VITE_ADMISSION_SESSIONS || "")
+  .split(",")
+  .map((session) => session.trim())
+  .filter(Boolean);
+const localTestSession = import.meta.env.DEV
+  ? String(import.meta.env.VITE_ADMISSION_TEST_SESSION || "").trim()
+  : "";
+
+export const admissionSessions = [...new Set([...configuredSessions, ...(localTestSession ? [localTestSession] : [])])];
+export const isAdmissionTestSession = (session) => Boolean(localTestSession && session === localTestSession);

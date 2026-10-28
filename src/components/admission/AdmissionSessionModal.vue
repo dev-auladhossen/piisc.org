@@ -125,13 +125,13 @@ function editPhone() {
         :aria-label="tr('Admission application demo', 'ভর্তি আবেদন ডেমো')"
         class="my-auto flex max-h-[min(92vh,860px)] w-full max-w-[780px] flex-col overflow-hidden rounded-[24px] border border-white/70 bg-white shadow-[0_28px_90px_rgba(4,15,30,.4)]"
       >
-        <header class="relative flex items-center gap-4 bg-gradient-to-r from-[#132239] via-[#202249] to-[#3f1768] px-5 py-5 text-white sm:px-7">
+        <header class="relative flex items-center gap-4 bg-gradient-to-r from-[#092645] via-[#173f8e] to-[#294e9e] px-5 py-5 text-white sm:px-7">
           <span class="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-[15px] border border-white/25 bg-white p-1.5">
             <img :src="schoolLogo" alt="" class="h-full w-full object-contain" />
           </span>
           <div class="min-w-0 pr-10">
             <p class="text-sm font-extrabold leading-snug sm:text-base">{{ tr("Peace International Islamic School & College", "পিস ইন্টারন্যাশনাল ইসলামিক স্কুল অ্যান্ড কলেজ") }}</p>
-            <span class="mt-2 inline-flex items-center gap-1.5 rounded-full border border-emerald-300/25 bg-emerald-300/10 px-2.5 py-1 text-[11px] font-bold text-emerald-300">
+            <span class="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[#e3c88d]/50 bg-[#e3c88d]/10 px-2.5 py-1 text-[11px] font-bold text-[#f5dfaa]">
               <ShieldCheck :size="14" aria-hidden="true" />
               {{ tr("Frontend demo · no SMS or account verification", "ফ্রন্টএন্ড ডেমো · এসএমএস বা অ্যাকাউন্ট যাচাই হয় না") }}
             </span>
@@ -156,8 +156,8 @@ function editPhone() {
         </div>
 
         <div class="flex shrink-0 items-center justify-between border-b border-[#e5eaf0] bg-white px-5 py-3 text-xs font-extrabold sm:px-7 sm:text-sm" aria-label="Application progress">
-          <div class="flex items-center gap-2" :class="step === 1 ? 'text-violet-700' : 'text-emerald-700'">
-            <span class="grid h-6 w-6 place-items-center rounded-full" :class="step === 1 ? 'bg-violet-600 text-white' : 'bg-emerald-500 text-white'"><Check v-if="step > 1" :size="14" /><span v-else>1</span></span>
+          <div class="flex items-center gap-2" :class="step === 1 ? 'text-[#173f8e]' : 'text-[#8a6b2b]'">
+            <span class="grid h-6 w-6 place-items-center rounded-full" :class="step === 1 ? 'bg-[#173f8e] text-white' : 'bg-[#d9b33d] text-[#092645]'"><Check v-if="step > 1" :size="14" /><span v-else>1</span></span>
             {{ tr("Mobile verification", "মোবাইল যাচাই") }}
           </div>
           <ArrowRight class="text-[#cbd5e1]" :size="18" aria-hidden="true" />
@@ -168,13 +168,13 @@ function editPhone() {
         </div>
 
         <div class="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-7 sm:py-6">
-          <div class="mb-4 rounded-[16px] border border-violet-200 bg-violet-50 px-4 py-3.5 text-sm text-violet-900">
+          <div class="mb-4 rounded-[16px] border border-[#c8d8ef] bg-[#edf3ff] px-4 py-3.5 text-sm text-[#173f8e]">
             <p class="flex items-start gap-2 font-extrabold"><LockKeyhole class="mt-0.5 shrink-0" :size="17" aria-hidden="true" />{{ tr("Demo only: no SMS, login, or account is created.", "শুধু ডেমো: কোনো এসএমএস, লগইন বা অ্যাকাউন্ট তৈরি হয় না।") }}</p>
             <p class="mt-1 pl-6 leading-relaxed">{{ tr("Use the sample OTP", "নমুনা ওটিপি ব্যবহার করুন") }} <strong class="font-mono">123456</strong> {{ tr("when prompted.", "চাওয়া হলে।") }}</p>
           </div>
 
           <template v-if="challenge === 'phone'">
-            <div class="mb-5 rounded-[18px] bg-gradient-to-r from-[#5821a3] to-[#8845e5] p-5 text-white shadow-[0_12px_26px_rgba(99,45,171,.2)] sm:p-6">
+            <div class="mb-5 rounded-[18px] bg-gradient-to-r from-[#092645] to-[#294e9e] p-5 text-white shadow-[0_12px_26px_rgba(23,63,142,.2)] sm:p-6">
               <div class="flex items-start gap-4">
                 <span class="grid h-12 w-12 shrink-0 place-items-center rounded-[14px] border border-white/30 bg-white/15"><GraduationCap :size="26" aria-hidden="true" /></span>
                 <div>
@@ -184,7 +184,7 @@ function editPhone() {
               </div>
             </div>
             <label for="demo-guardian-phone" class="mb-2 block text-sm font-extrabold text-[#34445b]">{{ tr("Guardian Mobile Number", "অভিভাবকের মোবাইল নম্বর") }} <span class="text-red-600">*</span></label>
-            <div class="flex min-h-[58px] items-center gap-3 rounded-[13px] border-2 border-violet-500 bg-white px-4 focus-within:ring-4 focus-within:ring-violet-100">
+            <div class="flex min-h-[58px] items-center gap-3 rounded-[13px] border-2 border-[#294e9e] bg-white px-4 focus-within:ring-4 focus-within:ring-[#dce8fa]">
               <span class="flex shrink-0 items-center gap-2 border-r border-[#dce5ef] pr-3 font-extrabold text-emerald-700"><span class="text-xs">BD</span><Phone :size="17" aria-hidden="true" /></span>
               <input id="demo-guardian-phone" ref="phoneInput" v-model="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="017XXXXXXXX" class="min-w-0 flex-1 border-0 bg-transparent text-lg font-bold text-[#1d2d43] outline-none placeholder:text-[#a3afbf]" @keydown.enter.prevent="continueWithPhone" />
             </div>
@@ -215,7 +215,7 @@ function editPhone() {
 
             <h3 class="mb-3 text-lg font-extrabold text-[#27374e]">{{ tr("Choose how to continue", "কীভাবে এগোবেন বেছে নিন") }}</h3>
             <div class="mb-5 grid grid-cols-2 gap-2 rounded-xl bg-[#eef2f7] p-1">
-              <button type="button" class="min-h-10 rounded-lg px-3 text-sm font-extrabold transition" :class="mode === 'new' ? 'bg-white text-violet-800 shadow-sm' : 'text-[#718096]'" :aria-pressed="mode === 'new'" @click="mode = 'new'; error = ''">{{ tr("New family", "নতুন পরিবার") }}</button>
+              <button type="button" class="min-h-10 rounded-lg px-3 text-sm font-extrabold transition" :class="mode === 'new' ? 'bg-white text-[#173f8e] shadow-sm' : 'text-[#718096]'" :aria-pressed="mode === 'new'" @click="mode = 'new'; error = ''">{{ tr("New family", "নতুন পরিবার") }}</button>
               <button type="button" class="min-h-10 rounded-lg px-3 text-sm font-extrabold transition" :class="mode === 'existing' ? 'bg-white text-violet-800 shadow-sm' : 'text-[#718096]'" :aria-pressed="mode === 'existing'" @click="mode = 'existing'; error = ''">{{ tr("Existing profile (demo)", "আগের প্রোফাইল (ডেমো)") }}</button>
             </div>
 
@@ -249,13 +249,13 @@ function editPhone() {
           </button>
           <span v-else></span>
 
-          <button v-if="challenge === 'phone'" type="button" class="ml-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] bg-gradient-to-r from-violet-600 to-violet-500 px-5 text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(110,55,190,.2)] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600" @click="continueWithPhone">
+          <button v-if="challenge === 'phone'" type="button" class="admission-submit ml-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-5 text-sm font-extrabold shadow-[0_6px_16px_rgba(23,63,142,.22)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d9b33d]" @click="continueWithPhone">
             {{ tr("Proceed to Admission", "ভর্তির জন্য এগিয়ে যান") }}<ArrowRight :size="18" aria-hidden="true" />
           </button>
-          <button v-else-if="challenge === 'otp'" type="button" class="ml-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] bg-gradient-to-r from-blue-600 to-indigo-500 px-5 text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(58,94,205,.2)] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600" @click="verifyDemoOtp">
+          <button v-else-if="challenge === 'otp'" type="button" class="admission-submit ml-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-5 text-sm font-extrabold shadow-[0_6px_16px_rgba(23,63,142,.22)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d9b33d]" @click="verifyDemoOtp">
             {{ tr("Verify demo OTP", "ডেমো ওটিপি যাচাই") }}<ArrowRight :size="18" aria-hidden="true" />
           </button>
-          <button v-else type="button" class="ml-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] bg-gradient-to-r from-[#168e76] to-[#2ca98a] px-5 text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(34,153,125,.2)] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700" @click="continueToApplication">
+          <button v-else type="button" class="admission-submit ml-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-5 text-sm font-extrabold shadow-[0_6px_16px_rgba(23,63,142,.22)] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d9b33d]" @click="continueToApplication">
             {{ tr("Continue to Application", "আবেদনে এগিয়ে যান") }}<ArrowRight :size="18" aria-hidden="true" />
           </button>
         </footer>
@@ -263,3 +263,8 @@ function editPhone() {
     </div>
   </Teleport>
 </template>
+
+<style scoped>
+.admission-submit { background: #173f8e !important; color: #fff !important; }
+.admission-submit:hover { background: #092645 !important; }
+</style>
