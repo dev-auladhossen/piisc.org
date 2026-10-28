@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
         <div class="header-account flex min-w-0 max-w-full flex-wrap items-center justify-end gap-[8px] max-[540px]:col-span-full max-[540px]:justify-center">
           <LanguageSwitcher />
           <template v-if="auth.isAuthenticated">
-            <UserMenu class="hidden min-[1200px]:block" />
+            <UserMenu brand class="hidden min-[1200px]:block" />
           </template>
         </div>
       </div>

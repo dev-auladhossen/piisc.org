@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
         <div class="flex min-w-0 max-w-full items-center gap-[10px]">
           <button ref="menuButton" type="button" class="drawer-toggle" :aria-label="$tr('Open dashboard menu')" :aria-expanded="drawerOpen" aria-controls="dashboard-drawer" @click="openDrawer"><Menu :size="22" aria-hidden="true" /></button>
           <LanguageSwitcher />
-          <UserMenu />
+          <UserMenu dark />
         </div>
       </div>
     </header>

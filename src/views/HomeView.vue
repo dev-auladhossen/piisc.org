@@ -9,9 +9,10 @@ import HomeNewsEvents from "../components/HomeNewsEvents.vue";
 import HomeNotices from "../components/HomeNotices.vue";
 import WhatsAppContact from "../components/WhatsAppContact.vue";
 import AdmissionPopup from "../components/AdmissionPopup.vue";
+import AnnouncementTicker from "../components/AnnouncementTicker.vue";
 </script>
 <template>
-  <AdmissionPopup /><HeroSection /><HomeAdmissionGateway />
+  <AdmissionPopup /><AnnouncementTicker /><HeroSection /><HomeAdmissionGateway />
   <HomePillars />
   <HomeJourney />
   <HomeNewsEvents />

@@ -5,6 +5,7 @@ const features = {
   admin: [
     { key: 'users', label: 'Users', icon: Users, to: '/dashboard/users', soon: false },
     { key: 'notices', label: 'Notices', icon: Megaphone, to: '/dashboard/notices', soon: false },
+    { key: 'announcements', label: 'Announcements', icon: Megaphone, to: '/dashboard/announcements', soon: false },
     { key: 'admissions', label: 'Admissions', icon: GraduationCap, to: '/dashboard/admissions', soon: false },
     { key: 'news', label: 'News & Events', icon: Newspaper },
     { key: 'gallery', label: 'Gallery', icon: Images, to: '/dashboard/gallery', soon: false },
